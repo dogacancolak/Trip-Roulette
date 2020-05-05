@@ -17,15 +17,13 @@ kivy.require('1.11.1')
 class TimeOptionButton(Button):
     pass
 
-class LoginScreen(Widget):
-    dropdown = ObjectProperty(None)
-    
+class LoginScreen(Widget):    
     def addTimeOptions(self, hours):
         if hours <= 12:
-            button = TimeOptionButton(text=(hours + " hours"))
-            self.dropdown.addwidget(button)
+            button = TimeOptionButton(text=(str(hours) + " hours"))
+            self.ids.dropdown.add_widget(button)
             hours += 1
-            self.addTimeOptions(self, hours)
+            self.addTimeOptions(hours)
         else:
             pass
 
