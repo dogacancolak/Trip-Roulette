@@ -35,7 +35,7 @@ class LoginScreen(Widget):
         for i in range(13):
             item = TimeOptionButton(text=(str(i) + " hours"))
             item.value = i
-            self.dropdown.add_widget(item)
+            self.dropdown.ids.dropdown.add_widget(item)
 
         for child in self.dropdown.children:
             print(child)

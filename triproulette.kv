@@ -20,6 +20,7 @@
         on_select: btn.text = '{}'.format(args[1])
 
 <LoginScreen>:
+    dropdown: drop
     FloatLayout:
         size: root.width, root.height
         orientation: 'vertical'
@@ -33,6 +34,7 @@
                 size_hint_x: 0.5
                 hint_text: "Search for a location"
             TimeDropDown:
+                id: dropdown
 
                 # canvas:
                 #     Color:
