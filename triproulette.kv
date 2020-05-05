@@ -6,19 +6,6 @@
     height: 44
     on_release: dropdown.select(self.value)
 
-<TimeDropDown>:
-    Button:
-        id: btn
-        text: 'Press'
-        on_release: dropdown.open(self)
-        size_hint: 0.5, None
-        height: '48dp'
-
-    DropDown:
-        id: dropdown
-        on_parent: self.dismiss()
-        on_select: btn.text = '{}'.format(args[1])
-
 <LoginScreen>:
     dropdown: drop
     FloatLayout:
@@ -33,7 +20,7 @@
                 id: location
                 size_hint_x: 0.5
                 hint_text: "Search for a location"
-            TimeDropDown:
+
                 id: dropdown
 
                 # canvas:
