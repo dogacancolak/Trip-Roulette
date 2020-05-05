@@ -1,42 +1,59 @@
 from kivy.app import App
-from kivy.uix.widget import Widget
-from kivy.uix.button import Button
-from kivy.uix.boxlayout import BoxLayout
-from kivy.properties import ListProperty
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.image import Image
+from kivy.properties import ObjectProperty
+from kivy.lang import Builder
 
-class RootWidget(BoxLayout):
 
-    def __init__(self, **kwargs):
-        super(RootWidget, self).__init__(**kwargs)
-        self.add_widget(Button(text='btn 1'))
-        cb = CustomBtn()
-        cb.bind(pressed=self.btn_pressed)
-        self.add_widget(cb)
-        self.add_widget(Button(text='btn 2'))
+Builder.load_string('''
+<CustomLayout>
+    canvas.before:
+        BorderImage:
+            # BorderImage behaves like the CSS BorderImage
+            border: 10, 10, 10, 10
+            texture: self.background_image.texture
+            pos: self.pos
+            size: self.size
 
-    def btn_pressed(self, instance, pos):
-        print ('pos: printed from root widget: {pos}'.format(pos=pos))
+<RootWidget>
+    CustomLayout:
+        size_hint: .9, .9
+        pos_hint: {'center_x': .5, 'center_y': .5}
+        rows:1
+        Label:
+            text: "I don't suffer from insanity, I enjoy every minute of it"
+            text_size: self.width-20, self.height-20
+            valign: 'top'
+        Label:
+            text: "When I was born I was so surprised; I didn't speak for a year and a half."
+            text_size: self.width-20, self.height-20
+            valign: 'middle'
+            halign: 'center'
+        Label:
+            text: "A consultant is someone who takes a subject you understand and makes it sound confusing"
+            text_size: self.width-20, self.height-20
+            valign: 'bottom'
+            halign: 'justify'
+''')
 
-class CustomBtn(Widget):
 
-    pressed = ListProperty([0, 0])
+class CustomLayout(GridLayout):
 
-    def on_touch_down(self, touch):
-        if self.collide_point(*touch.pos):
-            self.pressed = touch.pos
-            # we consumed the touch. return False here to propagate
-            # the touch further to the children.
-            return True
-        return super(CustomBtn, self).on_touch_down(touch)
+    background_image = ObjectProperty(
+        Image(
+            source='../examples/widgets/sequenced_images/data/images/button_white_animated.zip',
+            anim_delay=.1))
 
-    def on_pressed(self, instance, pos):
-        print ('pressed at {pos}'.format(pos=pos))
 
-class TestApp(App):
+class RootWidget(FloatLayout):
+    pass
+
+
+class MainApp(App):
 
     def build(self):
         return RootWidget()
 
-
 if __name__ == '__main__':
-    TestApp().run()
+    MainApp().run()
