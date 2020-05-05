@@ -1,39 +1,39 @@
-<LoginScreen>
-    username: name
-    password: password
-    email:    email
-    GridLayout:
-        cols:1 
-        size: root.width, root.height
-
+<LoginScreen>:
+    FloatLayout:
+        size: root.width, root.height   
+        
+        Image:
+            source: 'logo.png'
+            size_hint: .3, .3
+            pos_hint: {"top": 1, "center_x": 0.5}
+            allow_stretch: True
+        
         GridLayout:
-            cols:2
+            size_hint: 0.6,0.6
+            pos_hint: {"center_x": 0.5, "bottom" : 1}
+            cols: 2
+            
             Label:
-                
+                id: "regtext"
                 text: "Username: "
-
             TextInput:
                 id: name
-                multinline: False
+                multiline: False
             
             Label:
-                
-                text: "Password: "
-
+                id: "regtext"
+                text: "Password"
             TextInput:
-                id: password
-                multinline: False
+                id: "password"
+                multiline: False
                 password: True
-            
             Label:
-                text: "Email: "
-
+                id: "regtext"
+                text: "Email:"
             TextInput:
                 id: email
-                multinline: False
-    
-        Button: 
-            text:"Submit"
-            on_press: root.pressed()
-            fontsize: 40
+                multiline: False
         
+
+            
+            
