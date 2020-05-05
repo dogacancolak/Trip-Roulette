@@ -1,12 +1,25 @@
 #:kivy 1.11.1
 
 <TimeOptionButton>:
+    dropdown: self.parent.parent
     size_hint_y: None
     height: 44
-    on_release: self.parent.select(self.text)
+    on_release: dropdown.select(self.value)
+
+<TimeDropDown>:
+    Button:
+        id: btn
+        text: 'Press'
+        on_release: dropdown.open(self)
+        size_hint: 0.5, None
+        height: '48dp'
+
+    DropDown:
+        id: dropdown
+        on_parent: self.dismiss()
+        on_select: btn.text = '{}'.format(args[1])
 
 <LoginScreen>:
-    dropdown: dropdown
     FloatLayout:
         size: root.width, root.height
         orientation: 'vertical'
@@ -19,9 +32,8 @@
                 id: location
                 size_hint_x: 0.5
                 hint_text: "Search for a location"
-            DropDown:
-                id: dropdown
-                size_hint_x: 0.5
+            TimeDropDown:
+
                 # canvas:
                 #     Color:
                 #         rgba: 0, 1, 1, 0.5
