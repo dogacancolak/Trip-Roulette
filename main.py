@@ -10,27 +10,34 @@ from kivy.uix.image import Image
 from kivy.uix.scatter import Scatter
 from kivy.properties import ObjectProperty
 from kivy.uix.dropdown import DropDown
-
+from kivy.graphics.instructions import Canvas
+from kivy.graphics import Rectangle,Color
 
 kivy.require('1.11.1')
 
 class TimeOptionButton(Button):
     pass
 
-class LoginScreen(Widget):    
-    def addTimeOptions(self, hours):
-        if hours <= 12:
-            button = TimeOptionButton(text=(str(hours) + " hours"))
-            self.ids.dropdown.add_widget(button)
-            hours += 1
-            self.addTimeOptions(hours)
-        else:
-            pass
+class LoginScreen(Widget):
+    dropdown = ObjectProperty(DropDown)
+
+    def __init__(self, **kwargs):
+        super(LoginScreen, self).__init__(**kwargs)
+        self.addTimeOptions()
+
+    def addTimeOptions(self):
+        for i in range(13):
+            item = TimeOptionButton(text=(str(i) + " hours"))
+            self.dropdown.add_widget(item)
+
+        # for child in self.dropdown.children:
+        #     print(child)
+        #     child.canvas.add(Color(rgba=(1, 0, 0, 0.5)))
+        #     child.canvas.add(Rectangle(pos=self.pos, size=self.size))
 
 class TripRouletteApp(App):
     def build(self):
         loginscreen = LoginScreen()
-        loginscreen.addTimeOptions(0)
         return loginscreen
 
 if __name__ == "__main__":

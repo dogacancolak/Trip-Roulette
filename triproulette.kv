@@ -6,6 +6,7 @@
     on_release: self.parent.select(self.text)
 
 <LoginScreen>:
+    dropdown: dropdown
     FloatLayout:
         size: root.width, root.height
         orientation: 'vertical'
@@ -16,20 +17,20 @@
             size_hint: 0.6, 0.1
             TextInput:
                 id: location
+                size_hint_x: 0.5
                 hint_text: "Search for a location"
             DropDown:
                 id: dropdown
-                canvas:
-                    Color:
-                        rgba: 1, 0, 1, 0.5
-                    Rectangle:
-                        pos: self.pos
-                        size: self.size
-                Button:
-                    text: "Free time:"
-                    on_release: dropdown.open()
-                        
-                
+                size_hint_x: 0.5
+                # canvas:
+                #     Color:
+                #         rgba: 0, 1, 1, 0.5
+                #     Rectangle:
+                #         pos: self.pos
+                #         size: self.size
+                # Button:
+                #     text: "Free time:"
+                #     on_release: dropdown.open()
 
         GridLayout:
             cols: 2
@@ -37,10 +38,9 @@
             size_hint: 0.6, 0.1
             Button:
                 text: "Create Account"
-               
             Button:
                 text: "Log In"
-                
+
         Button:
             size_hint: 0.6, 0.1
             id: myButton
