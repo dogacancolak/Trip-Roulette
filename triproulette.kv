@@ -1,39 +1,41 @@
+#:kivy 1.11.1
+
+<TimeOptionButton>:
+    size_hint_y: None
+    height: 44
+    on_release: self.parent.select(self.text)
+
 <LoginScreen>:
     FloatLayout:
-        size: root.width, root.height   
-        
-        Image:
-            source: 'logo.png'
-            size_hint: .3, .3
-            pos_hint: {"top": 1, "center_x": 0.5}
-            allow_stretch: True
-        
-        GridLayout:
-            size_hint: 0.6,0.6
-            pos_hint: {"center_x": 0.5, "bottom" : 1}
-            cols: 2
-            
-            Label:
-                id: "regtext"
-                text: "Username: "
-            TextInput:
-                id: name
-                multiline: False
-            
-            Label:
-                id: "regtext"
-                text: "Password"
-            TextInput:
-                id: "password"
-                multiline: False
-                password: True
-            Label:
-                id: "regtext"
-                text: "Email:"
-            TextInput:
-                id: email
-                multiline: False
-        
+        size: root.width, root.height
+        orientation: 'vertical'
 
-            
-            
+        GridLayout:
+            dropdown = dropdown
+            cols:2
+            TextInput:
+                id: location
+                hint_text: "Search for a location"
+            DropDown:
+                id: dropdown
+                Button:
+                    text: "Free time:"
+                    on_release: dropdown.open()
+                        
+                
+
+        GridLayout:
+            cols: 2
+            pos_hint: {"y": 0.1, 'center_x' :.5}
+            size_hint: 0.6, 0.1
+            Button:
+                text: "Create Account"
+               
+            Button:
+                text: "Log In"
+                
+        Button:
+            size_hint: 0.6, 0.1
+            id: myButton
+            text: "Generate Trip"
+            pos_hint: {"bottom": 0, 'center_x' :.5}

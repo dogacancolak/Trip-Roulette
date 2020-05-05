@@ -9,17 +9,31 @@ from kivy.uix.widget import Widget
 from kivy.uix.image import Image
 from kivy.uix.scatter import Scatter
 from kivy.properties import ObjectProperty
+from kivy.uix.dropdown import DropDown
+
 
 kivy.require('1.11.1')
 
-class LoginScreen(Widget):
+class TimeOptionButton(Button):
     pass
 
-
+class LoginScreen(Widget):
+    dropdown = ObjectProperty(None)
+    
+    def addTimeOptions(self, hours):
+        if hours <= 12:
+            button = TimeOptionButton(text=(hours + " hours"))
+            self.dropdown.addwidget(button)
+            hours += 1
+            self.addTimeOptions(self, hours)
+        else:
+            pass
 
 class TripRouletteApp(App):
     def build(self):
-        return LoginScreen()
+        loginscreen = LoginScreen()
+        loginscreen.addTimeOptions(0)
+        return loginscreen
 
 if __name__ == "__main__":
     TripRouletteApp().run()
