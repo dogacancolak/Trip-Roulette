@@ -1,3 +1,8 @@
 {
+<<<<<<< HEAD
     "python.pythonPath": "C:\\Users\\Erce\\AppData\\Local\\Programs\\Python\\Python38-32\\python.exe"
 }
+=======
+    "python.pythonPath": "usr/local/bin/python3"
+}
+>>>>>>> dd39cd0c84f413c7fab023dfd4193bb395338c53
