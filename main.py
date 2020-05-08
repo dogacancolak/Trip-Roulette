@@ -32,7 +32,6 @@ class HomePage(FloatLayout):
      pass
 
 class TripRouletteApp(MDApp): 
-    
     data = {
             'car':  'Car',
             'walk': 'Walk',
