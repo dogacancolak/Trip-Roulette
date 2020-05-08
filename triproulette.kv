@@ -1,12 +1,10 @@
 <ItemDrawer>:
-    
-    theme_text_color: "Custom"
     on_release: self.parent.set_color_item(self)
     
     IconLeftWidget:
         id: icon
         icon: root.icon
-        theme_text_color: "Custom"
+        
         
 
 <ContentNavigationDrawer>:
@@ -26,23 +24,20 @@
             source: "data/logo/kivy-icon-256.png"
 
     MDLabel:
-    
         text: "Settings"
         font_style: "Button"
         size_hint_y: None
         height: self.texture_size[1]
-        
-        
+        theme_text_color: "Secondary"
+       
 
     MDLabel:
-       
         text: "triproulette@gmail.com"
         font_style: "Caption"
         size_hint_y: None
         height: self.texture_size[1]
+        theme_text_color: "Secondary"
         
-        
-
     ScrollView:
 
         DrawerList:
@@ -58,7 +53,6 @@
 
 
 Screen:
-    
     NavigationLayout:
 
         ScreenManager:
@@ -67,10 +61,10 @@ Screen:
 
                 HomePage:
                     MDIconButton:
-                        theme_text_color: 'Custom'
                         icon: "settings"
                         pos_hint: {"top": 0.9, "x": 0.1}
                         on_release: nav_drawer.toggle_nav_drawer()
+
 
                     
 

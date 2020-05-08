@@ -33,18 +33,17 @@ class HomePage(FloatLayout):
 class TripRouletteApp(MDApp): 
 
     def build(self):
-        self.theme_cls.primary_palette = 'Green'
-        self.theme_cls.theme_style = "Light"  # "Light"
-       
+        self.theme_cls.primary_palette = "Orange"
+        self.theme_cls.theme_style = "Dark"
+        
         
     def on_start(self):
         icons_item = {
-            "folder": "Account Details",
-            "account-multiple": "Preferences",
-            "star": "Starred",
-            "history": "Recent",
-            "checkbox-marked": "Shared with me",
-            "upload": "Upload",
+            "account": "Account Details",
+            "city-variant-outline": "Preferences",
+            "login": "Log Out/ Log In",
+            "help": "Help",
+           
         }
         for icon_name in icons_item.keys():
             self.root.ids.content_drawer.ids.md_list.add_widget(
