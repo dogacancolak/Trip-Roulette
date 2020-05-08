@@ -1,0 +1,81 @@
+<ItemDrawer>:
+    
+    theme_text_color: "Custom"
+    on_release: self.parent.set_color_item(self)
+    
+    IconLeftWidget:
+        id: icon
+        icon: root.icon
+        theme_text_color: "Custom"
+        
+
+<ContentNavigationDrawer>:
+    orientation: "vertical"
+    padding: "8dp"
+    spacing: "8dp"
+
+    AnchorLayout:
+        anchor_x: "left"
+        size_hint_y: None
+        height: avatar.height
+
+        Image:
+            id: avatar
+            size_hint: None, None
+            size: "56dp", "56dp"
+            source: "data/logo/kivy-icon-256.png"
+
+    MDLabel:
+    
+        text: "Settings"
+        font_style: "Button"
+        size_hint_y: None
+        height: self.texture_size[1]
+        
+        
+
+    MDLabel:
+       
+        text: "triproulette@gmail.com"
+        font_style: "Caption"
+        size_hint_y: None
+        height: self.texture_size[1]
+        
+        
+
+    ScrollView:
+
+        DrawerList:
+            id: md_list
+
+
+    
+
+    # MDToolbar:
+    #     title: "Navigation Drawer"
+    #     elevation: 10
+    #     left_action_items: [['menu', lambda x: nav_drawer.toggle_nav_drawer()]]
+
+
+Screen:
+    
+    NavigationLayout:
+
+        ScreenManager:
+
+            Screen:
+
+                HomePage:
+                    MDIconButton:
+                        theme_text_color: 'Custom'
+                        icon: "settings"
+                        pos_hint: {"top": 0.9, "x": 0.1}
+                        on_release: nav_drawer.toggle_nav_drawer()
+
+                    
+
+        MDNavigationDrawer:
+            id: nav_drawer
+
+            ContentNavigationDrawer:
+                id: content_drawer
