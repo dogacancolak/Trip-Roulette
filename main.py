@@ -8,6 +8,9 @@ from kivymd.theming import ThemableBehavior
 from kivymd.uix.list import OneLineIconListItem, MDList
 from kivymd.uix import MDAdaptiveWidget
 from kivymd.theming import ThemeManager
+from kivymd.uix.button import MDIconButton
+from kivymd.uix.toolbar import MDToolbar
+
 # from gpshelper import GpsHelper
 from kivymd.toast import toast
 
@@ -29,7 +32,22 @@ class DrawerList(ThemableBehavior, MDList):
                 break
         instance_item.text_color = self.theme_cls.text_color
 
-class Form(Screen):
+class SettingsButton(MDIconButton):
+    pass
+
+class PageToolbar(MDToolbar):
+    pass
+
+class FormPage(Screen):
+    pass
+
+class LogPage(Screen):
+    pass
+
+class HelpPage(Screen):
+    pass
+
+class DetailsPage(Screen):
     pass
 
 class HomePage(Screen):
@@ -52,6 +70,10 @@ class TripRouletteApp(MDApp):
             toast(instance.icon)
             pass
         
+    def return_homepage(self):
+            self.root.windows.current = "HomePage"
+            pass
+
     def build(self):
         self.theme_cls.primary_palette = "Green"
         self.theme_cls.theme_style = "Dark"
@@ -60,7 +82,7 @@ class TripRouletteApp(MDApp):
         icons_item = {
             "account": "Account Details",
             "city-variant-outline": "Form",
-            "login": "Log Out/ Log In",
+            "login": "Log Out/Log In",
             "help": "Help",
         }
         for icon_name in icons_item.keys():
