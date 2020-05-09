@@ -9,10 +9,11 @@
     on_release: app.root.nav_drawer.toggle_nav_drawer()
     md_bg_color: app.theme_cls.primary_color
             
-<ItemDrawer>:
+<ItemDrawer>:   
     on_release: 
         self.parent.set_color_item(self)
         app.root.windows.current = self.text
+        app.root.windows.current_screen.manager.transition.direction = "right"
         app.root.nav_drawer.toggle_nav_drawer()
     
     IconLeftWidget:
@@ -67,6 +68,7 @@
     pos_hint: {"top": 1}
 
 <DetailsPage>
+    
     name: "Account Details"
     PageToolbar:
         title: root.name
