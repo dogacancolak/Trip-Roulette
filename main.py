@@ -2,7 +2,7 @@ from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.properties import StringProperty, ObjectProperty
-from kivy.uix.screenmanager import Screen
+from kivy.uix.screenmanager import Screen, ScreenManager
 from kivymd.app import MDApp
 from kivymd.theming import ThemableBehavior
 from kivymd.uix.list import OneLineIconListItem, MDList
@@ -29,8 +29,18 @@ class DrawerList(ThemableBehavior, MDList):
                 break
         instance_item.text_color = self.theme_cls.text_color
 
+class Form(Screen):
+    pass
+
 class HomePage(Screen):
     map = ObjectProperty(None)
+
+class WindowManager(ScreenManager):
+    pass
+
+class MainScreen(Screen):
+    nav_drawer = ObjectProperty(None)
+    windows = ObjectProperty(None)
 
 class TripRouletteApp(MDApp): 
     data = {
@@ -45,11 +55,11 @@ class TripRouletteApp(MDApp):
     def build(self):
         self.theme_cls.primary_palette = "Green"
         self.theme_cls.theme_style = "Dark"
-        
+
     def on_start(self):
         icons_item = {
             "account": "Account Details",
-            "city-variant-outline": "Preferences",
+            "city-variant-outline": "Form",
             "login": "Log Out/ Log In",
             "help": "Help",
         }
@@ -57,6 +67,7 @@ class TripRouletteApp(MDApp):
             self.root.ids.content_drawer.ids.md_list.add_widget(
                 ItemDrawer(icon=icon_name, text=icons_item[icon_name])
             )
+    
         # Initialize GPS
         # GpsHelper().run()
 

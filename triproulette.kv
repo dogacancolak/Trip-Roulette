@@ -1,14 +1,16 @@
 #:import MapView kivy.garden.mapview.MapView
+#import GpsBlinker gpsblinker.GpsBlinker
+#include gpsblinker.kv
 
 <ItemDrawer>:
-    on_release: self.parent.set_color_item(self)
+    on_release: 
+        self.parent.set_color_item(self)
+        app.root.windows.current = self.text
     
     IconLeftWidget:
         id: icon
         icon: root.icon
         
-        
-
 <ContentNavigationDrawer>:
     orientation: "vertical"
     padding: "8dp"
@@ -46,9 +48,6 @@
         DrawerList:
             id: md_list
 
-
-    
-
     # MDToolbar:
     #     title: "Navigation Drawer"
     #     elevation: 10
@@ -61,7 +60,39 @@
     #     lat: root.lat
     #     lon: root.lon
 
+<Form>
+    name: "Form"
+    FloatLayout:
+
+        MDIconButton:
+            icon: "settings"
+            pos_hint: {"top": 0.95, "x": 0.05}
+            height: self.width
+            on_release: app.root.nav_drawer.toggle_nav_drawer()
+            md_bg_color: app.theme_cls.primary_color
+
+MainScreen:
+    nav_drawer: nav_drawer
+    windows: windows
+    NavigationLayout:
+        id: nav_layout
+    
+        WindowManager:
+            id: windows
+
+            HomePage:
+                id: homepage
+
+            Form:
+
+        MDNavigationDrawer:
+            id: nav_drawer
+
+            ContentNavigationDrawer:
+                id: content_drawer
+
 <HomePage>:
+    name: "HomePage"
     map: mapview
     MapView:
         id: mapview
@@ -72,7 +103,7 @@
             icon: "settings"
             pos_hint: {"top": 0.95, "x": 0.05}
             height: self.width
-            on_release: nav_drawer.toggle_nav_drawer()
+            on_release: app.root.nav_drawer.toggle_nav_drawer()
             md_bg_color: app.theme_cls.primary_color
         
         MDRaisedButton:
@@ -105,20 +136,3 @@
             md_bg_color: app.theme_cls.primary_color  
             hint_animation:  True
             callback: app.toast_pop
-            
-
-Screen:
-    NavigationLayout:
-        id: nav_layout
-    
-        ScreenManager:
-            id: screens
-
-            HomePage:
-                id: homepage
-
-        MDNavigationDrawer:
-            id: nav_drawer
-
-            ContentNavigationDrawer:
-                id: content_drawer
