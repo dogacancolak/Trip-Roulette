@@ -1,4 +1,4 @@
-#:import MapView kivy_garden.mapview.MapView
+#:import MapView kivy.garden.mapview.MapView
 
 <ItemDrawer>:
     on_release: self.parent.set_color_item(self)
@@ -63,6 +63,7 @@ Screen:
             Screen:
 
                 MapView:
+                    zoom: 2
 
                 HomePage:
 

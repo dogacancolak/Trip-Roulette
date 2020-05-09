@@ -8,7 +8,7 @@ from kivymd.theming import ThemableBehavior
 from kivymd.uix.list import OneLineIconListItem, MDList
 from kivymd.uix import MDAdaptiveWidget
 from kivymd.theming import ThemeManager
-
+from gpshelper import GpsHelper
 
 class ContentNavigationDrawer(BoxLayout):
     pass
@@ -36,7 +36,7 @@ class TripRouletteApp(MDApp):
             'car':  'Car',
             'walk': 'Walk',
             'bus':  'Public Transport',
-        }
+            }
 
     def build(self):
         self.theme_cls.primary_palette = "Green"
@@ -48,9 +48,6 @@ class TripRouletteApp(MDApp):
             "city-variant-outline": "Preferences",
             "login": "Log Out/ Log In",
             "help": "Help",
-           
-        
-
         }
         for icon_name in icons_item.keys():
             self.root.ids.content_drawer.ids.md_list.add_widget(
