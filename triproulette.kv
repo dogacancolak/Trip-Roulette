@@ -1,4 +1,6 @@
 #:import MapView kivy.garden.mapview.MapView
+#:import GpsBlinker gpsblinker.GpsBlinker
+#:include gpsblinker.kv
 
 <ItemDrawer>:
     on_release: self.parent.set_color_item(self)
@@ -54,8 +56,15 @@
     #     elevation: 10
     #     left_action_items: [['menu', lambda x: nav_drawer.toggle_nav_drawer()]]
 
+<MapView>:
+    zoom: 2
+    GpsBlinker:
+        id: blinker
+        lat: root.lat
+        lon: root.lon
 
 Screen:
+    map: mapview
     NavigationLayout:
     
         ScreenManager:
@@ -63,9 +72,9 @@ Screen:
             Screen:
 
                 MapView:
-                    zoom: 2
+                    id: mapview
 
-                HomePage:
+                FloatLayout:
 
                     MDIconButton:
                         icon: "settings"
