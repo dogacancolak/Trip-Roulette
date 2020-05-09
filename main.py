@@ -10,8 +10,7 @@ from kivymd.uix import MDAdaptiveWidget
 from kivymd.theming import ThemeManager
 from kivymd.uix.button import MDIconButton
 from kivymd.uix.toolbar import MDToolbar
-
-# from gpshelper import GpsHelper
+from gpshelper import GpsHelper
 from kivymd.toast import toast
 
 class ContentNavigationDrawer(BoxLayout):
@@ -59,6 +58,7 @@ class WindowManager(ScreenManager):
 class MainScreen(Screen):
     nav_drawer = ObjectProperty(None)
     windows = ObjectProperty(None)
+    homepage = ObjectProperty(None)
 
 class TripRouletteApp(MDApp): 
     data = {
@@ -71,7 +71,7 @@ class TripRouletteApp(MDApp):
         
     def return_homepage(self):
             self.root.windows.current = "HomePage"
-            self.root.windows.current_screen.manager.transition.direction = "right"
+            self.root.windows.current_screen.manager.transition.direction = "left"
 
     def build(self):
         self.theme_cls.primary_palette = "Green"
@@ -90,7 +90,7 @@ class TripRouletteApp(MDApp):
             )
     
         # Initialize GPS
-        # GpsHelper().run()
+        GpsHelper().run()
 
 
 TripRouletteApp().run()
