@@ -63,56 +63,57 @@
         lat: root.lat
         lon: root.lon
 
+<HomePage>:
+
+    MapView:
+        id: mapview
+
+    FloatLayout:
+
+        MDIconButton:
+            icon: "settings"
+            pos_hint: {"top": 0.95, "x": 0.05}
+            height: self.width
+            on_release: nav_drawer.toggle_nav_drawer()
+            md_bg_color: app.theme_cls.primary_color
+        
+        MDRaisedButton:
+            text: "Generate Trip"
+            md_bg_color: app.theme_cls.primary_dark
+            pos_hint: {"center_x": 0.5, "y": 0.03}
+            size_hint: 0.8, 0.1
+
+        MDRoundFlatButton:
+            text: "Log In"
+            text_color: app.theme_cls.primary_color
+            pos_hint: {"center_x": 0.25, "y": 0.15}
+            size: account_create.size
+
+        MDRoundFlatButton:
+            id: account_create
+            text: "Create Account"
+            text_color: app.theme_cls.primary_color
+            pos_hint: {"center_x": 0.75, "y": 0.15}
+            
+        MDIconButton:
+            icon: "crosshairs-gps"
+            pos_hint: {"y": 0.25, "right": 0.9}
+            height: self.width
+            md_bg_color: app.theme_cls.primary_color
+            
+        MDFloatingActionButtonSpeedDial:
+            data: app.data
+            rotation_root_button: True
+            md_bg_color: app.theme_cls.primary_color
+
 Screen:
     map: mapview
     NavigationLayout:
     
         ScreenManager:
 
-            Screen:
-
-                MapView:
-                    id: mapview
-
-                FloatLayout:
-
-                    MDIconButton:
-                        icon: "settings"
-                        pos_hint: {"top": 0.95, "x": 0.05}
-                        height: self.width
-                        on_release: nav_drawer.toggle_nav_drawer()
-                        md_bg_color: app.theme_cls.primary_color
-                    
-                    MDRaisedButton:
-                        text: "Generate Trip"
-                        md_bg_color: app.theme_cls.primary_dark
-                        pos_hint: {"center_x": 0.5, "y": 0.03}
-                        size_hint: 0.8, 0.1
-
-                    MDRoundFlatButton:
-                        text: "Log In"
-                        text_color: app.theme_cls.primary_color
-                        pos_hint: {"center_x": 0.25, "y": 0.15}
-                        size: account_create.size
-
-                    MDRoundFlatButton:
-                        id: account_create
-                        text: "Create Account"
-                        text_color: app.theme_cls.primary_color
-                        pos_hint: {"center_x": 0.75, "y": 0.15}
-                        
-                    MDIconButton:
-                        icon: "crosshairs-gps"
-                        pos_hint: {"y": 0.25, "right": 0.9}
-                        height: self.width
-                        md_bg_color: app.theme_cls.primary_color
-                        
-                    MDFloatingActionButtonSpeedDial:
-                        data: app.data
-                        rotation_root_button: True
-                        md_bg_color: app.theme_cls.primary_color
-
-                    
+            HomePage:
+                id: homepage
 
         MDNavigationDrawer:
             id: nav_drawer
