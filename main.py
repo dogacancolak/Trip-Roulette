@@ -8,7 +8,7 @@ from kivymd.theming import ThemableBehavior
 from kivymd.uix.list import OneLineIconListItem, MDList
 from kivymd.uix import MDAdaptiveWidget
 from kivymd.theming import ThemeManager
-from gpshelper import GpsHelper
+# from gpshelper import GpsHelper
 from kivymd.toast import toast
 
 class ContentNavigationDrawer(BoxLayout):
@@ -29,12 +29,10 @@ class DrawerList(ThemableBehavior, MDList):
                 break
         instance_item.text_color = self.theme_cls.text_color
 
-class Homepage(Screen):
-    pass
-
-class TripRouletteApp(MDApp): 
+class HomePage(Screen):
     map = ObjectProperty(None)
 
+class TripRouletteApp(MDApp): 
     data = {
             'car':  'Car',
             'walk': 'Walk',
@@ -60,7 +58,7 @@ class TripRouletteApp(MDApp):
                 ItemDrawer(icon=icon_name, text=icons_item[icon_name])
             )
         # Initialize GPS
-        GpsHelper().run()
+        # GpsHelper().run()
 
 
 TripRouletteApp().run()

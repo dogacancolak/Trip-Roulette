@@ -8,7 +8,9 @@ class GpsHelper():
 
     def run(self):
         # Get a reference to GpsBlinker, then call blink()
-        gps_blinker = App.get_running_app().root
+        map = App.get_running_app().root.ids.nav_layout.ids.screens.ids.homepage.map
+
+        gps_blinker = map.blinker
     #     # Start blinking the GpsBlinker
     #     gps_blinker.blink()
 
