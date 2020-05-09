@@ -9,6 +9,7 @@ from kivymd.uix.list import OneLineIconListItem, MDList
 from kivymd.uix import MDAdaptiveWidget
 from kivymd.theming import ThemeManager
 from gpshelper import GpsHelper
+from kivymd.toast import toast
 
 class ContentNavigationDrawer(BoxLayout):
     pass
@@ -39,7 +40,10 @@ class TripRouletteApp(MDApp):
             'walk': 'Walk',
             'bus':  'Public Transport',
             }
-
+    def toast_pop(self, instance):
+            toast(instance.icon)
+            pass
+        
     def build(self):
         self.theme_cls.primary_palette = "Green"
         self.theme_cls.theme_style = "Dark"
