@@ -13,7 +13,7 @@
     on_release: 
         self.parent.set_color_item(self)
         app.root.windows.current = self.text
-        app.root.windows.current_screen.manager.transition.direction = "left"
+        app.root.windows.current_screen.manager.transition.direction = "right"
         app.root.nav_drawer.set_state("close")
     
     IconLeftWidget:
@@ -121,6 +121,20 @@ MainScreen:
     #     id: blinker
     #     lat: root.lat
     #     lon: root.lon
+<Content>:
+    orientation: "vertical"
+    spacing: "12dp"
+    size_hint_y: None
+    height: "120dp"
+
+    MDLabel:
+        text: "Food:"
+        font_style: "Caption"
+    MDSwitch:
+        on_active: app.on_switch_active
+    MDLabel:
+        text: "Trip Length:"
+        font_style: "Caption"
 
 <HomePage>:
     name: "HomePage"
@@ -137,6 +151,7 @@ MainScreen:
             md_bg_color: app.theme_cls.primary_dark
             pos_hint: {"center_x": 0.5, "y": 0.03}
             size_hint: 0.8, 0.1
+            on_release: root.show_confirmation_dialog()
 
         MDRoundFlatButton:
             text: "Log In"
@@ -159,6 +174,6 @@ MainScreen:
         MDFloatingActionButtonSpeedDial:
             data: app.data
             rotation_root_button: True
-            md_bg_color: app.theme_cls.primary_color  
+            md_bg_color: app.theme_cls.primary_dark  
             hint_animation:  True
-            callback: app.toast_pop
+            callback: root.toast_pop

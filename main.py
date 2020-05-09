@@ -10,7 +10,8 @@ from kivymd.uix import MDAdaptiveWidget
 from kivymd.theming import ThemeManager
 from kivymd.uix.button import MDIconButton
 from kivymd.uix.toolbar import MDToolbar
-
+from kivymd.uix.dialog import MDDialog
+from kivymd.uix.button import MDFlatButton
 # from gpshelper import GpsHelper
 from kivymd.toast import toast
 
@@ -52,6 +53,25 @@ class DetailsPage(Screen):
 
 class HomePage(Screen):
     map = ObjectProperty(None)
+    def toast_pop(self, instance):
+        toast(instance.icon)
+
+    def show_confirmation_dialog(self):
+                if not self.dialog:
+                    self.dialog = MDDialog(
+                        title="Details:",
+                        type="custom",
+                        content_cls=Content(),
+                        buttons=[
+                            MDFlatButton(
+                                text="CANCEL", text_color=self.theme_cls.primary_color
+                            ),
+                            MDFlatButton(
+                                text="OK", text_color=self.theme_cls.primary_color
+                            ),
+                        ],
+                    )
+                self.dialog.open()
 
 class WindowManager(ScreenManager):
     pass
@@ -66,12 +86,17 @@ class TripRouletteApp(MDApp):
             'walk': 'Walk',
             'bus':  'Public Transport',
             }
-    def toast_pop(self, instance):
-            toast(instance.icon)
+    def on_switch_active(self, switch, value):
+        if value:
+            food = True
+            print(food)
+        else:
+            food = False
+            print(food)
         
     def return_homepage(self):
             self.root.windows.current = "HomePage"
-            self.root.windows.current_screen.manager.transition.direction = "right"
+            self.root.windows.current_screen.manager.transition.direction = "left"
 
     def build(self):
         self.theme_cls.primary_palette = "Green"
