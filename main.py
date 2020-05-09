@@ -14,6 +14,7 @@ from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton
 from gpshelper import GpsHelper
 from kivymd.toast import toast
+from kivy.app import App
 
 class ContentNavigationDrawer(BoxLayout):
     pass
@@ -51,27 +52,32 @@ class HelpPage(Screen):
 class DetailsPage(Screen):
     pass
 
+class DialogContent(BoxLayout):
+    pass
+
 class HomePage(Screen):
     map = ObjectProperty(None)
+    dialog = None
+
     def toast_pop(self, instance):
         toast(instance.icon)
 
     def show_confirmation_dialog(self):
-                if not self.dialog:
-                    self.dialog = MDDialog(
-                        title="Details:",
-                        type="custom",
-                        content_cls=Content(),
-                        buttons=[
-                            MDFlatButton(
-                                text="CANCEL", text_color=self.theme_cls.primary_color
-                            ),
-                            MDFlatButton(
-                                text="OK", text_color=self.theme_cls.primary_color
-                            ),
-                        ],
-                    )
-                self.dialog.open()
+        if not self.dialog:
+            self.dialog = MDDialog(
+                title="Details:",
+                type="custom",
+                content_cls= DialogContent(),
+                buttons=[
+                    MDFlatButton(
+                        text="CANCEL", text_color= App.get_running_app().theme_cls.primary_color
+                    ),
+                    MDFlatButton(
+                        text="OK", text_color= App.get_running_app().theme_cls.primary_color
+                    ),
+                ],
+            )
+        self.dialog.open()
 
 class WindowManager(ScreenManager):
     pass
@@ -90,10 +96,10 @@ class TripRouletteApp(MDApp):
     def on_switch_active(self, switch, value):
         if value:
             food = True
-            print(food)
+           
         else:
             food = False
-            print(food)
+            
         
     def return_homepage(self):
             self.root.windows.current = "HomePage"
