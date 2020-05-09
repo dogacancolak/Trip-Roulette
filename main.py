@@ -68,11 +68,10 @@ class TripRouletteApp(MDApp):
             }
     def toast_pop(self, instance):
             toast(instance.icon)
-            pass
         
     def return_homepage(self):
             self.root.windows.current = "HomePage"
-            pass
+            self.root.windows.current_screen.manager.transition.direction = "left"
 
     def build(self):
         self.theme_cls.primary_palette = "Green"
