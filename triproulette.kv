@@ -83,11 +83,21 @@
     PageToolbar:
         title: root.name
 
+
 <HelpPage>
     name: "Help"    
     PageToolbar:
         title: root.name
-
+        orientation: "vertical"
+    MDToolbar:
+        title: "Reach Out To Us"
+        pos_hint: {"top": 1}
+    Image:
+        source: 'chad.jpg'
+        size_hint: 0.6, 0.6
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+ 
+            
 MainScreen:
     nav_drawer: nav_drawer
     windows: windows
@@ -125,21 +135,28 @@ MainScreen:
 <DialogContent>:
     orientation: "vertical"
     spacing: "12dp"
-    size_hint_y: None
     height: "120dp"
-
+    
     MDLabel:
         text: "Food:"
         font_style: "Caption"
     MDSwitch:
         on_active: app.on_switch_active
-    # MDLabel:
-    #     text: "Trip Length:"
-    #     font_style: "Caption"
+    MDLabel:
+        text: "Trip Length:" 
+        font_style: "Caption"
 
+<PopupDialog>:
+    title_align: 'center'
+    title_size: '18sp'
+    separator_color: app.theme_cls.primary_color
+    size_hint: 0.7, 0.4
+    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+    
 <HomePage>:
     name: "HomePage"
     map: mapview
+    
     MapView:
         id: mapview
 
@@ -177,4 +194,4 @@ MainScreen:
             rotation_root_button: True
             md_bg_color: app.theme_cls.primary_dark  
             hint_animation:  True
-            callback: root.toast_pop
+            

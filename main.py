@@ -1,20 +1,27 @@
+from kivy.app import App
 from kivy.lang import Builder
+from kivy.properties import StringProperty, ObjectProperty, BooleanProperty
+from kivy.animation import Animation
+
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
-from kivy.properties import StringProperty, ObjectProperty
 from kivy.uix.screenmanager import Screen, ScreenManager
+from kivy.uix.popup import Popup
+
 from kivymd.app import MDApp
-from kivymd.theming import ThemableBehavior
+from kivymd.theming import ThemableBehavior,ThemeManager
+from kivymd import images_path
+from kivymd.toast import toast
+
 from kivymd.uix.list import OneLineIconListItem, MDList
 from kivymd.uix import MDAdaptiveWidget
-from kivymd.theming import ThemeManager
 from kivymd.uix.button import MDIconButton
 from kivymd.uix.toolbar import MDToolbar
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton
+from kivymd.uix.expansionpanel import MDExpansionPanelOneLine, MDExpansionPanel
+
 from gpshelper import GpsHelper
-from kivymd.toast import toast
-from kivy.app import App
 
 class ContentNavigationDrawer(BoxLayout):
     pass
@@ -49,10 +56,14 @@ class LogPage(Screen):
 class HelpPage(Screen):
     pass
 
+
 class DetailsPage(Screen):
     pass
 
 class DialogContent(BoxLayout):
+    pass
+
+class PopupDialog(Popup):
     pass
 
 class HomePage(Screen):
@@ -64,19 +75,23 @@ class HomePage(Screen):
 
     def show_confirmation_dialog(self):
         if not self.dialog:
-            self.dialog = MDDialog(
-                title="Details:",
-                type="custom",
-                content_cls= DialogContent(),
-                buttons=[
-                    MDFlatButton(
-                        text="CANCEL", text_color= App.get_running_app().theme_cls.primary_color
-                    ),
-                    MDFlatButton(
-                        text="OK", text_color= App.get_running_app().theme_cls.primary_color
-                    ),
-                ],
-            )
+            self.dialog = PopupDialog(
+                title='Trip Details',
+                content=DialogContent(),
+                )
+            # self.dialog = PopupDialog(
+            #     title="Details:",
+            #     type="custom",
+            #     content_cls= DialogContent(),
+            #     buttons=[
+            #         MDFlatButton(
+            #             text="CANCEL", text_color= App.get_running_app().theme_cls.primary_color
+            #         ),
+            #         MDFlatButton(
+            #             text="OK", text_color= App.get_running_app().theme_cls.primary_color
+            #         ),
+            #     ],
+            # )
         self.dialog.open()
 
 class WindowManager(ScreenManager):
@@ -93,14 +108,13 @@ class TripRouletteApp(MDApp):
             'walk': 'Walk',
             'bus':  'Public Transport',
             }
+    food = BooleanProperty()
     def on_switch_active(self, switch, value):
         if value:
             food = True
-           
         else:
             food = False
             
-        
     def return_homepage(self):
             self.root.windows.current = "HomePage"
             self.root.windows.current_screen.manager.transition.direction = "left"
