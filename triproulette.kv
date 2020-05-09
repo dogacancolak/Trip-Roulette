@@ -6,15 +6,15 @@
     icon: "settings"
     pos_hint: {"top": 0.95, "x": 0.05}
     height: self.width
-    on_release: app.root.nav_drawer.toggle_nav_drawer()
+    on_release: app.root.nav_drawer.set_state("open")
     md_bg_color: app.theme_cls.primary_color
             
 <ItemDrawer>:   
     on_release: 
         self.parent.set_color_item(self)
         app.root.windows.current = self.text
-        app.root.windows.current_screen.manager.transition.direction = "right"
-        app.root.nav_drawer.toggle_nav_drawer()
+        app.root.windows.current_screen.manager.transition.direction = "left"
+        app.root.nav_drawer.set_state("close")
     
     IconLeftWidget:
         id: icon

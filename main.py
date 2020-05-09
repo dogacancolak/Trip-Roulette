@@ -71,7 +71,7 @@ class TripRouletteApp(MDApp):
         
     def return_homepage(self):
             self.root.windows.current = "HomePage"
-            self.root.windows.current_screen.manager.transition.direction = "left"
+            self.root.windows.current_screen.manager.transition.direction = "right"
 
     def build(self):
         self.theme_cls.primary_palette = "Green"
