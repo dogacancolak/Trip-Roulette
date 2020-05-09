@@ -110,7 +110,9 @@ Screen:
                     MDFloatingActionButtonSpeedDial:
                         data: app.data
                         rotation_root_button: True
-                        md_bg_color: app.theme_cls.primary_color
+                        md_bg_color: app.theme_cls.primary_color  
+                        hint_animation:  True
+                        callback: app.toast_pop
 
                     
 
