@@ -88,15 +88,30 @@
     name: "Help"    
     PageToolbar:
         title: root.name
-        orientation: "vertical"
-    MDToolbar:
-        title: "Reach Out To Us"
-        pos_hint: {"top": 1}
+        
+    
+    Label:
+        text: "Phone: +90 (553) 204 24 75"
+        halign: "center"
+        color: app.theme_cls.primary_color
+        pos_hint:{"y" :0.8}
+        text_size: self.size
+    
+    Label:
+        text: "Email: triproulette@gmail.com"
+        halign: "center"
+        color: app.theme_cls.primary_color
+        pos_hint:{"y" :0.7}
+        text_size: self.size
     Image:
         source: 'chad.jpg'
         size_hint: 0.6, 0.6
-        pos_hint: {"center_x": 0.5, "center_y": 0.5}
- 
+        pos_hint: {"center_x": 0.5, "bottom": 0.1}
+        keep_ratio: True
+        
+            
+
+
             
 MainScreen:
     nav_drawer: nav_drawer
@@ -137,11 +152,27 @@ MainScreen:
     spacing: "12dp"
     height: "120dp"
     
-    MDLabel:
-        text: "Food:"
-        font_style: "Caption"
-    MDSwitch:
-        on_active: app.on_switch_active
+    FloatLayout:
+        id: content_layout
+        pos: root.pos
+        size: root.size
+        Label:
+            text: "Food:"
+            text_color: 0, 0, 0, 1
+            halign: 'left'
+            size_hint: 0.2, None
+            pos_hint: {'x': 0, 'top': 1}
+            # canvas:
+            #     Color:
+            #         rgba: 0, 0, 1, 0.5
+            #     Rectangle:
+            #         size: self.size
+            #         pos: self.pos
+
+        MDSwitch:
+            on_active: root.on_switch_active(*args)
+            pos_hint: {'x': 0.25, 'top': 1}
+
     MDLabel:
         text: "Trip Length:" 
         font_style: "Caption"
@@ -193,5 +224,6 @@ MainScreen:
             data: app.data
             rotation_root_button: True
             md_bg_color: app.theme_cls.primary_dark  
-            hint_animation:  True
+            hint_animation: True
+            callback: root.toast_pop
             

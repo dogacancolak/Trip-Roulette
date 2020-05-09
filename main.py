@@ -20,6 +20,7 @@ from kivymd.uix.toolbar import MDToolbar
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton
 from kivymd.uix.expansionpanel import MDExpansionPanelOneLine, MDExpansionPanel
+from kivymd.uix.dropdownitem import MDDropDownItem
 
 from gpshelper import GpsHelper
 
@@ -61,7 +62,21 @@ class DetailsPage(Screen):
     pass
 
 class DialogContent(BoxLayout):
-    pass
+    dietary_restrictions = None
+    def on_switch_active(self, switch, value):
+        if value:
+            App.get_running_app().food = True
+            self.dietary_restrictions = MDDropDownItem(
+                id="dietary",
+                pos_hint= {'right': 1, 'top': 1}
+            )
+            self.dietary_restrictions.set_item("None")
+            self.dietary_restrictions.set_item("Vegetarian/Vegan")
+            self.ids.content_layout.add_widget(self.dietary_restrictions)
+        else:
+            App.get_running_app().food = False
+            if self.dietary_restrictions:
+                self.ids.content_layout.remove_widget(self.dietary_restrictions)
 
 class PopupDialog(Popup):
     pass
@@ -108,12 +123,8 @@ class TripRouletteApp(MDApp):
             'walk': 'Walk',
             'bus':  'Public Transport',
             }
+
     food = BooleanProperty()
-    def on_switch_active(self, switch, value):
-        if value:
-            food = True
-        else:
-            food = False
             
     def return_homepage(self):
             self.root.windows.current = "HomePage"
