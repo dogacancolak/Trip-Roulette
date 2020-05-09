@@ -1,6 +1,6 @@
 #:import MapView kivy.garden.mapview.MapView
-#import GpsBlinker gpsblinker.GpsBlinker
-#include gpsblinker.kv
+#:import GpsBlinker gpsblinker.GpsBlinker
+#:include gpsblinker.kv
 
 <SettingsButton>:
     icon: "settings"
@@ -91,6 +91,8 @@
 MainScreen:
     nav_drawer: nav_drawer
     windows: windows
+    homepage: homepage
+
     NavigationLayout:
         id: nav_layout
     
@@ -117,10 +119,9 @@ MainScreen:
 
 <MapView>:
     zoom: 2
-    # GpsBlinker:
-    #     id: blinker
-    #     lat: root.lat
-    #     lon: root.lon
+    GpsBlinker:
+        id: blinker
+
 <Content>:
     orientation: "vertical"
     spacing: "12dp"

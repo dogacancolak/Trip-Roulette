@@ -12,7 +12,7 @@ from kivymd.uix.button import MDIconButton
 from kivymd.uix.toolbar import MDToolbar
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton
-# from gpshelper import GpsHelper
+from gpshelper import GpsHelper
 from kivymd.toast import toast
 
 class ContentNavigationDrawer(BoxLayout):
@@ -79,6 +79,7 @@ class WindowManager(ScreenManager):
 class MainScreen(Screen):
     nav_drawer = ObjectProperty(None)
     windows = ObjectProperty(None)
+    homepage = ObjectProperty(None)
 
 class TripRouletteApp(MDApp): 
     data = {
@@ -115,7 +116,7 @@ class TripRouletteApp(MDApp):
             )
     
         # Initialize GPS
-        # GpsHelper().run()
+        GpsHelper().run()
 
 
 TripRouletteApp().run()
