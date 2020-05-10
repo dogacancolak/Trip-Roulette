@@ -1,0 +1,32 @@
+
+<PageToolbar>
+    right_action_items: [["keyboard-return", lambda x: app.return_homepage()]]
+    md_bg_color: app.theme_cls.accent_color
+    pos_hint: {"top": 1}
+
+<HelpPage>
+    name: "Help"    
+    PageToolbar:
+        title: root.name
+        
+    
+    Label:
+        text: "Phone: +90 (553) 204 24 75"
+        halign: "center"
+        color: app.theme_cls.primary_color
+        pos_hint:{"y" :0.8}
+        text_size: self.size
+    
+    Label:
+        text: "Email: triproulette@gmail.com"
+        halign: "center"
+        color: app.theme_cls.primary_color
+        pos_hint:{"y" :0.7}
+        text_size: self.size
+    Image:
+        source: 'chad.jpg'
+        size_hint: 0.6, 0.6
+        pos_hint: {"center_x": 0.5, "bottom": 0.1}
+        keep_ratio: True
+        
+            

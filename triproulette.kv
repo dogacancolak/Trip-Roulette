@@ -1,6 +1,6 @@
-#:import MapView kivy.garden.mapview.MapView
-#:import GpsBlinker gpsblinker.GpsBlinker
 #:include gpsblinker.kv
+#:include homepage.kv
+#:include helppage.kv
 
 <SettingsButton>:
     icon: "settings"
@@ -78,38 +78,47 @@
     PageToolbar:
         title: root.name
 
+    TwoLineIconListItem:
+        text: "Sightseeing"
+        secondary_text: "Search for sightseeing locations in your trip"
+
+        IconLeftWidget:
+            icon: "telescope"
+
+    TwoLineIconListItem:
+        text: "Monuments"
+        secondary_text: "Search for monuments in your trip"
+
+        IconLeftWidget:
+            icon: "terrain"
+
+    TwoLineIconListItem:
+        text: "Shopping"
+        secondary_text: "Search for shopping locations in your trip"
+
+        IconLeftWidget:
+            icon: "terrain"
+
+    TwoLineIconListItem:
+        text: "Museums"
+        secondary_text: "Search for popular museums in your trip"
+
+        IconLeftWidget:
+            icon: "terrain"
+
+    TwoLineIconListItem:
+        text: "Hiking"
+        secondary_text: "Search for popular hiking paths in your trip"
+
+        IconLeftWidget:
+            icon: "summit"
+    
 <LogPage>
     name: "Log Out/Log In"
     PageToolbar:
         title: root.name
 
 
-<HelpPage>
-    name: "Help"    
-    PageToolbar:
-        title: root.name
-        
-    
-    Label:
-        text: "Phone: +90 (553) 204 24 75"
-        halign: "center"
-        color: app.theme_cls.primary_color
-        pos_hint:{"y" :0.8}
-        text_size: self.size
-    
-    Label:
-        text: "Email: triproulette@gmail.com"
-        halign: "center"
-        color: app.theme_cls.primary_color
-        pos_hint:{"y" :0.7}
-        text_size: self.size
-    Image:
-        source: 'chad.jpg'
-        size_hint: 0.6, 0.6
-        pos_hint: {"center_x": 0.5, "bottom": 0.1}
-        keep_ratio: True
-        
-            
 
 
             
@@ -142,88 +151,5 @@ MainScreen:
             ContentNavigationDrawer:
                 id: content_drawer
 
-<MapView>:
-    zoom: 2
-    GpsBlinker:
-        id: blinker
 
-<DialogContent>:
-    orientation: "vertical"
-    spacing: "12dp"
-    height: "120dp"
-    
-    FloatLayout:
-        id: content_layout
-        pos: root.pos
-        size: root.size
-        Label:
-            text: "Food:"
-            text_color: 0, 0, 0, 1
-            halign: 'left'
-            size_hint: 0.2, None
-            pos_hint: {'x': 0, 'top': 1}
-            # canvas:
-            #     Color:
-            #         rgba: 0, 0, 1, 0.5
-            #     Rectangle:
-            #         size: self.size
-            #         pos: self.pos
-
-        MDSwitch:
-            on_active: root.on_switch_active(*args)
-            pos_hint: {'x': 0.25, 'top': 1}
-
-    MDLabel:
-        text: "Trip Length:" 
-        font_style: "Caption"
-
-<PopupDialog>:
-    title_align: 'center'
-    title_size: '18sp'
-    separator_color: app.theme_cls.primary_color
-    size_hint: 0.7, 0.4
-    pos_hint: {"center_x": 0.5, "center_y": 0.5}
-    
-<HomePage>:
-    name: "HomePage"
-    map: mapview
-    
-    MapView:
-        id: mapview
-
-    FloatLayout:
-
-        SettingsButton:
-        
-        MDRaisedButton:
-            text: "Generate Trip"
-            md_bg_color: app.theme_cls.primary_dark
-            pos_hint: {"center_x": 0.5, "y": 0.03}
-            size_hint: 0.8, 0.1
-            on_release: root.show_confirmation_dialog()
-
-        MDRoundFlatButton:
-            text: "Log In"
-            text_color: app.theme_cls.primary_color
-            pos_hint: {"center_x": 0.25, "y": 0.15}
-            size: account_create.size
-
-        MDRoundFlatButton:
-            id: account_create
-            text: "Create Account"
-            text_color: app.theme_cls.primary_color
-            pos_hint: {"center_x": 0.75, "y": 0.15}
-            
-        MDIconButton:
-            icon: "crosshairs-gps"
-            pos_hint: {"y": 0.25, "right": 0.9}
-            height: self.width
-            md_bg_color: app.theme_cls.primary_color
-            
-        MDFloatingActionButtonSpeedDial:
-            data: app.data
-            rotation_root_button: True
-            md_bg_color: app.theme_cls.primary_dark  
-            hint_animation: True
-            callback: root.toast_pop
             

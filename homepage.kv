@@ -1,0 +1,93 @@
+#:import MapView kivy.garden.mapview.MapView
+#:import GpsBlinker gpsblinker.GpsBlinker
+
+<MapView>:
+    zoom: 2
+    GpsBlinker:
+        id: blinker
+
+<DialogContent>:
+    orientation: "vertical"
+    spacing: "12dp"
+    height: "120dp"
+    
+    GridLayout:
+        BoxLayout:
+            orientation: "vertical"
+            size_hint: 0.33, 1
+            Label:
+                text: "Restaurants"
+                text_color: 0, 0, 0, 1
+                # size: self.texture_size
+                # pos_hint: {'x': 0, 'top': 0.95}
+            MDSwitch:
+                on_active: root.on_switch_active(*args)
+                pos_hint: {'x': 0.25, 'top': 1}
+                size_hint: 
+
+        id: content_layout
+        pos: root.pos
+        size: root.size
+
+        #     canvas:
+        #         Color:
+        #             rgba: 0, 0, 1, 0.5
+        #         Rectangle:
+        #             size: self.size
+        #             pos: self.pos
+
+
+
+    MDLabel:
+        text: "Trip Length:" 
+        font_style: "Caption"
+
+<PopupDialog>:
+    title_align: 'center'
+    title_size: '18sp'
+    separator_color: app.theme_cls.primary_color
+    size_hint: 0.7, 0.4
+    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+    
+<HomePage>:
+    name: "HomePage"
+    map: mapview
+    
+    MapView:
+        id: mapview
+
+    FloatLayout:
+
+        SettingsButton:
+        
+        MDRaisedButton:
+            text: "Generate Trip"
+            md_bg_color: app.theme_cls.primary_dark
+            pos_hint: {"center_x": 0.5, "y": 0.03}
+            size_hint: 0.8, 0.1
+            on_release: root.show_confirmation_dialog()
+
+        MDRoundFlatButton:
+            text: "Log In"
+            text_color: app.theme_cls.primary_color
+            pos_hint: {"center_x": 0.25, "y": 0.15}
+            size: account_create.size
+
+        MDRoundFlatButton:
+            id: account_create
+            text: "Create Account"
+            text_color: app.theme_cls.primary_color
+            pos_hint: {"center_x": 0.75, "y": 0.15}
+            
+        MDIconButton:
+            icon: "crosshairs-gps"
+            pos_hint: {"y": 0.25, "right": 0.9}
+            height: self.width
+            md_bg_color: app.theme_cls.primary_color
+            
+        MDFloatingActionButtonSpeedDial:
+            data: app.data
+            rotation_root_button: True
+            md_bg_color: app.theme_cls.primary_dark  
+            hint_animation: True
+            callback: root.toast_pop
