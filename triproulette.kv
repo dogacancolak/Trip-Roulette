@@ -1,6 +1,6 @@
-#:include gpsblinker.kv
 #:include homepage.kv
 #:include helppage.kv
+#:include formpage.kv
 
 <SettingsButton>:
     icon: "settings"
@@ -73,55 +73,16 @@
     PageToolbar:
         title: root.name
     
-<FormPage>
-    name: "Form"
-    PageToolbar:
-        title: root.name
 
-    TwoLineIconListItem:
-        text: "Sightseeing"
-        secondary_text: "Search for sightseeing locations in your trip"
-
-        IconLeftWidget:
-            icon: "telescope"
-
-    TwoLineIconListItem:
-        text: "Monuments"
-        secondary_text: "Search for monuments in your trip"
-
-        IconLeftWidget:
-            icon: "terrain"
-
-    TwoLineIconListItem:
-        text: "Shopping"
-        secondary_text: "Search for shopping locations in your trip"
-
-        IconLeftWidget:
-            icon: "terrain"
-
-    TwoLineIconListItem:
-        text: "Museums"
-        secondary_text: "Search for popular museums in your trip"
-
-        IconLeftWidget:
-            icon: "terrain"
-
-    TwoLineIconListItem:
-        text: "Hiking"
-        secondary_text: "Search for popular hiking paths in your trip"
-
-        IconLeftWidget:
-            icon: "summit"
+        
+        
+            
     
 <LogPage>
     name: "Log Out/Log In"
     PageToolbar:
         title: root.name
 
-
-
-
-            
 MainScreen:
     nav_drawer: nav_drawer
     windows: windows
@@ -149,4 +110,7 @@ MainScreen:
             id: nav_drawer
 
             ContentNavigationDrawer:
-                id: content_drawer            
+                id: content_drawer
+
+
+            
