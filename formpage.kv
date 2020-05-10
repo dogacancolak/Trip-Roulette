@@ -1,0 +1,57 @@
+<RightCheckbox>:
+    selected_color: self.theme_cls.primary_color   
+    unselected_color: self.theme_cls.primary_light
+
+<FormPage>:
+    name: "Form"
+    PageToolbar:
+        title: root.name
+    
+    BoxLayout:    
+        orientation: "vertical"
+        pos_hint: {"top": 0.89}
+        ScrollView:
+            MDList:
+                TwoLineAvatarIconListItem:
+                    text: "Sightseeing"
+                    secondary_text: "Sightseeing locations in your trip"
+                    pos: 0, root.height - 30
+                    IconLeftWidget:
+                        icon: "telescope"
+                    RightCheckbox:
+
+                TwoLineAvatarIconListItem:
+                    text: "Monuments"
+                    secondary_text: "Monuments in your trip"
+                    
+                    IconLeftWidget:
+                        icon: "terrain"
+                    RightCheckbox:
+
+                TwoLineAvatarIconListItem:
+                    text: "Shopping"
+                    secondary_text: "Shopping locations in your trip"
+                    
+
+                    IconLeftWidget:
+                        icon: "shopping"
+                    RightCheckbox:
+
+                TwoLineAvatarIconListItem:
+                    text: "Museums"
+                    secondary_text: "Popular museums in your trip"
+                    
+                    IconLeftWidget:
+                        icon: "store"
+                    RightCheckbox:
+
+                TwoLineAvatarIconListItem:
+                    text: "Hiking"
+                    secondary_text: "Popular hiking paths in your trip"
+                    
+                    IconLeftWidget:
+                        icon: "summit"
+                    RightCheckbox:
+                BoxLayout:
+                    
+            
