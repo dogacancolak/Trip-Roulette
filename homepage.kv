@@ -6,41 +6,60 @@
     GpsBlinker:
         id: blinker
 
+<FoodOption>:
+    orientation: "vertical"
+    title: "Set on Usage" # set title when used
+    Label:
+        text: root.title
+        text_color: 0, 0, 0, 1
+        size_hint: 1, 0.5
+    MDCheckbox:
+        # on_active: root.on_switch_active(*args)
+        size_hint: None, 0.5
+        width: self.height
+        pos_hint: {'center_x': .5}
+
 <DialogContent>:
     orientation: "vertical"
     spacing: "12dp"
     height: "120dp"
     
     GridLayout:
-        BoxLayout:
-            orientation: "vertical"
-            size_hint: 0.33, 1
-            Label:
-                text: "Restaurants"
-                text_color: 0, 0, 0, 1
-                # size: self.texture_size
-                # pos_hint: {'x': 0, 'top': 0.95}
-            MDSwitch:
-                on_active: root.on_switch_active(*args)
-                pos_hint: {'x': 0.25, 'top': 1}
-                size_hint: 
+        cols: 3
+        FoodOption:
+            title: "Restaurants"
+        FoodOption:
+            title: "Bars"
+        FoodOption:
+            title: "Cafés"
 
-        id: content_layout
-        pos: root.pos
-        size: root.size
+    GridLayout:
+        cols: 3
+        Label:
+            id: duration_label
+            text: "Trip Duration:" 
+        MDSlider:
+            id: slider
+            min: 1
+            max: 12
+            value: 4
+            hint: False
+        Label:
+            text: str(round(slider.value)) + " hours"
 
-        #     canvas:
-        #         Color:
-        #             rgba: 0, 0, 1, 0.5
-        #         Rectangle:
-        #             size: self.size
-        #             pos: self.pos
-
-
-
-    MDLabel:
-        text: "Trip Length:" 
-        font_style: "Caption"
+    GridLayout:
+        cols: 3
+        Label:
+            text: "Budget:"
+        MDSlider:
+            min: 1
+            max: 5
+            value: 3
+        FloatLayout:
+            MDRaisedButton:
+                text: "Generate!"
+                size_hint: 0.8, 0.6
+                pos_hint: {'center_x': .5, 'center_y': .5}
 
 <PopupDialog>:
     title_align: 'center'

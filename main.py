@@ -23,6 +23,8 @@ from kivymd.uix.expansionpanel import MDExpansionPanelOneLine, MDExpansionPanel
 from kivymd.uix.dropdownitem import MDDropDownItem
 
 from gpshelper import GpsHelper
+from homepage import HomePage
+
 
 class ContentNavigationDrawer(BoxLayout):
     pass
@@ -61,53 +63,7 @@ class HelpPage(Screen):
 class DetailsPage(Screen):
     pass
 
-class DialogContent(BoxLayout):
-    dietary_restrictions = None
-    def on_switch_active(self, switch, value):
-        if value:
-            App.get_running_app().food = True
-            self.dietary_restrictions = MDDropDownItem(
-                id="dietary",
-                pos_hint= {'right': 1, 'top': 1}
-            )
-            self.dietary_restrictions.set_item("None")
-            self.dietary_restrictions.set_item("Vegetarian/Vegan")
-            self.ids.content_layout.add_widget(self.dietary_restrictions)
-        else:
-            App.get_running_app().food = False
-            if self.dietary_restrictions:
-                self.ids.content_layout.remove_widget(self.dietary_restrictions)
 
-class PopupDialog(Popup):
-    pass
-
-class HomePage(Screen):
-    map = ObjectProperty(None)
-    dialog = None
-
-    def toast_pop(self, instance):
-        toast(instance.icon)
-
-    def show_confirmation_dialog(self):
-        if not self.dialog:
-            self.dialog = PopupDialog(
-                title='Trip Details',
-                content=DialogContent(),
-                )
-            # self.dialog = PopupDialog(
-            #     title="Details:",
-            #     type="custom",
-            #     content_cls= DialogContent(),
-            #     buttons=[
-            #         MDFlatButton(
-            #             text="CANCEL", text_color= App.get_running_app().theme_cls.primary_color
-            #         ),
-            #         MDFlatButton(
-            #             text="OK", text_color= App.get_running_app().theme_cls.primary_color
-            #         ),
-            #     ],
-            # )
-        self.dialog.open()
 
 class WindowManager(ScreenManager):
     pass
