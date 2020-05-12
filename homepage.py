@@ -57,8 +57,6 @@ class HomePage(Screen):
         instance.parent.icon = selection
         App.get_running_app().user_info.transportation = transport
         
-        print(App.get_running_app().user_info.transportation)
-
     def show_confirmation_dialog(self):
         if not self.dialog:
             self.dialog = PopupDialog(
