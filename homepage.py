@@ -33,7 +33,7 @@ class DialogContent(BoxLayout):
             user_info.trip_length = value
 
         elif id == 'budget':
-            user_info.budget = value
+            user_info.budget = value - 1    # our range 1-5 to Google's 0-4
 
 class PopupDialog(Popup):
     pass
@@ -42,9 +42,22 @@ class HomePage(Screen):
     map = ObjectProperty(None)
     dialog = None
 
-    def toast_pop(self, instance):
-        toast(instance.icon)
+    def update_transport(self, instance):
+        selection = instance.icon
         
+        if selection == 'bicycle':
+            transport = 'cycling'
+        elif selection == 'car':
+            transport = 'driving'
+        elif selection == 'bus':
+            transport = 'transit'
+        elif selection == 'walk':
+            transport = 'walking'
+
+        instance.parent.icon = selection
+        App.get_running_app().user_info.transportation = transport
+        
+        print(App.get_running_app().user_info.transportation)
 
     def show_confirmation_dialog(self):
         if not self.dialog:

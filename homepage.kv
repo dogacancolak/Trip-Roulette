@@ -111,10 +111,11 @@
             md_bg_color: app.theme_cls.primary_color
             
         MDFloatingActionButtonSpeedDial:
-            data: {'car': 'Car', 'walk': 'Walk', 'bus': 'Transit'}
-            rotation_root_button: True
+            data: {'bicycle': 'Bicycle', 'car': 'Car', 'walk': 'Walk', 'bus': 'Transit'}
             md_bg_color: app.theme_cls.primary_dark  
-            anchor: None
             hint_animation: True
-            callback: root.toast_pop
+            callback: root.update_transport
             pos_hint: {"center_y": 0.5}
+            icon: 'walk'
+
+            # NOTE: toggle speed dial
