@@ -10,14 +10,30 @@ from kivymd import images_path
 from kivymd.toast import toast
 
 class FoodOption(BoxLayout):
-    def on_switch_active(self, switch, value):
+    def update_food_options(self, switch, value):
+        food = App.get_running_app().user_info.food
+
+        # Convert switch.title in the UI to index strings in our program
+        # e.g. 'Restaurants' to 'restaurant'
+        place_type = switch.title.lower()[:-1]
+
         if value:
-            App.get_running_app().food = True
+            if place_type not in food:
+                food.append(place_type)
         else:
-            App.get_running_app().food = False
+            if place_type in food:
+                food.remove(place_type)
 
 class DialogContent(BoxLayout):
-    pass
+    def update_slider_values(self, slider, value, id):
+        user_info = App.get_running_app().user_info
+        value = round(value)
+
+        if id == 'duration':
+            user_info.trip_length = value
+
+        elif id == 'budget':
+            user_info.budget = value
 
 class PopupDialog(Popup):
     pass
@@ -28,6 +44,7 @@ class HomePage(Screen):
 
     def toast_pop(self, instance):
         toast(instance.icon)
+        
 
     def show_confirmation_dialog(self):
         if not self.dialog:

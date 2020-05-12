@@ -1,24 +1,27 @@
 <RightCheckbox>:
     selected_color: self.theme_cls.primary_color   
     unselected_color: self.theme_cls.primary_light
+    active: True
 
 <FormPage>:
-    name: "Form"
+    name: "Personalize"
     PageToolbar:
         title: root.name
-    
-    BoxLayout:    
+
+    BoxLayout:
         orientation: "vertical"
         pos_hint: {"top": 0.89}
         ScrollView:
             MDList:
                 TwoLineAvatarIconListItem:
-                    text: "Sightseeing"
-                    secondary_text: "Sightseeing locations in your trip"
+                    text: "Attractions"
+                    secondary_text: "Attractions in your trip"
                     pos: 0, root.height - 30
                     IconLeftWidget:
                         icon: "telescope"
                     RightCheckbox:
+                        title: "attraction"
+                        on_active: self.update_interests(*args)
 
                 TwoLineAvatarIconListItem:
                     text: "Monuments"
@@ -27,6 +30,8 @@
                     IconLeftWidget:
                         icon: "terrain"
                     RightCheckbox:
+                        title: "monument"
+                        on_active: self.update_interests(*args)
 
                 TwoLineAvatarIconListItem:
                     text: "Shopping"
@@ -36,6 +41,8 @@
                     IconLeftWidget:
                         icon: "shopping"
                     RightCheckbox:
+                        title: "shopping"
+                        on_active: self.update_interests(*args)
 
                 TwoLineAvatarIconListItem:
                     text: "Museums"
@@ -44,6 +51,8 @@
                     IconLeftWidget:
                         icon: "store"
                     RightCheckbox:
+                        title: "museum"
+                        on_active: self.update_interests(*args)
 
                 TwoLineAvatarIconListItem:
                     text: "Hiking"
@@ -52,6 +61,8 @@
                     IconLeftWidget:
                         icon: "summit"
                     RightCheckbox:
+                        title: "hiking"
+                        on_active: self.update_interests(*args)
                 BoxLayout:
                     
             

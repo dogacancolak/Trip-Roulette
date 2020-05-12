@@ -26,6 +26,26 @@ from gpshelper import GpsHelper
 from homepage import HomePage
 from formpage import FormPage
 
+class UserInfo:
+    # FIELDS:
+    # lat                 (Float)
+    # lon                 (Float)
+    # interests           (Array of strings) available inputs:
+    #                     Attractions, Museums, Shopping, Hiking, Monuments
+    # food                (Array of Strings) e.g. ['restaurant', 'bar']
+    # trip_length         (int)
+    # budget              (int) range: 0 to 4
+    # transportation      (String) 4 possible strings: 'transit', 'driving', 'walking', 'cycling'
+    def __init__(self):
+        self.lat = 42.406722   # Tufts location as default (easter egg lol)
+        self.lon = -71.116469
+        self.interests = ['attraction', 'museum', 'shopping', 'monument', 'hiking']
+        self.food = ['restaurant', 'bar', 'cafe']
+        self.trip_length = 4
+        self.budget = 2
+        self.transportation = 'walking'
+    pass
+
 class ContentNavigationDrawer(BoxLayout):
     pass
 
@@ -50,9 +70,6 @@ class SettingsButton(MDIconButton):
 class PageToolbar(MDToolbar):
     pass
 
-class FormPage(Screen):
-    pass
-
 class LogPage(Screen):
     pass
 
@@ -63,8 +80,6 @@ class HelpPage(Screen):
 class DetailsPage(Screen):
     pass
 
-
-
 class WindowManager(ScreenManager):
     pass
 
@@ -74,14 +89,8 @@ class MainScreen(Screen):
     homepage = ObjectProperty(None)
 
 class TripRouletteApp(MDApp): 
-    data = {
-            'car':  'Car',
-            'walk': 'Walk',
-            'bus':  'Public Transport',
-            }
+    user_info = UserInfo()
 
-    food = BooleanProperty()
-            
     def return_homepage(self):
             self.root.windows.current = "HomePage"
             self.root.windows.current_screen.manager.transition.direction = "left"
@@ -93,10 +102,11 @@ class TripRouletteApp(MDApp):
     def on_start(self):
         icons_item = {
             "account": "Account Details",
-            "city-variant-outline": "Form",
+            "city-variant-outline": "Personalize",
             "login": "Log Out/Log In",
             "help": "Help",
         }
+
         for icon_name in icons_item.keys():
             self.root.ids.content_drawer.ids.md_list.add_widget(
                 ItemDrawer(icon=icon_name, text=icons_item[icon_name])
@@ -104,6 +114,5 @@ class TripRouletteApp(MDApp):
     
         # Initialize GPS
         GpsHelper().run()
-
 
 TripRouletteApp().run()

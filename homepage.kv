@@ -15,10 +15,12 @@
         text_color: 0, 0, 0, 1
         size_hint: 1, 0.5
     MDCheckbox:
-        # on_active: root.on_switch_active(*args)
+        title: root.title
+        on_active: root.update_food_options(*args)
         size_hint: None, 0.5
         width: self.height
         pos_hint: {'center_x': .5}
+        active: True
 
 <DialogContent>:
     orientation: "vertical"
@@ -32,7 +34,7 @@
         FoodOption:
             title: "Bars"
         FoodOption:
-            title: "Cafés"
+            title: "Cafes"
 
     GridLayout:
         cols: 3
@@ -40,22 +42,25 @@
             id: duration_label
             text: "Trip Duration:" 
         MDSlider:
-            id: slider
+            id: duration_slider
             min: 1
             max: 12
             value: 4
             hint: False
+            on_value: root.update_slider_values(self, self.value, "duration")
         Label:
-            text: str(round(slider.value)) + " hours"
+            text: str(round(duration_slider.value)) + " hours"
 
     GridLayout:
         cols: 3
         Label:
             text: "Budget:"
         MDSlider:
+            id: budget_slider
             min: 1
             max: 5
             value: 3
+            on_value: root.update_slider_values(self, self.value, "budget")
         FloatLayout:
             MDRaisedButton:
                 text: "Generate!"
@@ -106,8 +111,10 @@
             md_bg_color: app.theme_cls.primary_color
             
         MDFloatingActionButtonSpeedDial:
-            data: app.data
+            data: {'car': 'Car', 'walk': 'Walk', 'bus': 'Transit'}
             rotation_root_button: True
             md_bg_color: app.theme_cls.primary_dark  
+            anchor: None
             hint_animation: True
             callback: root.toast_pop
+            pos_hint: {"center_y": 0.5}
