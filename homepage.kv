@@ -110,11 +110,10 @@
             height: self.width
             md_bg_color: app.theme_cls.primary_color
             
-        MDFloatingActionButtonSpeedDial:
-            data: {'bicycle': 'Bicycle', 'car': 'Car', 'walk': 'Walk', 'bus': 'Transit'}
+        TransportOptions:
+            data: {'bicycle': '', 'car': '', 'walk': '', 'bus': ''}
             md_bg_color: app.theme_cls.primary_dark  
-            hint_animation: True
-            callback: root.update_transport
+            callback: self.update_transport
             pos_hint: {"center_y": 0.5}
             icon: 'walk'
 

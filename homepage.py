@@ -8,6 +8,7 @@ from kivy.uix.popup import Popup
 from kivymd.theming import ThemableBehavior,ThemeManager
 from kivymd import images_path
 from kivymd.toast import toast
+from kivymd.uix.button import MDFloatingActionButtonSpeedDial
 
 class FoodOption(BoxLayout):
     def update_food_options(self, switch, value):
@@ -38,9 +39,7 @@ class DialogContent(BoxLayout):
 class PopupDialog(Popup):
     pass
 
-class HomePage(Screen):
-    map = ObjectProperty(None)
-    dialog = None
+class TransportOptions(MDFloatingActionButtonSpeedDial):
 
     def update_transport(self, instance):
         selection = instance.icon
@@ -54,8 +53,13 @@ class HomePage(Screen):
         elif selection == 'walk':
             transport = 'walking'
 
-        instance.parent.icon = selection
+        self.icon = selection
+        self.close_stack()
         App.get_running_app().user_info.transportation = transport
+
+class HomePage(Screen):
+    map = ObjectProperty(None)
+    dialog = None
         
     def show_confirmation_dialog(self):
         if not self.dialog:
