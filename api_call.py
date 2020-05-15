@@ -2,46 +2,108 @@ import urllib.request
 import json
 import time
 
-
-# BOSTON
-# radius  = 10000
-# lat = 42.359441   
-# lon = -71.059767
-
+valid_location_types = ["airport", "library", \
+                        "amusement_park", "aquarium",\
+                        "liquor_store", "art_gallery",\
+                        "atm", "bakery", "lodging", "bar", \
+                        "mosque", "shopping_mall"\
+                        "book_store", "movie_theater",\
+                        "museum", "cafe",\
+                        "campground", "painter", "park", \
+                        "parking", "car_wash", "pharmacy", \
+                        "casino", "church", \
+                        "restaurant",\
+                        "spa", "florist",\
+                        "stadium", "store", "gym", "tourist_attraction", "university", "zoo"\
+                        ]
 # ISTANBUL
 # radius  = 10000
 # lat = 41.059995
 # lon = 28.987315
 
-location = str(lat) + ',' + str(lon)
-key     = 'AIzaSyA4H5RbPwYejTlXVI1hjio_4q4XYS_Ubts'
+def get_places_in_radius(user_info):
+    lat       = user_info.lat
+    lon       = user_info.lon
+    radius    = user_info.radius
+    max_price = user_info.budget
+    interests = user_info.interests
+    food      = user_info.food
+    
+    key            = 'AIzaSyA4H5RbPwYejTlXVI1hjio_4q4XYS_Ubts'
+    endpoint       = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
+    location       = str(lat) + ',' + str(lon)
+    place_types    = food + interests
+    
+    requests = []
+    tokens = []
+    results = []
+    for place in place_types:
+        if place in valid_location_types:
+            place_search_word = 'type'      # to be inserted in the API request
+        else:
+            place_search_word = 'keyword'
+            
+        #&opennow
+        nav_request =  'location={}&maxprice={}&radius={}&{}={}&rankby=prominence&key={}'\
+                        .format(str(location), str(max_price), str(radius), place_search_word, place, key)
+        response = json.loads(urllib.request.urlopen(endpoint + nav_request).read())
 
-endpoint =  'https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
-place_type = 'restaurant'
+        if not response["results"] == []:
+            if 'next_page_token' in response:
+                tokens.append(response["next_page_token"])
+            else:
+                tokens.append(0)
+        
+            requests.append(endpoint + nav_request)
+            results.append(response["results"])
 
-# max_price  = 2          # NOTE: adjust min_price as well?
-                                                #&opennow
-                                                # &maxprice={}
-nav_request =  'location={}&radius={}&type={}&rankby=prominence&key={}'\
-                .format(str(location), str(radius) , place_type, key)
-# , str(max_price)
+    # for p in results:
+    #     print("\nResult AMK")
+    #     for res in p:
+    #         print("Name: ", res["name"])
 
-request = endpoint + nav_request
-response = urllib.request.urlopen(request).read()
-new_places = json.loads(response)
+    # print(len(requests))
+    tokens_left = True
+    while tokens_left:
+        tokens_left = False
+        i = 0 
+        # print(min(len(tokens), len(requests), len(results)))
+        while i < min(len(tokens), len(requests), len(results)):
+            if tokens[i] != 0:
+                tokens_left = True
+                next_page_token = tokens[i]
 
-places = new_places
+                new_request = requests[i] + '&pagetoken=' + next_page_token
+                new_response = json.loads(urllib.request.urlopen(new_request).read())
 
-while "next_page_token" in new_places:
+                if new_response["status"] == 'OK':
+                    # print('amjik')
+                    results[i].extend(new_response["results"])
+                    if 'next_page_token' in new_response:
+                        tokens[i] = new_response["next_page_token"]
+                    else:
+                        tokens[i] = 0  
+            i += 1
+           
+    return results
 
-    next_page = new_places['next_page_token']
-    time.sleep(1)
 
-    new_request = request + '&pagetoken=' + next_page
-    response = urllib.request.urlopen(new_request).read()
-    new_places = json.loads(response)
+class Amcik():
+    pass
 
-    places["results"].extend(new_places["results"])
+amcik = Amcik()
+amcik.lat = 42.406722   # Tufts location as default (easter egg lol)
+amcik.lon = -71.116469
+amcik.radius = 10000
+amcik.interests = ['attraction', 'museum', 'shopping_mall', 'monument', 'hiking']
+amcik.food = ['restaurant', 'bar', 'cafe']
+amcik.trip_length = 4
+amcik.budget = 4
+amcik.transportation = 'walking'
 
-for p in places['results']:
-    print("Name: ", p['name'])
+results = get_places_in_radius(amcik)
+
+for p in results:
+    print("\nResult AMK")
+    for res in p:
+        print("Name: ", res["name"])
