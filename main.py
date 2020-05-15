@@ -39,6 +39,7 @@ class UserInfo:
     def __init__(self):
         self.lat = 42.406722   # Tufts location as default (easter egg lol)
         self.lon = -71.116469
+        self.radius = 400
         self.interests = ['attraction', 'museum', 'shopping', 'monument', 'hiking']
         self.food = ['restaurant', 'bar', 'cafe']
         self.trip_length = 4

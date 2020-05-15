@@ -6,6 +6,7 @@
     zoom: 2
     GpsBlinker:
         id: blinker
+    
 
 <FoodOption>:
     orientation: "vertical"
@@ -66,6 +67,7 @@
                 text: "Generate!"
                 size_hint: 0.8, 0.6
                 pos_hint: {'center_x': .5, 'center_y': .5}
+                on_release: app.get_possible_places
 
 <PopupDialog>:
     title_align: 'center'

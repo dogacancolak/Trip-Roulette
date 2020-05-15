@@ -43,19 +43,24 @@ class TransportOptions(MDFloatingActionButtonSpeedDial):
 
     def update_transport(self, instance):
         selection = instance.icon
-        
+
         if selection == 'bicycle':
             transport = 'cycling'
+            radius    =  800
         elif selection == 'car':
             transport = 'driving'
+            radius    = 5000
         elif selection == 'bus':
             transport = 'transit'
+            radius    = 3000
         elif selection == 'walk':
             transport = 'walking'
+            radius    = 400
 
         self.icon = selection
         self.close_stack()
         App.get_running_app().user_info.transportation = transport
+        App.get_running_app().user_info.radius = radius
 
 class HomePage(Screen):
     map = ObjectProperty(None)
@@ -64,7 +69,7 @@ class HomePage(Screen):
     def show_confirmation_dialog(self):
         if not self.dialog:
             self.dialog = PopupDialog(
-                title='Trip Details',
+                title='Trip Details', 
                 content=DialogContent(),
                 )
             # self.dialog = PopupDialog(
@@ -81,3 +86,4 @@ class HomePage(Screen):
             #     ],
             # )
         self.dialog.open()
+
