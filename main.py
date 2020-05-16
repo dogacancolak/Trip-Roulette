@@ -25,6 +25,7 @@ from kivymd.uix.dropdownitem import MDDropDownItem
 from gpshelper import GpsHelper
 from homepage import HomePage
 from formpage import FormPage
+from routepage import RoutePage
 
 class UserInfo:
     # FIELDS:
@@ -37,8 +38,8 @@ class UserInfo:
     # budget              (int) range: 0 to 4
     # transportation      (String) 4 possible strings: 'transit', 'driving', 'walking', 'cycling'
     def __init__(self):
-        self.lat = 42.406722   # Tufts location as default (easter egg lol)
-        self.lon = -71.116469
+        self.lat = 42.396399   # Davis location as default (easter egg lol)
+        self.lon = -71.122368
         self.radius = 400
         self.interests = ['attraction', 'museum', 'shopping', 'monument', 'hiking']
         self.food = ['restaurant', 'bar', 'cafe']
@@ -77,30 +78,29 @@ class LogPage(Screen):
 class HelpPage(Screen):
     pass
 
-
 class DetailsPage(Screen):
     pass
 
 class WindowManager(ScreenManager):
-    pass
+    def return_homepage(self):
+            self.current = "HomePage"
+            self.current_screen.manager.transition.direction = "left"
 
 class MainScreen(Screen):
     nav_drawer = ObjectProperty(None)
     windows = ObjectProperty(None)
     homepage = ObjectProperty(None)
+    routepage = ObjectProperty(None)
 
 class TripRouletteApp(MDApp): 
     user_info = UserInfo()
-
-    def return_homepage(self):
-            self.root.windows.current = "HomePage"
-            self.root.windows.current_screen.manager.transition.direction = "left"
 
     def build(self):
         self.theme_cls.primary_palette = "Green"
         self.theme_cls.theme_style = "Dark"
 
     def on_start(self):
+        
         icons_item = {
             "account": "Account Details",
             "city-variant-outline": "Personalize",
@@ -115,5 +115,7 @@ class TripRouletteApp(MDApp):
     
         # Initialize GPS
         GpsHelper().run()
+
+    
 
 TripRouletteApp().run()

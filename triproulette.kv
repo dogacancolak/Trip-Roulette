@@ -63,18 +63,14 @@
     #     left_action_items: [['menu', lambda x: nav_drawer.toggle_nav_drawer()]]
 
 <PageToolbar>
-    right_action_items: [["keyboard-return", lambda x: app.return_homepage()]]
+    right_action_items: [["keyboard-return", lambda x: app.root.windows.return_homepage()]]
     md_bg_color: app.theme_cls.accent_color
     pos_hint: {"top": 1}
 
 <DetailsPage>
-    
     name: "Account Details"
     PageToolbar:
         title: root.name
-    
-
-        
     
 <LogPage>
     name: "Log Out/Log In"
@@ -85,6 +81,7 @@ MainScreen:
     nav_drawer: nav_drawer
     windows: windows
     homepage: homepage
+    routepage: routepage
 
     NavigationLayout:
         id: nav_layout
@@ -94,7 +91,6 @@ MainScreen:
 
             HomePage:
                 id: homepage
-
             FormPage:
                 id: formpage
             DetailsPage:
@@ -103,6 +99,8 @@ MainScreen:
                 id: helppage
             LogPage:
                 id: logpage
+            RoutePage:
+                id: routepage
 
         MDNavigationDrawer:
             id: nav_drawer

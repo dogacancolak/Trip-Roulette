@@ -1,6 +1,7 @@
 import urllib.request
 import json
 import time
+import timeit
 
 valid_location_types = {"airport", "library", \
                         "amusement_park", "aquarium",\
@@ -30,16 +31,23 @@ def get_places_in_radius(user_info, place_types):
     requests = []
     tokens   = []
     results  = []
+
+    loop_time = timeit.default_timer()
     for place in place_types:
         if place in valid_location_types:
             place_search_word = 'type'      # to be inserted in the API request
         else:
             place_search_word = 'keyword'
-            
+        # else:
+        #     place_search_word = ''
+        # place_search_word = 'keyword'
+
         #&opennow
+       
         nav_request =  'location={}&maxprice={}&radius={}&{}={}&rankby=prominence&key={}'\
                         .format(str(location), str(max_price), str(radius), place_search_word, place, key)
         response = json.loads(urllib.request.urlopen(endpoint + nav_request).read())
+       
 
         if not response["results"] == []:
             if 'next_page_token' in response:
@@ -51,10 +59,12 @@ def get_places_in_radius(user_info, place_types):
             results.append(response["results"])
 
     tokens_left = True
+    min_loop = min(len(tokens), len(requests), len(results))
     while tokens_left:
         tokens_left = False
-        i = 0 
-        while i < min(len(tokens), len(requests), len(results)):
+        i = 0
+        
+        while i < min_loop:
             if tokens[i] != 0:
                 tokens_left = True
                 next_page_token = tokens[i]
@@ -69,5 +79,5 @@ def get_places_in_radius(user_info, place_types):
                     else:
                         tokens[i] = 0  
             i += 1
-           
+
     return results

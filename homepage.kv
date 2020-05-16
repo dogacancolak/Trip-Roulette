@@ -67,7 +67,7 @@
                 text: "Generate!"
                 size_hint: 0.8, 0.6
                 pos_hint: {'center_x': .5, 'center_y': .5}
-                on_release: app.get_possible_places
+                on_release: app.root.routepage.generate_trip()
 
 <PopupDialog>:
     title_align: 'center'
