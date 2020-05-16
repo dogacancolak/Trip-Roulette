@@ -71,24 +71,3 @@ def get_places_in_radius(user_info, place_types):
             i += 1
            
     return results
-
-
-# class Amcik():
-#     pass
-
-# amcik = Amcik()
-# amcik.lat = 42.406722   # Tufts location as default (easter egg lol)
-# amcik.lon = -71.116469
-# amcik.radius = 10000
-# amcik.interests = ['attraction', 'museum', 'shopping_mall', 'monument', 'hiking']
-# amcik.food = ['restaurant', 'bar', 'cafe']
-# amcik.trip_length = 4
-# amcik.budget = 4
-# amcik.transportation = 'walking'
-
-# results = get_places_in_radius(amcik, amcik.interests)
-
-# for p in results:
-#     print("\nResult AMK")
-#     for res in p:
-#         print("Name: ", res["name"])
