@@ -30,10 +30,12 @@ def get_places_in_radius(user_info, place_types):
     
     requests = []
     tokens   = []
-    results  = []
+    results  = {}
 
-    loop_time = timeit.default_timer()
     for place in place_types:
+
+        results[place] = []
+
         if place in valid_location_types:
             place_search_word = 'type'      # to be inserted in the API request
         else:
@@ -54,12 +56,13 @@ def get_places_in_radius(user_info, place_types):
                 tokens.append(response["next_page_token"])
             else:
                 tokens.append(0)
-        
             requests.append(endpoint + nav_request)
-            results.append(response["results"])
+            results[place].extend(response["results"])
+        else:
+            place_types.remove(place)
 
     tokens_left = True
-    min_loop = min(len(tokens), len(requests), len(results))
+    min_loop = min(len(tokens), len(requests), len(results.keys()))
     while tokens_left:
         tokens_left = False
         i = 0
@@ -73,7 +76,7 @@ def get_places_in_radius(user_info, place_types):
                 new_response = json.loads(urllib.request.urlopen(new_request).read())
 
                 if new_response["status"] == 'OK':
-                    results[i].extend(new_response["results"])
+                    results[place_types[i]].extend(new_response["results"])
                     if 'next_page_token' in new_response:
                         tokens[i] = new_response["next_page_token"]
                     else:
