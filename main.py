@@ -43,7 +43,7 @@ class UserInfo:
         self.radius = 400
         self.interests = ['attraction', 'museum', 'shopping', 'monument', 'hiking']
         self.food = ['restaurant', 'bar', 'cafe']
-        self.trip_length = 4
+        self.trip_length = 4 * 60       # 4 hours in minutes
         self.budget = 2
         self.transportation = 'walking'
     pass

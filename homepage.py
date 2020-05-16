@@ -31,7 +31,7 @@ class DialogContent(BoxLayout):
         value = round(value)
 
         if id == 'duration':
-            user_info.trip_length = value
+            user_info.trip_length = value * 60
 
         elif id == 'budget':
             user_info.budget = value - 1    # our range 1-5 to Google's 0-4
