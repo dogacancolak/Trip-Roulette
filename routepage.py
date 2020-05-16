@@ -8,7 +8,6 @@ import timeit
 class RoutePage(Screen):
 
     def generate_trip(self): 
-        print("amcik")       
         user_info =  App.get_running_app().user_info
 
         interest_places = get_places_in_radius(user_info, user_info.interests)

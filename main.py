@@ -38,8 +38,8 @@ class UserInfo:
     # budget              (int) range: 0 to 4
     # transportation      (String) 4 possible strings: 'transit', 'driving', 'walking', 'cycling'
     def __init__(self):
-        self.lat = 42.396399   # Davis location as default (easter egg lol)
-        self.lon = -71.122368
+        self.lat = 41.029502 #42.396399   # Davis location as default (easter egg lol)
+        self.lon = 28.975353 #-71.122368
         self.radius = 400
         self.interests = ['attraction', 'museum', 'shopping', 'monument', 'hiking']
         self.food = ['restaurant', 'bar', 'cafe']

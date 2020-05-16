@@ -31,6 +31,7 @@ def get_places_in_radius(user_info, place_types):
     requests = []
     tokens   = []
     results  = {}
+    places_with_results = []
 
     for place in place_types:
 
@@ -50,7 +51,6 @@ def get_places_in_radius(user_info, place_types):
                         .format(str(location), str(max_price), str(radius), place_search_word, place, key)
         response = json.loads(urllib.request.urlopen(endpoint + nav_request).read())
        
-
         if not response["results"] == []:
             if 'next_page_token' in response:
                 tokens.append(response["next_page_token"])
@@ -58,8 +58,7 @@ def get_places_in_radius(user_info, place_types):
                 tokens.append(0)
             requests.append(endpoint + nav_request)
             results[place].extend(response["results"])
-        else:
-            place_types.remove(place)
+            places_with_results.append(place)
 
     tokens_left = True
     min_loop = min(len(tokens), len(requests), len(results.keys()))
@@ -76,7 +75,7 @@ def get_places_in_radius(user_info, place_types):
                 new_response = json.loads(urllib.request.urlopen(new_request).read())
 
                 if new_response["status"] == 'OK':
-                    results[place_types[i]].extend(new_response["results"])
+                    results[places_with_results[i]].extend(new_response["results"])
                     if 'next_page_token' in new_response:
                         tokens[i] = new_response["next_page_token"]
                     else:
