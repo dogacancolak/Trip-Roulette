@@ -65,25 +65,11 @@ class TransportOptions(MDFloatingActionButtonSpeedDial):
 class HomePage(Screen):
     map = ObjectProperty(None)
     dialog = None
-        
+
     def show_confirmation_dialog(self):
         if not self.dialog:
             self.dialog = PopupDialog(
                 title='Trip Details', 
                 content=DialogContent(),
                 )
-            # self.dialog = PopupDialog(
-            #     title="Details:",
-            #     type="custom",
-            #     content_cls= DialogContent(),
-            #     buttons=[
-            #         MDFlatButton(
-            #             text="CANCEL", text_color= App.get_running_app().theme_cls.primary_color
-            #         ),
-            #         MDFlatButton(
-            #             text="OK", text_color= App.get_running_app().theme_cls.primary_color
-            #         ),
-            #     ],
-            # )
         self.dialog.open()
-

@@ -1,0 +1,65 @@
+
+Result AMK
+Name:  Davis Square Hand Crafted Donuts & Bagels
+Name:  J.P. Licks
+Name:  Starbucks
+Name:  McKinnon's Meat Market
+Name:  Dunkin'
+Name:  Dunkin'
+Name:  Frozen Hoagies
+yemeks memeks
+
+Result AMK
+Name:  The Burren
+Name:  Flatbread Company
+Name:  Foundry On Elm
+Name:  Five Horses Tavern
+Name:  Saloon
+Name:  The Painted Burro
+Name:  Rosebud American Kitchen & Bar
+Name:  Mr. Crepe
+Name:  Anna's Taqueria
+Name:  Mike's Food & Spirits
+Name:  Chipotle Mexican Grill
+Name:  Punjabi Grill
+Name:  Oath Pizza - Davis Square
+Name:  OGinger
+Name:  Boston Burger Co-Davis Sq
+Name:  Sugidama Soba & Izakaya
+Name:  Redbones Barbecue
+Name:  Caramel French Patisserie
+Name:  Orlean's Restaurant
+Name:  Tenóch Mexican
+Name:  Opa Greek Yeeros
+Name:  Dave's Fresh Pasta
+Name:  Snappy Kitchen
+Name:  Domino's Pizza
+Name:  Out Of The Blue
+Name:  Au Bon Pain
+Name:  Dunkin'
+Name:  Martsa On Elm
+Name:  Pokeworks
+Name:  Kor Tor Mor
+Name:  Genki Ya - Somerville
+Name:  DAKZEN
+
+Result AMK
+Name:  The Burren
+Name:  Foundry On Elm
+Name:  Five Horses Tavern
+Name:  Saloon
+Name:  Rosebud American Kitchen & Bar
+Name:  Mike's Food & Spirits
+Name:  Redbones Barbecue
+Name:  Sligo Pub
+
+Result AMK
+Name:  Diesel Cafe
+Name:  Starbucks
+Name:  J.P. Licks
+Name:  Nine Bar Espresso
+Name:  Kung Fu Tea
+Name:  Au Bon Pain
+Name:  Dunkin'
+Name:  Oat Shop
+Time:  9.764617207
