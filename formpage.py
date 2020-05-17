@@ -9,24 +9,29 @@ from kivymd.uix.list import IRightBodyTouch
 from kivymd.uix import MDAdaptiveWidget
 from kivymd.uix.toolbar import MDToolbar
 from kivymd.uix.selectioncontrol import MDCheckbox
+from kivy.properties import ListProperty
 
 class PageToolbar(MDToolbar):
     pass
 
 class RightCheckbox(IRightBodyTouch, MDCheckbox):
+    # places = ListProperty()
+
     def update_interests(self, switch, value):
         interests = App.get_running_app().user_info.interests
 
         # Convert switch.title in the UI to index strings in our program
         # e.g. 'Restaurants' to 'restaurant'
-        interest_type = switch.title
+        interest_types = switch.title
+        
+        already_interested = all(elem in interests  for elem in interest_types)
         
         if value:
-            if interest_type not in interests:
-                interests.append(interest_type)
+            if not already_interested:
+                interests.extend(interest_types)
         else:
-            if interest_type in interests:
-                interests.remove(interest_type)
+            if already_interested:
+                interests = [x for x in interests if x not in interest_types]
 
 
 class FormPage(Screen):

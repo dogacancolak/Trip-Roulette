@@ -20,28 +20,27 @@
                     IconLeftWidget:
                         icon: "telescope"
                     RightCheckbox:
-                        title: "attraction"
+                        title: ["tourist_attraction", "art_gallery", "aquarium", "hindu_temple", "zoo", "university", "synagogue", "stadium", "mosque", "library"]
                         on_active: self.update_interests(*args)
 
                 TwoLineAvatarIconListItem:
-                    text: "Monuments"
-                    secondary_text: "Monuments in your trip"
+                    text: "Entertainment"
+                    secondary_text: "Activities like amusement parks, casinos and bowling alleys"
                     
                     IconLeftWidget:
                         icon: "terrain"
                     RightCheckbox:
-                        title: "monument"
+                        title: ["bowling_alley", "amusement_park", "casino", "spa", "night_club", "movie_theater"]
                         on_active: self.update_interests(*args)
 
                 TwoLineAvatarIconListItem:
                     text: "Shopping"
                     secondary_text: "Shopping locations in your trip"
                     
-
                     IconLeftWidget:
                         icon: "shopping"
                     RightCheckbox:
-                        title: "shopping"
+                        title: ["clothing_store", "shopping_mall", "liquor_store", "shoe_store"]
                         on_active: self.update_interests(*args)
 
                 TwoLineAvatarIconListItem:
@@ -51,7 +50,7 @@
                     IconLeftWidget:
                         icon: "store"
                     RightCheckbox:
-                        title: "museum"
+                        title: ["museum ", "art_gallery", "history", "art"]
                         on_active: self.update_interests(*args)
 
                 TwoLineAvatarIconListItem:
@@ -61,7 +60,7 @@
                     IconLeftWidget:
                         icon: "summit"
                     RightCheckbox:
-                        title: "hiking"
+                        title: ["hiking", "park", "campground", "forest", "pond", "wildlife"]
                         on_active: self.update_interests(*args)
                 BoxLayout:
                     

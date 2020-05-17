@@ -3,19 +3,19 @@ import json
 import time
 import timeit
 
-valid_location_types = {"airport", "library", \
+valid_location_types = {"airport", "hindu_temple", "library", \
                         "amusement_park", "aquarium",\
                         "liquor_store", "art_gallery",\
                         "atm", "bakery", "lodging", "bar", \
                         "mosque", "shopping_mall"\
                         "book_store", "movie_theater",\
-                        "museum", "cafe",\
+                        "museum", "cafe", "shoe_store",\
                         "campground", "painter", "park", \
                         "parking", "car_wash", "pharmacy", \
-                        "casino", "church", \
+                        "casino", "church", "night_club",\
                         "restaurant", "spa", "florist",\
-                        "stadium", "store", "gym", "tourist_attraction", \
-                        "university", "zoo" \
+                        "stadium", "store", "synagogue", "gym", "tourist_attraction", \
+                        "university", "bowling_alley", "zoo" ,"clothing_store"\
                         }
 
 def get_places_in_radius(user_info, place_types):
