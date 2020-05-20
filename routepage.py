@@ -19,8 +19,8 @@ class RoutePage(Screen):
         self.interest_places = get_places_in_radius(user_info, user_info.interests)
         self.food_places     = get_places_in_radius(user_info, user_info.food)
        
-        self.interest_places = list({ each['name'] : each for each in self.interest_places }.values())
-        self.food_places = list({ each['name'] : each for each in self.food_places }.values())
+        self.interest_places = self.remove_duplicates(self.interest_places)
+        self.food_places     = self.remove_duplicates(self.food_places)
 
         place_number_hint = ceil(user_info.trip_length / 60 * 1.4)
          # approximately 1.4 places per hour
@@ -36,6 +36,8 @@ class RoutePage(Screen):
             place = random.choice(list(self.interest_places[key]))
             waypoints.append(place) 
 
+        waypoints = list({ each['place_id'] : each for each in waypoints }.values())
+
         directions = self.find_directions(waypoints)
 
         if directions['status'] == 'OK':
@@ -49,6 +51,15 @@ class RoutePage(Screen):
         print("\nordered:")
         for i in route['waypoint_order']:
             print(waypoints[i]['name'])
+
+    def remove_duplicates(self, dict_raw):
+        filtered = {}
+
+        for key, value in dict_raw.items():
+            if value not in filtered.values():
+                filtered[key] = value
+
+        return filtered
 
     def find_directions(self, waypoints):
         

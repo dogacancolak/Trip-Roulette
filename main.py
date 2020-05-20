@@ -40,7 +40,7 @@ class UserInfo:
     def __init__(self):
         self.lat = 42.360674   # Davis location as default (easter egg lol)
         self.lon = -71.065140
-        self.radius = 4000
+        self.radius = 400
         self.interests = ["bowling_alley", "amusement_park", "casino", "spa", "night_club", \
                         "movie_theater" , "tourist_attraction", "art_gallery", "aquarium", \
                         "hindu_temple", "zoo", "university", "synagogue", "stadium", "mosque", "library",\
