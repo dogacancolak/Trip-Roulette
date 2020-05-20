@@ -9,51 +9,64 @@ import json
 import sys
 
 class RoutePage(Screen):
-    
+
+    interest_places = None
+    food_places = None
     def generate_trip(self): 
         
         user_info =  App.get_running_app().user_info
-        interest_places = get_places_in_radius(user_info, user_info.interests)
-        food_places     = get_places_in_radius(user_info, user_info.food)
+        self.interest_places = get_places_in_radius(user_info, user_info.interests)
+        self.food_places     = get_places_in_radius(user_info, user_info.food)
        
+
+        # self.crop_list(self.interest_places, user_info.trip_length)
+        # self.crop_list(self.food_places, user_info.trip_length)
+
+        for key in self.interest_places:
+            for p in self.interest_places[key]:
+                if 'restaurant' not in p['types']:
+                    print(key, ": ", p['name'])
+
+        for key in self.food_places:
+            for p in self.food_places[key]:
+                if 'restaurant' not in p['types'] or key == 'restaurant':
+                    print(key, ": ", p['name'])
     
-        self.crop_list(interest_places, user_info.trip_length)
-        self.crop_list(food_places, user_info.trip_length)
-
-        all_places = []
-        for key in interest_places:
-            all_places += interest_places[key]
+        # all_places = []
+        # for key in self.interest_places:
+        #     all_places += self.interest_places[key]
             
-        restaurants = []
-        for key in food_places:
-            if key != 'restaurant':
-                all_places += food_places[key]
-            else:
-                restaurants = food_places[key]
+        # restaurants = []
+        # for key in self.food_places:
+        #     if key != 'restaurant':
+        #         all_places += self.food_places[key]
+        #     else:
+        #         restaurants = self.food_places[key]
 
-        all_places = list({ each['name'] : each for each in all_places }.values())
+        # all_places = list({ each['name'] : each for each in all_places }.values())
+        # restaurants = list({ each['name'] : each for each in restaurants }.values())
 
-        route = self.find_optimal_route(all_places, restaurants, user_info.trip_length, user_info.lat, user_info.lon)
+        # # print(len(all_places))
+        # route = self.find_optimal_route(all_places, restaurants, user_info.trip_length, user_info.lat, user_info.lon)
 
-        for p in route:
-            print(p["name"])     
-   
-        # for key in food_places:
+        # for p in all_places:
+        #     print(p["name"])
+               
+        # for key in self.food_places:
         #     print("KEY: ", key)
-        #     for place in food_places[key]:
+        #     for place in self.food_places[key]:
         #             print("Name: ", place["name"])
 
     def crop_list(self, places_dict, trip_duration):
         duration_weight = round(trip_duration / 60) * 5  # 5 options to choose from per hour
-
         for place_key in places_dict:
             if len(places_dict[place_key]) > duration_weight:
                 places_sample = random.sample(places_dict[place_key], k = duration_weight)
                 places_dict[place_key] = places_sample
 
-
     def find_optimal_route(self, all_places, restaurants, time_left, curr_lat, curr_lon):
         complete_places = all_places + restaurants
+
         if not complete_places: # if complete_places is empty, end route
             return []
 
@@ -62,14 +75,13 @@ class RoutePage(Screen):
         fitting_direction_not_found = True
         while fitting_direction_not_found:
             min_distance = 1000000
-            dest_index = 0
             all_distances = []
-            for i in range(round(len(complete_places))):
+            for i in range(len(complete_places)):
                 new_lat = complete_places[i]["geometry"]["location"]["lat"]
                 new_lon = complete_places[i]["geometry"]["location"]["lng"]
                 distance = self.measure_distance(curr_lat, curr_lon, new_lat, new_lon)
                 all_distances += [distance]
-                if distance < min_distance:
+                if distance < min_distance and distance != 0:
                     min_distance = distance
                     dest_index = i
 
@@ -78,15 +90,16 @@ class RoutePage(Screen):
             if self.route_fits_in_radius(route):
                 fitting_direction_not_found = False
             
-        time_left -= self.calculate_time_spent(curr_lat, curr_lon, destination)
+        time_left -= self.calculate_time_spent(route, destination)
 
         if time_left > 0:
             if destination in restaurants:
                 restaurants.clear()
-            try:
+                for p in all_places:
+                    if 'restaurant' in p['types']:
+                        all_places.remove(p)
+            else:
                 all_places.remove(destination)
-            except ValueError:
-                pass  # do nothing!
             new_lat = destination["geometry"]["location"]["lat"]
             new_lon = destination["geometry"]["location"]["lng"]
             return [destination] + self.find_optimal_route(all_places, restaurants, time_left, new_lat, new_lon)
@@ -151,7 +164,7 @@ class RoutePage(Screen):
         dest_loc = str(dest_lat) + ',' + str(dest_lon)
 
         nav_request    = "origin={}&destination={}&mode={}{}&key={}"\
-                           .format(origin_loc, dest_loc, \
+                            .format(origin_loc, dest_loc, \
                                     transportation, avoid, key)
 
         response = json.loads(urllib.request.urlopen(endpoint + nav_request).read())
@@ -159,15 +172,12 @@ class RoutePage(Screen):
         return response
 
     def calculate_time_spent(self, response, destination):
-        user_info       =  App.get_running_app().user_info
-        interest_places = get_places_in_radius(user_info, user_info.interests)
-        food_places     = get_places_in_radius(user_info, user_info.food)
         
-        interest = list({ each['name'] : each for each in interest_places }.values())
-        food     = list({ each['name'] : each for each in food_places }.values())
-        if destination in interest:
-            time_spent_in_destination = 50
-        elif destination in food:
-            time_spent_in_destination = 40
+        for key in self.interest_places:
+            if destination in self.interest_places[key]:
+                time_spent_in_destination = 50
+        for key in self.food_places:
+            if destination in self.food_places[key]:
+                time_spent_in_destination = 40
 
-        return response["routes"][0]["duration"]["value"] + time_spent_in_destination
+        return response["routes"][0]["legs"][0]["duration"]["value"] / 60 + time_spent_in_destination

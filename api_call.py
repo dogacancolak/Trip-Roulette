@@ -7,7 +7,7 @@ valid_location_types = {"airport", "hindu_temple", "library", \
                         "amusement_park", "aquarium",\
                         "liquor_store", "art_gallery",\
                         "atm", "bakery", "lodging", "bar", \
-                        "mosque", "shopping_mall"\
+                        "mosque", "shopping_mall",\
                         "book_store", "movie_theater",\
                         "museum", "cafe", "shoe_store",\
                         "campground", "painter", "park", \
@@ -15,8 +15,7 @@ valid_location_types = {"airport", "hindu_temple", "library", \
                         "casino", "church", "night_club",\
                         "restaurant", "spa", "florist",\
                         "stadium", "store", "synagogue", "gym", "tourist_attraction", \
-                        "university", "bowling_alley", "zoo" ,"clothing_store"\
-                        }
+                        "university", "bowling_alley", "zoo" ,"clothing_store"}
 
 def get_places_in_radius(user_info, place_types):
     lat       = user_info.lat
@@ -35,29 +34,23 @@ def get_places_in_radius(user_info, place_types):
 
     for place in place_types:
 
-        results[place] = []
-
         if place in valid_location_types:
             place_search_word = 'type'      # to be inserted in the API request
         else:
             place_search_word = 'keyword'
-        # else:
-        #     place_search_word = ''
-        # place_search_word = 'keyword'
 
         #&opennow
-       
         nav_request =  'location={}&maxprice={}&radius={}&{}={}&rankby=prominence&key={}'\
                         .format(str(location), str(max_price), str(radius), place_search_word, place, key)
         response = json.loads(urllib.request.urlopen(endpoint + nav_request).read())
        
-        if not response["results"] == []:
+        if response["results"] != []:
             if 'next_page_token' in response:
                 tokens.append(response["next_page_token"])
             else:
                 tokens.append(0)
             requests.append(endpoint + nav_request)
-            results[place].extend(response["results"])
+            results[place] = response["results"]
             places_with_results.append(place)
 
     tokens_left = True
@@ -79,7 +72,7 @@ def get_places_in_radius(user_info, place_types):
                     if 'next_page_token' in new_response:
                         tokens[i] = new_response["next_page_token"]
                     else:
-                        tokens[i] = 0  
+                        tokens[i] = 0
             i += 1
 
     return results

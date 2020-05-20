@@ -40,8 +40,13 @@ class UserInfo:
     def __init__(self):
         self.lat = 42.360674   # Davis location as default (easter egg lol)
         self.lon = -71.065140
-        self.radius = 400
-        self.interests = ['attraction', 'museum', 'shopping', 'monument', 'hiking']
+        self.radius = 4000
+        self.interests = ["bowling_alley", "amusement_park", "casino", "spa", "night_club", \
+                        "movie_theater" , "tourist_attraction", "art_gallery", "aquarium", \
+                        "hindu_temple", "zoo", "university", "synagogue", "stadium", "mosque", "library",\
+                        "clothing_store",  "marketplace", "shopping_mall", "liquor_store", "shoe_store",\
+                        "museum", "art_gallery", "history", "art","monument",\
+                        "hiking", "park", "campground", "forest", "pond", "wildlife", "nature", "beach", "ocean", "sea"]
         self.food = ['restaurant', 'bar', 'cafe']
         self.trip_length = 4 * 60       # 4 hours in minutes
         self.budget = 2
@@ -115,7 +120,5 @@ class TripRouletteApp(MDApp):
     
         # Initialize GPS
         GpsHelper().run()
-
-    
 
 TripRouletteApp().run()

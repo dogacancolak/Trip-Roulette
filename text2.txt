@@ -1,0 +1,23 @@
+unordered:
+New England Aquarium
+ImprovBoston
+Famous Footwear
+Bunker Hill Monument
+New England Aquarium
+Old Navy
+Faneuil Hall Marketplace
+Bacco's Wine & Cheese
+New England Aquarium
+Monument Restaurant & Tavern
+
+ordered:
+Bacco's Wine & Cheese
+Famous Footwear
+ImprovBoston
+Old Navy
+Monument Restaurant & Tavern
+Bunker Hill Monument
+New England Aquarium
+New England Aquarium
+New England Aquarium
+Faneuil Hall Marketplace
