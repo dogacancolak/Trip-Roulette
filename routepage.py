@@ -32,10 +32,14 @@ class RoutePage(Screen):
             place_number_hint -= 1
 
         for _ in range(place_number_hint):
-            key = random.choice(list(self.interest_places))
-            place = random.choice(list(self.interest_places[key]))
-            waypoints.append(place) 
-
+            successful = False
+            while not successful:
+                key = random.choice(list(self.interest_places))
+                place = random.choice(list(self.interest_places[key]))
+                if place not in waypoints or 'restaurant' not in place['types']:
+                    waypoints.append(place) 
+                    successful = True
+        
         waypoints = list({ each['place_id'] : each for each in waypoints }.values())
 
         directions = self.find_directions(waypoints)
