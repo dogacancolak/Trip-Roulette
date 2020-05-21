@@ -21,10 +21,14 @@ class FoodOption(BoxLayout):
         if value:
             if place_type not in food:
                 food.append(place_type)
+                if place_type == 'bar':
+                    food.append('pub')
         else:
             if place_type in food:
                 food.remove(place_type)
-
+                if place_type == 'bar':
+                    food.remove('pub')
+                    
 class DialogContent(BoxLayout):
     def update_slider_values(self, slider, value, id):
         user_info = App.get_running_app().user_info

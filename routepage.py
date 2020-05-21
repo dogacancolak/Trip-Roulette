@@ -32,29 +32,70 @@ class RoutePage(Screen):
             place_number_hint -= 1
 
         for _ in range(place_number_hint):
-            successful = False
-            while not successful:
-                key = random.choice(list(self.interest_places))
-                place = random.choice(list(self.interest_places[key]))
-                if place not in waypoints or 'restaurant' not in place['types']:
-                    waypoints.append(place) 
-                    successful = True
+            added = self.add_waypoint(waypoints)
+            if not added:
+                break
+            
+        route = self.find_directions(waypoints)
+        time_spent = self.calculate_time(route)
         
-        waypoints = list({ each['place_id'] : each for each in waypoints }.values())
+        entered = False
+        while time_spent > user_info.trip_length + 15:
+            self.remove_waypoint(waypoints)
+            route = self.find_directions(waypoints)
+            time_spent = self.calculate_time(route)
+            entered = True
 
-        directions = self.find_directions(waypoints)
+        if not entered:
+            while time_spent < user_info.trip_length + 40:
+                added = self.add_waypoint(waypoints)
+                if not added:
+                    break
+                else:
+                    route = self.find_directions(waypoints)
+                    time_spent = self.calculate_time(route)
 
-        if directions['status'] == 'OK':
-            route = directions['routes'][0]
+        # print("unordered:")
+        # for p in waypoints:
+        #     print(p['name'])
+        # print("\nordered:")
+        # for i in route['waypoint_order']:
+        #     print(waypoints[i]['name'])
+
+    def calculate_time(self, route):
+        leg_duration = 0
+        for route_index in len(route["legs"]) - 1:
+            leg_duration += route["legs"][route_index]["duration"]["value"]
+
+        return leg_duration +  len(route["waypoint_order"]) * 40
+
+    def remove_waypoint(self, waypoints):
+        food_count = len(self.food_places)
+        if waypoints[food_count:] != []:
+            waypoint = random.choice(waypoints[food_count:])
+        elif waypoints != []:
+            waypoint = random.choice(waypoints)
         else:
-            print("no route found")
+            print("no interests/food", file=sys.stderr)
 
-        print("unordered:")
-        for p in waypoints:
-            print(p['name'])
-        print("\nordered:")
-        for i in route['waypoint_order']:
-            print(waypoints[i]['name'])
+        waypoints.remove(waypoint)
+        
+    # If successfully added a waypoint, returns True
+    # If cannot add any more wapoints, returns False
+    def add_waypoint(self, waypoints):
+        successful = False
+        if not self.interest_places:
+            return False
+        while not successful:
+            key = random.choice(list(self.interest_places))
+            place = random.choice(list(self.interest_places[key]))
+            if 'restaurant' not in place['types']:
+                waypoints.append(place)
+                self.interest_places[key].remove(place)
+                if self.interest_places[key] == []:
+                    del self.interest_places[key]
+                successful = True
+        return True
 
     def remove_duplicates(self, dict_raw):
         filtered = {}
@@ -89,4 +130,8 @@ class RoutePage(Screen):
 
         response = json.loads(urllib.request.urlopen(endpoint + nav_request).read())
 
-        return response
+        if response['status'] == 'OK':
+            route = response['routes'][0]
+            return route
+        else:
+            print("no route found")
