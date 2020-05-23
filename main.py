@@ -96,34 +96,6 @@ class DetailsPage(Screen):
 
 class LoadingPage(Screen):
     pass
-    # def build(self):
-    #     self.b = BoxLayout()
-    #     self.b.add_widget(ZipAnimationImage(zip_source='loading.zip'))
-    #     return self.b
-
-
-# class ZipAnimationImage(Image):
-#     zip_source = StringProperty('')
-
-#     def __init__(self, **kwargs):
-#         self._cycle = None
-#         super(Image, self).__init__(**kwargs)
-#         Clock.schedule_interval(self._update, 1.0)
-
-#     def _update(self, *args):
-#         if self._cycle:
-#             self.texture = next(self._cycle).texture
-
-#     def on_zip_source(self, *args):
-#         cis = []
-#         with zipfile.ZipFile(self.zip_source) as z:
-#             names = z.namelist()
-#             for name in names:
-#                 ext = name.split('.')[-1]
-#                 with z.open(name) as f:
-#                     ci = CoreImage(io.BytesIO(f.read()), ext=ext)
-#                     cis.append(ci)
-#         self._cycle = cycle(cis) if cis else None
 
 class WindowManager(ScreenManager):
     def return_homepage(self):

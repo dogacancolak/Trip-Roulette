@@ -81,7 +81,14 @@
 <LoadingPage>:
     name: "LoadingPage"
     MDSpinner:
-
+        id: spinner
+        size_hint: 0.2, None
+        height: self.width
+        pos_hint: {"center_x": 0.5, "center_y": 2/3}
+    Label:
+        text: "Yarrami yeyin"
+        pos_hint: {"center_x": 0.5, "center_y": 1/3}
+        
 MainScreen:
     nav_drawer: nav_drawer
     windows: windows
@@ -94,6 +101,8 @@ MainScreen:
     
         WindowManager:
             id: windows
+    
+            on_current: app.root.routepage.generate_trip if self.current == loadingpage.name
 
             HomePage:
                 id: homepage
@@ -109,6 +118,7 @@ MainScreen:
                 id: routepage
             LoadingPage:
                 id: loadingpage
+
 
         MDNavigationDrawer:
             id: nav_drawer
