@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from kivy.app import App
 from kivy.uix.screenmanager import Screen
 import random
@@ -22,16 +24,15 @@ class RoutePage(Screen):
         self.food_places     = get_places_in_radius(user_info, user_info.food)
         print("exiting first api call", file=sys.stderr)
         
-        for key in self.interest_places:
-            for p in self.interest_places[key]:
-                print(key, " : before : ", p['name'])
+        # print(self.food_places)
+      
 
-        self.remove_duplicates(self.interest_places)
-        self.remove_duplicates(self.food_places)
+        # self.remove_duplicates(self.interest_places)
+        # self.remove_duplicates(self.food_places)
 
-        for key in self.interest_places:
-            for p in self.interest_places[key]:
-                print(key, " : after : ", p['name'])
+        # for key in self.interest_places:
+        #     for p in self.interest_places[key]:
+                # print(key, " : after : ", p['name'])
 
         place_number_hint = ceil(user_info.trip_length / 60 * 1.4)
          # approximately 1.4 places per hour
@@ -40,8 +41,10 @@ class RoutePage(Screen):
 
         waypoints = []
         for key in self.food_places:
-            place = random.choice(self.food_places[key])
-            waypoints.append(place)
+            place = random.choice(self.food_places[key])    
+            if all(point['name'] != place['name'] for point in waypoints):
+                waypoints.append(place)
+        
             place_number_hint -= 1
 
         print("adding interests", file=sys.stderr)
@@ -79,10 +82,10 @@ class RoutePage(Screen):
 
         print("unordered:")
         for p in waypoints:
-            print(p['name'])
+            print(p['name'].decode('utf-8'))
         print("\nordered:")
         for i in route['waypoint_order']:
-            print(waypoints[i]['name'])
+            print(waypoints[i]['name'].decode('utf-8'))
         print("Time spent: ", time_spent, file=sys.stderr)
         
     def calculate_time(self, route):
@@ -113,28 +116,31 @@ class RoutePage(Screen):
         else:
             key = random.choice(list(self.interest_places))
             place = random.choice(list(self.interest_places[key]))
-            waypoints.append(place)
-            self.interest_places[key].remove(place)
-            if not self.interest_places[key]:
-                del self.interest_places[key]
-            return True
+            if all(point['name'] != place['name'] for point in waypoints) and \
+                'restaurant' not in place['types']:
+                waypoints.append(place)
+                self.interest_places[key].remove(place)
+                if not self.interest_places[key]:
+                    del self.interest_places[key]
+                return True
         
-    def remove_duplicates(self, dict_raw):
-        filtered_dict = {}
-        for key in dict_raw:
-            filtered_list = []
-            for p in dict_raw[key]:
-                duplicate = False
-                if p in itertools.chain(*filtered_dict.values()):
-                        duplicate = True
-                        break
-                if not duplicate:
-                    if 're staurant' not in p['types'] or p in itertools.chain(*self.food_places.values()):
-                        filtered_list.append(p)
-            if filtered_list:
-                filtered_dict[key] = filtered_list
+    # def remove_duplicates(self, dict_raw):
+    #     filtered_dict = {}
+    #     for key in dict_raw:
+    #         # print("key is: ", key, file=)
+    #         filtered_list = []
+    #         for p in dict_raw[key]:
+    #             duplicate = False
+    #             if p in itertools.chain(*filtered_dict.values()):
+    #                     duplicate = True
+    #                     break
+    #             if not duplicate:
+    #                 if 'restaurant' not in p['types'] or p in itertools.chain(*self.food_places.values()):
+    #                     filtered_list.append(p)
+    #         if filtered_list:
+    #             filtered_dict[key] = filtered_list
 
-        dict_raw = filtered_dict
+    #     dict_raw = filtered_dict
 
     def find_directions(self, waypoints):
         
