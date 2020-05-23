@@ -28,7 +28,7 @@ class FoodOption(BoxLayout):
                 food.remove(place_type)
                 if place_type == 'bar':
                     food.remove('pub')
-                    
+
 class DialogContent(BoxLayout):
     def update_slider_values(self, slider, value, id):
         user_info = App.get_running_app().user_info
@@ -69,6 +69,9 @@ class TransportOptions(MDFloatingActionButtonSpeedDial):
 class HomePage(Screen):
     map = ObjectProperty(None)
     dialog = None
+
+    def call_toast(self):
+        toast("Please include at least one interest")
 
     def show_confirmation_dialog(self):
         if not self.dialog:

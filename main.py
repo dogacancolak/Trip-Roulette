@@ -43,10 +43,10 @@ class UserInfo:
         self.radius = 400
         self.interests = ["bowling_alley", "amusement_park", "casino", "spa", "night_club", \
                         "movie_theater" , "tourist_attraction", "art_gallery", "aquarium", \
-                        "hindu_temple", "zoo", "university", "synagogue", "stadium", "mosque", "library",\
+                        "hindu_temple", "zoo", "university", "synagogue", "mosque", "library",\
                         "clothing_store",  "marketplace", "shopping_mall", "liquor_store", "shoe_store",\
-                        "museum", "art_gallery", "history", "art","monument",\
-                        "hiking", "park", "campground", "forest", "pond", "wildlife", "nature", "beach", "ocean", "sea"]
+                        "museum", "art_gallery", "history", "art",\
+                        "hiking", "park", "campground", "forest", "wildlife", "nature", "beach", "ocean"]
         self.food = ['restaurant', 'bar', 'pub', 'cafe']
         self.trip_length = 4 * 60       # 4 hours in minutes
         self.budget = 2

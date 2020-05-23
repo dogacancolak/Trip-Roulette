@@ -23,15 +23,14 @@ class RightCheckbox(IRightBodyTouch, MDCheckbox):
         # Convert switch.title in the UI to index strings in our program
         # e.g. 'Restaurants' to 'restaurant'
         interest_types = switch.title
-        
-        already_interested = all(elem in interests  for elem in interest_types)
-        
+        already_interested = all(elem in interests for elem in interest_types)
+
         if value:
             if not already_interested:
-                interests.extend(interest_types)
+                App.get_running_app().user_info.interests.extend(interest_types)
         else:
             if already_interested:
-                interests = [x for x in interests if x not in interest_types]
+                App.get_running_app().user_info.interests = [x for x in interests if x not in interest_types]
 
 
 class FormPage(Screen):

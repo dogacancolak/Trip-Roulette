@@ -1,3 +1,5 @@
+#:kivy 1.11.1
+
 #:import MapView kivy.garden.mapview.MapView
 #:import GpsBlinker gpsblinker.GpsBlinker
 #:include gpsblinker.kv
@@ -68,9 +70,8 @@
                 size_hint: 0.8, 0.6
                 pos_hint: {'center_x': .5, 'center_y': .5}
                 on_release: 
-                    # app.root.homepage.dialog.dismiss()
-                    # app.root.windows.current = "Route Page"
-                    app.root.routepage.generate_trip()
+                    if app.user_info.interests or app.user_info.food: app.root.routepage.generate_trip()
+                    else: app.root.homepage.call_toast()
 
 <PopupDialog>:
     title_align: 'center'
