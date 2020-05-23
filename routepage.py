@@ -41,11 +41,12 @@ class RoutePage(Screen):
 
         waypoints = []
         for key in self.food_places:
-            place = random.choice(self.food_places[key])    
-            if all(point['name'] != place['name'] for point in waypoints):
-                waypoints.append(place)
-        
-            place_number_hint -= 1
+            while True:
+                place = random.choice(self.food_places[key])    
+                if all(point['name'] != place['name'] for point in waypoints):
+                    waypoints.append(place)
+                    place_number_hint -= 1
+                    break
 
         print("adding interests", file=sys.stderr)
 
@@ -111,18 +112,19 @@ class RoutePage(Screen):
     # If successfully added a waypoint, returns True
     # If cannot add any more waypoints, returns False
     def add_waypoint(self, waypoints):
-        if not self.interest_places:
-            return False
-        else:
-            key = random.choice(list(self.interest_places))
-            place = random.choice(list(self.interest_places[key]))
-            if all(point['name'] != place['name'] for point in waypoints) and \
-                'restaurant' not in place['types']:
-                waypoints.append(place)
+        while True:
+            if not self.interest_places:
+                return False
+            else:
+                key = random.choice(list(self.interest_places))
+                place = random.choice(list(self.interest_places[key]))
                 self.interest_places[key].remove(place)
                 if not self.interest_places[key]:
                     del self.interest_places[key]
-                return True
+                if all(point['name'] != place['name'] for point in waypoints) and \
+                    'restaurant' not in place['types']:
+                    waypoints.append(place)
+                    return True                    
         
     # def remove_duplicates(self, dict_raw):
     #     filtered_dict = {}
