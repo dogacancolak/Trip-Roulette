@@ -7,6 +7,7 @@ import timeit
 import urllib.request
 import json
 import sys
+import itertools
 
 class RoutePage(Screen):
 
@@ -20,19 +21,17 @@ class RoutePage(Screen):
         self.interest_places = get_places_in_radius(user_info, user_info.interests)
         self.food_places     = get_places_in_radius(user_info, user_info.food)
         print("exiting first api call", file=sys.stderr)
-
-        temp_dict = {}
-        for key in self.interest_places:
-            temp_list = []
-            for p in self.interest_places[key]:
-                if 'restaurant' not in p['types']:
-                    temp_list.append(p)
-            if temp_list:
-                temp_dict[key] = temp_list
-        self.interest_places = temp_dict
         
-        self.interest_places = self.remove_duplicates(self.interest_places)
-        self.food_places     = self.remove_duplicates(self.food_places)
+        for key in self.interest_places:
+            for p in self.interest_places[key]:
+                print(key, " : before : ", p['name'])
+
+        self.remove_duplicates(self.interest_places)
+        self.remove_duplicates(self.food_places)
+
+        for key in self.interest_places:
+            for p in self.interest_places[key]:
+                print(key, " : after : ", p['name'])
 
         place_number_hint = ceil(user_info.trip_length / 60 * 1.4)
          # approximately 1.4 places per hour
@@ -59,11 +58,13 @@ class RoutePage(Screen):
 
         entered = False
         while time_spent > user_info.trip_length + 15:
-            self.remove_waypoint(waypoints)
-            route = self.find_directions(waypoints)
-            time_spent = self.calculate_time(route)
+            removed = self.remove_waypoint(waypoints)
+            if not removed:
+                break
+            else:
+                route = self.find_directions(waypoints)
+                time_spent = self.calculate_time(route)
             entered = True
-
             print("trip length too long", file=sys.stderr)
 
         if not entered:
@@ -82,7 +83,8 @@ class RoutePage(Screen):
         print("\nordered:")
         for i in route['waypoint_order']:
             print(waypoints[i]['name'])
-
+        print("Time spent: ", time_spent, file=sys.stderr)
+        
     def calculate_time(self, route):
         leg_duration = 0
         for route_index in range(len(route["legs"]) - 1):
@@ -90,38 +92,49 @@ class RoutePage(Screen):
 
         return leg_duration + len(route["waypoint_order"]) * 40
 
+    # If successfully removed a waypoint, returns True
+    # If cannot remove any more waypoints, returns False
     def remove_waypoint(self, waypoints):
+        if not waypoints:
+            return False
         food_count = len(self.food_places)
         if waypoints[food_count:] != []:
             waypoint = random.choice(waypoints[food_count:])
-        elif waypoints != []:
-            waypoint = random.choice(waypoints)
         else:
-            print("no interests/food", file=sys.stderr)
+            waypoint = random.choice(waypoints)
         waypoints.remove(waypoint)
+        return True
         
     # If successfully added a waypoint, returns True
-    # If cannot add any more wapoints, returns False
+    # If cannot add any more waypoints, returns False
     def add_waypoint(self, waypoints):
         if not self.interest_places:
             return False
         else:
-            successful = False
-            while not successful:
-                key = random.choice(list(self.interest_places))
-                place = random.choice(list(self.interest_places[key]))
-                if place not in waypoints:  # check if whole list is in the list
-                    waypoints.append(place)
-                    return True
+            key = random.choice(list(self.interest_places))
+            place = random.choice(list(self.interest_places[key]))
+            waypoints.append(place)
+            self.interest_places[key].remove(place)
+            if not self.interest_places[key]:
+                del self.interest_places[key]
+            return True
         
     def remove_duplicates(self, dict_raw):
-        filtered = {}
+        filtered_dict = {}
+        for key in dict_raw:
+            filtered_list = []
+            for p in dict_raw[key]:
+                duplicate = False
+                if p in itertools.chain(*filtered_dict.values()):
+                        duplicate = True
+                        break
+                if not duplicate:
+                    if 're staurant' not in p['types'] or p in itertools.chain(*self.food_places.values()):
+                        filtered_list.append(p)
+            if filtered_list:
+                filtered_dict[key] = filtered_list
 
-        for key, value in dict_raw.items():
-            if value not in filtered.values():
-                filtered[key] = value
-
-        return filtered
+        dict_raw = filtered_dict
 
     def find_directions(self, waypoints):
         

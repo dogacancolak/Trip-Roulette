@@ -1,0 +1,371 @@
+night_club  : before :  House of Blues Boston
+night_club  : before :  Royale
+night_club  : before :  Beehive Restaurant
+night_club  : before :  Middle East Restaurant and Club
+night_club  : before :  Lolita Back Bay
+night_club  : before :  Red Lantern Restaurant & Lounge
+night_club  : before :  Good Life
+night_club  : before :  Sonsie
+night_club  : before :  Trade
+night_club  : before :  Wally's Cafe Jazz Club
+night_club  : before :  The Greatest Bar
+night_club  : before :  Bristol Restaurant and Bar
+night_club  : before :  Carrie Nation Cocktail Club
+night_club  : before :  Venu Nightclub
+night_club  : before :  The Mad Monkfish
+night_club  : before :  GEM
+night_club  : before :  Middlesex Lounge
+night_club  : before :  Bijou Nightclub
+night_club  : before :  The Phoenix Landing
+night_club  : before :  The Cantab Lounge
+night_club  : before :  Storyville
+night_club  : before :  Wild Rover
+night_club  : before :  Abigail's
+night_club  : before :  The Q
+night_club  : before :  Zuzu
+night_club  : before :  Stanza Dei Sigari
+night_club  : before :  Guilt
+night_club  : before :  Vintage Restaurant & Lounge
+night_club  : before :  Assaggio
+night_club  : before :  City Bar Back Bay
+night_club  : before :  Limelight Stage + Studios
+night_club  : before :  Nico Ristorante
+night_club  : before :  Alibi
+night_club  : before :  Ned Devine's
+night_club  : before :  Union Tavern
+night_club  : before :  49 Social
+night_club  : before :  Machine Nightclub
+night_club  : before :  Bar 10
+night_club  : before :  Regattabar
+night_club  : before :  Tunnel
+tourist_attraction  : before :  New England Aquarium
+tourist_attraction  : before :  USS Constitution Museum
+tourist_attraction  : before :  Bunker Hill Monument
+aquarium  : before :  New England Aquarium
+university  : before :  ImprovBoston
+clothing_store  : before :  Macy's
+clothing_store  : before :  Urban Outfitters
+clothing_store  : before :  Urban Outfitters
+clothing_store  : before :  Lids
+clothing_store  : before :  GUESS
+clothing_store  : before :  Target
+clothing_store  : before :  Banana Republic
+clothing_store  : before :  Target
+clothing_store  : before :  Target
+clothing_store  : before :  Walgreens
+clothing_store  : before :  Foot Locker
+clothing_store  : before :  Brooks Brothers
+clothing_store  : before :  Walgreens
+clothing_store  : before :  H&M
+clothing_store  : before :  Neiman Marcus
+clothing_store  : before :  Old Navy
+clothing_store  : before :  Marie Galvin Fine Millinery
+clothing_store  : before :  Anthropologie
+marketplace  : before :  Lambert's Marketplace
+marketplace  : before :  Boston Public Market
+marketplace  : before :  Ned Devine's
+marketplace  : before :  Magnolia Bakery
+marketplace  : before :  Regina Pizzeria
+marketplace  : before :  Maverick's
+marketplace  : before :  Urban Outfitters
+marketplace  : before :  wagamama faneuil hall
+marketplace  : before :  Dick's Last Resort - Boston
+marketplace  : before :  Sprinkles
+marketplace  : before :  Anthem Kitchen & Bar
+marketplace  : before :  Starbucks
+marketplace  : before :  Ueno Sushi
+marketplace  : before :  Mmmac N' Cheese
+marketplace  : before :  Salty Dog Seafood Grille & Bar
+marketplace  : before :  Banana Republic
+marketplace  : before :  American Eagle & Aerie Store
+marketplace  : before :  Gap Kids
+marketplace  : before :  Time Out Market Boston
+marketplace  : before :  Starbucks
+marketplace  : before :  Legal Fish Bowl - Temporarily Closed
+marketplace  : before :  Quincy's Place
+marketplace  : before :  Boston & Maine Fish Co
+marketplace  : before :  Mezcala Tex Mex Grill
+marketplace  : before :  LOFT
+marketplace  : before :  MIJA Cantina & Tequila Bar
+marketplace  : before :  Boston Chowda Co
+marketplace  : before :  COACH FANUEIL HALL
+marketplace  : before :  Sunglass Hut
+marketplace  : before :  Victoria's Secret
+marketplace  : before :  Ben & Jerry’s
+marketplace  : before :  Gap
+marketplace  : before :  Eataly Boston
+marketplace  : before :  Whole Foods Market
+marketplace  : before :  Stop & Shop
+marketplace  : before :  Allium Market & Cafe
+marketplace  : before :  McCormick & Schmick's
+marketplace  : before :  Gourmet India
+marketplace  : before :  Cheers
+shopping_mall  : before :  Faneuil Hall Marketplace
+liquor_store  : before :  Bacco's Wine & Cheese
+liquor_store  : before :  The Urban Grape
+liquor_store  : before :  SEIYO SUSHI
+liquor_store  : before :  Cardullo's Gourmet Shoppe
+liquor_store  : before :  Social Wines - Boston
+shoe_store  : before :  Macy's
+shoe_store  : before :  Urban Outfitters
+shoe_store  : before :  Urban Outfitters
+shoe_store  : before :  GUESS
+shoe_store  : before :  Foot Locker
+shoe_store  : before :  Famous Footwear
+shoe_store  : before :  The Walking Company
+shoe_store  : before :  Helen's Leather Shop
+shoe_store  : before :  Aldo shoes
+shoe_store  : before :  The Frye Company
+shoe_store  : before :  Carter's
+shoe_store  : before :  Johnston & Murphy
+shoe_store  : before :  Foot Locker
+museum  : before :  USS Constitution Museum
+history  : before :  John F. Kennedy Presidential Library and Museum
+history  : before :  Isabella Stewart Gardner Museum
+art  : before :  Isabella Stewart Gardner Museum
+art  : before :  The Institute of Contemporary Art
+art  : before :  Multicultural Arts Center
+art  : before :  OBERON - American Repertory Theater
+monument  : before :  Monument Restaurant & Tavern
+pond  : before :  7 Pond Coffee Bar
+wildlife  : before :  New England Aquarium
+nature  : before :  New England Aquarium
+nature  : before :  Isabella Stewart Gardner Museum
+nature  : before :  The Institute of Contemporary Art
+beach  : before :  Pasta Beach Boston
+beach  : before :  Hei La Moon Restaurant
+beach  : before :  Kelly's Roast Beef
+beach  : before :  Chili's Grill & Bar
+beach  : before :  Avana Sushi
+beach  : before :  My Thai Vegan Cafe
+beach  : before :  Hot Pot Buffet
+beach  : before :  Taco Bell
+beach  : before :  New Golden Gate Seafood
+beach  : before :  Hot Eastern
+beach  : before :  Popeyes Louisiana Kitchen
+ocean  : before :  Ocean Prime
+ocean  : before :  Mastro's Ocean Club
+ocean  : before :  New England Aquarium
+ocean  : before :  The Oceanaire Seafood Room
+ocean  : before :  Harborside Grill and Patio
+sea  : before :  Rowes Wharf Sea Grille
+sea  : before :  Legal Sea Foods
+sea  : before :  Legal Sea Foods
+sea  : before :  Legal Sea Foods
+sea  : before :  Legal on the Mystic - Temporarily Closed
+sea  : before :  Legal Sea Foods
+sea  : before :  Legal Sea Foods
+sea  : before :  Legal Sea Foods
+sea  : before :  Legal Sea Foods
+sea  : before :  Legal Sea Foods
+sea  : before :  Legal Test Kitchen
+sea  : before :  Legal Sea Foods
+sea  : before :  Legal Sea Foods - Headquarters
+sea  : before :  Legal Test Kitchen
+sea  : before :  Legal Fish Bowl
+sea  : before :  Legal Harborside
+sea  : before :  Legal Crossing
+sea  : before :  Legal Oysteria
+sea  : before :  Legal Fish Bowl - Temporarily Closed
+night_club  : after :  House of Blues Boston
+night_club  : after :  Royale
+night_club  : after :  Beehive Restaurant
+night_club  : after :  Middle East Restaurant and Club
+night_club  : after :  Lolita Back Bay
+night_club  : after :  Red Lantern Restaurant & Lounge
+night_club  : after :  Good Life
+night_club  : after :  Sonsie
+night_club  : after :  Trade
+night_club  : after :  Wally's Cafe Jazz Club
+night_club  : after :  The Greatest Bar
+night_club  : after :  Bristol Restaurant and Bar
+night_club  : after :  Carrie Nation Cocktail Club
+night_club  : after :  Venu Nightclub
+night_club  : after :  The Mad Monkfish
+night_club  : after :  GEM
+night_club  : after :  Middlesex Lounge
+night_club  : after :  Bijou Nightclub
+night_club  : after :  The Phoenix Landing
+night_club  : after :  The Cantab Lounge
+night_club  : after :  Storyville
+night_club  : after :  Wild Rover
+night_club  : after :  Abigail's
+night_club  : after :  The Q
+night_club  : after :  Zuzu
+night_club  : after :  Stanza Dei Sigari
+night_club  : after :  Guilt
+night_club  : after :  Vintage Restaurant & Lounge
+night_club  : after :  Assaggio
+night_club  : after :  City Bar Back Bay
+night_club  : after :  Limelight Stage + Studios
+night_club  : after :  Nico Ristorante
+night_club  : after :  Alibi
+night_club  : after :  Ned Devine's
+night_club  : after :  Union Tavern
+night_club  : after :  49 Social
+night_club  : after :  Machine Nightclub
+night_club  : after :  Bar 10
+night_club  : after :  Regattabar
+night_club  : after :  Tunnel
+tourist_attraction  : after :  New England Aquarium
+tourist_attraction  : after :  USS Constitution Museum
+tourist_attraction  : after :  Bunker Hill Monument
+aquarium  : after :  New England Aquarium
+university  : after :  ImprovBoston
+clothing_store  : after :  Macy's
+clothing_store  : after :  Urban Outfitters
+clothing_store  : after :  Urban Outfitters
+clothing_store  : after :  Lids
+clothing_store  : after :  GUESS
+clothing_store  : after :  Target
+clothing_store  : after :  Banana Republic
+clothing_store  : after :  Target
+clothing_store  : after :  Target
+clothing_store  : after :  Walgreens
+clothing_store  : after :  Foot Locker
+clothing_store  : after :  Brooks Brothers
+clothing_store  : after :  Walgreens
+clothing_store  : after :  H&M
+clothing_store  : after :  Neiman Marcus
+clothing_store  : after :  Old Navy
+clothing_store  : after :  Marie Galvin Fine Millinery
+clothing_store  : after :  Anthropologie
+marketplace  : after :  Lambert's Marketplace
+marketplace  : after :  Boston Public Market
+marketplace  : after :  Ned Devine's
+marketplace  : after :  Magnolia Bakery
+marketplace  : after :  Regina Pizzeria
+marketplace  : after :  Maverick's
+marketplace  : after :  Urban Outfitters
+marketplace  : after :  wagamama faneuil hall
+marketplace  : after :  Dick's Last Resort - Boston
+marketplace  : after :  Sprinkles
+marketplace  : after :  Anthem Kitchen & Bar
+marketplace  : after :  Starbucks
+marketplace  : after :  Ueno Sushi
+marketplace  : after :  Mmmac N' Cheese
+marketplace  : after :  Salty Dog Seafood Grille & Bar
+marketplace  : after :  Banana Republic
+marketplace  : after :  American Eagle & Aerie Store
+marketplace  : after :  Gap Kids
+marketplace  : after :  Time Out Market Boston
+marketplace  : after :  Starbucks
+marketplace  : after :  Legal Fish Bowl - Temporarily Closed
+marketplace  : after :  Quincy's Place
+marketplace  : after :  Boston & Maine Fish Co
+marketplace  : after :  Mezcala Tex Mex Grill
+marketplace  : after :  LOFT
+marketplace  : after :  MIJA Cantina & Tequila Bar
+marketplace  : after :  Boston Chowda Co
+marketplace  : after :  COACH FANUEIL HALL
+marketplace  : after :  Sunglass Hut
+marketplace  : after :  Victoria's Secret
+marketplace  : after :  Ben & Jerry’s
+marketplace  : after :  Gap
+marketplace  : after :  Eataly Boston
+marketplace  : after :  Whole Foods Market
+marketplace  : after :  Stop & Shop
+marketplace  : after :  Allium Market & Cafe
+marketplace  : after :  McCormick & Schmick's
+marketplace  : after :  Gourmet India
+marketplace  : after :  Cheers
+shopping_mall  : after :  Faneuil Hall Marketplace
+liquor_store  : after :  Bacco's Wine & Cheese
+liquor_store  : after :  The Urban Grape
+liquor_store  : after :  SEIYO SUSHI
+liquor_store  : after :  Cardullo's Gourmet Shoppe
+liquor_store  : after :  Social Wines - Boston
+shoe_store  : after :  Macy's
+shoe_store  : after :  Urban Outfitters
+shoe_store  : after :  Urban Outfitters
+shoe_store  : after :  GUESS
+shoe_store  : after :  Foot Locker
+shoe_store  : after :  Famous Footwear
+shoe_store  : after :  The Walking Company
+shoe_store  : after :  Helen's Leather Shop
+shoe_store  : after :  Aldo shoes
+shoe_store  : after :  The Frye Company
+shoe_store  : after :  Carter's
+shoe_store  : after :  Johnston & Murphy
+shoe_store  : after :  Foot Locker
+museum  : after :  USS Constitution Museum
+history  : after :  John F. Kennedy Presidential Library and Museum
+history  : after :  Isabella Stewart Gardner Museum
+art  : after :  Isabella Stewart Gardner Museum
+art  : after :  The Institute of Contemporary Art
+art  : after :  Multicultural Arts Center
+art  : after :  OBERON - American Repertory Theater
+monument  : after :  Monument Restaurant & Tavern
+pond  : after :  7 Pond Coffee Bar
+wildlife  : after :  New England Aquarium
+nature  : after :  New England Aquarium
+nature  : after :  Isabella Stewart Gardner Museum
+nature  : after :  The Institute of Contemporary Art
+beach  : after :  Pasta Beach Boston
+beach  : after :  Hei La Moon Restaurant
+beach  : after :  Kelly's Roast Beef
+beach  : after :  Chili's Grill & Bar
+beach  : after :  Avana Sushi
+beach  : after :  My Thai Vegan Cafe
+beach  : after :  Hot Pot Buffet
+beach  : after :  Taco Bell
+beach  : after :  New Golden Gate Seafood
+beach  : after :  Hot Eastern
+beach  : after :  Popeyes Louisiana Kitchen
+ocean  : after :  Ocean Prime
+ocean  : after :  Mastro's Ocean Club
+ocean  : after :  New England Aquarium
+ocean  : after :  The Oceanaire Seafood Room
+ocean  : after :  Harborside Grill and Patio
+sea  : after :  Rowes Wharf Sea Grille
+sea  : after :  Legal Sea Foods
+sea  : after :  Legal Sea Foods
+sea  : after :  Legal Sea Foods
+sea  : after :  Legal on the Mystic - Temporarily Closed
+sea  : after :  Legal Sea Foods
+sea  : after :  Legal Sea Foods
+sea  : after :  Legal Sea Foods
+sea  : after :  Legal Sea Foods
+sea  : after :  Legal Sea Foods
+sea  : after :  Legal Test Kitchen
+sea  : after :  Legal Sea Foods
+sea  : after :  Legal Sea Foods - Headquarters
+sea  : after :  Legal Test Kitchen
+sea  : after :  Legal Fish Bowl
+sea  : after :  Legal Harborside
+sea  : after :  Legal Crossing
+sea  : after :  Legal Oysteria
+sea  : after :  Legal Fish Bowl - Temporarily Closed
+unordered:
+Cafe 472
+Tico Boston
+Hennessy’s Bar
+Boston Barber & Tattoo Co.
+Multicultural Arts Center
+John F. Kennedy Presidential Library and Museum
+Anthropologie
+ImprovBoston
+Walgreens
+GUESS
+Ocean Prime
+Isabella Stewart Gardner Museum
+COACH FANUEIL HALL
+Hot Eastern
+Monument Restaurant & Tavern
+
+ordered:
+Hennessy’s Bar
+COACH FANUEIL HALL
+Ocean Prime
+Hot Eastern
+Tico Boston
+Anthropologie
+Cafe 472
+Isabella Stewart Gardner Museum
+Walgreens
+John F. Kennedy Presidential Library and Museum
+Boston Barber & Tattoo Co.
+Monument Restaurant & Tavern
+GUESS
+Multicultural Arts Center
+ImprovBoston
