@@ -24,17 +24,7 @@ class RoutePage(Screen):
         self.food_places     = get_places_in_radius(user_info, user_info.food)
         print("exiting first api call", file=sys.stderr)
         
-        # print(self.food_places)
-      
-
-        # self.remove_duplicates(self.interest_places)
-        # self.remove_duplicates(self.food_places)
-
-        # for key in self.interest_places:
-        #     for p in self.interest_places[key]:
-                # print(key, " : after : ", p['name'])
-
-        place_number_hint = ceil(user_info.trip_length / 60 * 1.4)
+        place_number_hint = ceil(user_info.trip_length / 60 * 1.3)
          # approximately 1.4 places per hour
 
         print("adding waypoints", file=sys.stderr)
@@ -55,9 +45,10 @@ class RoutePage(Screen):
             if not added:
                 break
         print("find directions", file=sys.stderr)
-
-        route = self.find_directions(waypoints)
-        time_spent = self.calculate_time(route)
+                
+        route_details = self.optimize_route(waypoints)
+        route = route_details[0]
+        time_spent = route_details[1]
         print("while loops", file=sys.stderr)
 
         entered = False
@@ -66,8 +57,9 @@ class RoutePage(Screen):
             if not removed:
                 break
             else:
-                route = self.find_directions(waypoints)
-                time_spent = self.calculate_time(route)
+                route_details = self.optimize_route(waypoints)
+                route = route_details[0]
+                time_spent = route_details[1]
             entered = True
             print("trip length too long", file=sys.stderr)
 
@@ -77,18 +69,30 @@ class RoutePage(Screen):
                 if not added:
                     break
                 else:
-                    route = self.find_directions(waypoints)
-                    time_spent = self.calculate_time(route)
+                    route_details = self.optimize_route(waypoints)
+                    route = route_details[0]
+                    time_spent = route_details[1]
+                   
                 print("trip length too short", file=sys.stderr)
 
-        print("unordered:")
-        for p in waypoints:
-            print(p['name'].decode('utf-8'))
-        print("\nordered:")
+        print("ordered:")
         for i in route['waypoint_order']:
-            print(waypoints[i]['name'].decode('utf-8'))
-        print("Time spent: ", time_spent, file=sys.stderr)
+            print(waypoints[i]['name'])
+
+        print("Time spent: ", time_spent/60, file=sys.stderr)
         
+    def optimize_route(self, waypoints):
+
+        shortest = 100000
+        for point in waypoints:
+            temp_route = self.find_directions(waypoints, point)
+            time = self.calculate_time(temp_route)
+            if time < shortest:
+                route = temp_route
+                shortest = time
+
+        return (route, shortest)
+
     def calculate_time(self, route):
         leg_duration = 0
         for route_index in range(len(route["legs"]) - 1):
@@ -125,26 +129,8 @@ class RoutePage(Screen):
                     'restaurant' not in place['types']:
                     waypoints.append(place)
                     return True                    
-        
-    # def remove_duplicates(self, dict_raw):
-    #     filtered_dict = {}
-    #     for key in dict_raw:
-    #         # print("key is: ", key, file=)
-    #         filtered_list = []
-    #         for p in dict_raw[key]:
-    #             duplicate = False
-    #             if p in itertools.chain(*filtered_dict.values()):
-    #                     duplicate = True
-    #                     break
-    #             if not duplicate:
-    #                 if 'restaurant' not in p['types'] or p in itertools.chain(*self.food_places.values()):
-    #                     filtered_list.append(p)
-    #         if filtered_list:
-    #             filtered_dict[key] = filtered_list
 
-    #     dict_raw = filtered_dict
-
-    def find_directions(self, waypoints):
+    def find_directions(self, waypoints, destination):
         
         user_info =  App.get_running_app().user_info
         user_loc = str(user_info.lat) + ',' + str(user_info.lon)
@@ -162,8 +148,8 @@ class RoutePage(Screen):
             
         endpoint       = 'https://maps.googleapis.com/maps/api/directions/json?'
         key            = 'AIzaSyA4H5RbPwYejTlXVI1hjio_4q4XYS_Ubts'
-        nav_request    = 'origin={}&destination={}&mode={}{}&waypoints=optimize:true|{}&key={}'\
-                            .format(user_loc, user_loc, \
+        nav_request    = 'origin={}&destination=place_id:{}&mode={}{}&waypoints=optimize:true|{}&key={}'\
+                            .format(user_loc, destination['place_id'], \
                                     transportation, avoid, api_waypoints, key)
 
         response = json.loads(urllib.request.urlopen(endpoint + nav_request).read())
@@ -173,3 +159,22 @@ class RoutePage(Screen):
             return route
         else:
             print("no route found")
+
+
+    # def remove_duplicates(self, dict_raw):
+    #     filtered_dict = {}
+    #     for key in dict_raw:
+    #         # print("key is: ", key, file=)
+    #         filtered_list = []
+    #         for p in dict_raw[key]:
+    #             duplicate = False
+    #             if p in itertools.chain(*filtered_dict.values()):
+    #                     duplicate = True
+    #                     break
+    #             if not duplicate:
+    #                 if 'restaurant' not in p['types'] or p in itertools.chain(*self.food_places.values()):
+    #                     filtered_list.append(p)
+    #         if filtered_list:
+    #             filtered_dict[key] = filtered_list
+
+    #     dict_raw = filtered_dict

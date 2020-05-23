@@ -1,1 +1,6 @@
-unordered:
+ordered:
+Hard Rock Cafe
+China Pearl Restaurant
+Panera Bread
+Lansdowne Pub
+Isabella Stewart Gardner Museum
