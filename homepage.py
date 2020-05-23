@@ -69,8 +69,8 @@ class TransportOptions(MDFloatingActionButtonSpeedDial):
 class HomePage(Screen):
     map = ObjectProperty(None)
     dialog = None
-
-    def call_toast(self):
+    
+    def toast_pop(self):
         toast("Please include at least one interest")
 
     def show_confirmation_dialog(self):

@@ -3,6 +3,7 @@
 #:import MapView kivy.garden.mapview.MapView
 #:import GpsBlinker gpsblinker.GpsBlinker
 #:include gpsblinker.kv
+#:import Toast kivymd.toast
 
 <MapView>:
     zoom: 2
@@ -69,9 +70,12 @@
                 text: "Generate!"
                 size_hint: 0.8, 0.6
                 pos_hint: {'center_x': .5, 'center_y': .5}
-                on_release: 
-                    if app.user_info.interests or app.user_info.food: app.root.routepage.generate_trip()
-                    else: app.root.homepage.call_toast()
+                on_release:
+                    if app.user_info.interests or app.user_info.food:\
+                    app.root.windows.current = app.root.loadingpage.name
+                    # app.root.routepage.generate_trip()
+                    # app.root.windows.current = app.root.routepage.name
+                    else: app.root.homepage.toast_pop()
 
 <PopupDialog>:
     title_align: 'center'

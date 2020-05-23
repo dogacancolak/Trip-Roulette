@@ -7,6 +7,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.uix.popup import Popup
+from kivy.uix.image import Image
 
 from kivymd.app import MDApp
 from kivymd.theming import ThemableBehavior,ThemeManager
@@ -21,6 +22,14 @@ from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton
 from kivymd.uix.expansionpanel import MDExpansionPanelOneLine, MDExpansionPanel
 from kivymd.uix.dropdownitem import MDDropDownItem
+from kivymd.uix.spinner import MDSpinner
+
+import io
+import zipfile
+from itertools import cycle
+
+from kivy.clock import Clock
+from kivy.core.image import Image as CoreImage
 
 from gpshelper import GpsHelper
 from homepage import HomePage
@@ -59,7 +68,6 @@ class ContentNavigationDrawer(BoxLayout):
 class ItemDrawer(OneLineIconListItem):
     icon = StringProperty()
 
-
 class DrawerList(ThemableBehavior, MDList):
     def set_color_item(self, instance_item):
         """Called when tap on a menu item."""
@@ -86,6 +94,37 @@ class HelpPage(Screen):
 class DetailsPage(Screen):
     pass
 
+class LoadingPage(Screen):
+    pass
+    # def build(self):
+    #     self.b = BoxLayout()
+    #     self.b.add_widget(ZipAnimationImage(zip_source='loading.zip'))
+    #     return self.b
+
+
+# class ZipAnimationImage(Image):
+#     zip_source = StringProperty('')
+
+#     def __init__(self, **kwargs):
+#         self._cycle = None
+#         super(Image, self).__init__(**kwargs)
+#         Clock.schedule_interval(self._update, 1.0)
+
+#     def _update(self, *args):
+#         if self._cycle:
+#             self.texture = next(self._cycle).texture
+
+#     def on_zip_source(self, *args):
+#         cis = []
+#         with zipfile.ZipFile(self.zip_source) as z:
+#             names = z.namelist()
+#             for name in names:
+#                 ext = name.split('.')[-1]
+#                 with z.open(name) as f:
+#                     ci = CoreImage(io.BytesIO(f.read()), ext=ext)
+#                     cis.append(ci)
+#         self._cycle = cycle(cis) if cis else None
+
 class WindowManager(ScreenManager):
     def return_homepage(self):
             self.current = "HomePage"
@@ -96,6 +135,7 @@ class MainScreen(Screen):
     windows = ObjectProperty(None)
     homepage = ObjectProperty(None)
     routepage = ObjectProperty(None)
+    loadingpage = ObjectProperty(None)
 
 class TripRouletteApp(MDApp): 
     user_info = UserInfo()
@@ -105,7 +145,6 @@ class TripRouletteApp(MDApp):
         self.theme_cls.theme_style = "Dark"
 
     def on_start(self):
-        
         icons_item = {
             "account": "Account Details",
             "city-variant-outline": "Personalize",

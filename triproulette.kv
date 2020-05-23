@@ -78,12 +78,17 @@
     PageToolbar:
         title: root.name
 
+<LoadingPage>:
+    name: "LoadingPage"
+    MDSpinner:
+
 MainScreen:
     nav_drawer: nav_drawer
     windows: windows
     homepage: homepage
     routepage: routepage
-
+    loadingpage: loadingpage
+    
     NavigationLayout:
         id: nav_layout
     
@@ -102,6 +107,8 @@ MainScreen:
                 id: logpage
             RoutePage:
                 id: routepage
+            LoadingPage:
+                id: loadingpage
 
         MDNavigationDrawer:
             id: nav_drawer

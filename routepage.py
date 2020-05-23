@@ -10,26 +10,55 @@ import urllib.request
 import json
 import sys
 import itertools
+from kivymd.toast import toast
+import time
 
 class RoutePage(Screen):
 
+    user_info = None
     interest_places = None
     food_places = None
     def generate_trip(self): 
-        
-        user_info =  App.get_running_app().user_info
+        app = App.get_running_app()
+
+        app.root.windows.return_homepage()
+
+        print("george")
+        time.sleep(2)
+        print("mike")
+        self.user_info = app.user_info
 
         print("entering first api call", file=sys.stderr)
-        self.interest_places = get_places_in_radius(user_info, user_info.interests)
-        self.food_places     = get_places_in_radius(user_info, user_info.food)
+        self.interest_places = get_places_in_radius(self.user_info, self.user_info.interests)
+        self.food_places     = get_places_in_radius(self.user_info, self.user_info.food)
         print("exiting first api call", file=sys.stderr)
         
-        place_number_hint = ceil(user_info.trip_length / 60 * 1.3)
-         # approximately 1.4 places per hour
-
+        if not self.interest_places and not self.food_places:
+            toast("No places found nearby. Please expand your options.")
+            return False
+        
         print("adding waypoints", file=sys.stderr)
 
         waypoints = []
+        self.populate_waypoints(waypoints)
+
+        print("find directions", file=sys.stderr)
+
+        route_details = self.optimize_route(waypoints)
+        route = route_details[0]
+        time_spent = route_details[1]
+        print("while loops", file=sys.stderr)
+
+        print("ordered:")
+        for i in route['waypoint_order']:
+            print(waypoints[i]['name'])
+
+        print("Time spent: ", time_spent/60, file=sys.stderr)
+        
+    def populate_waypoints(self, waypoints):
+        place_number_hint = ceil(self.user_info.trip_length / 60 * 1.3)
+         # approximately 1.4 places per hour
+
         for key in self.food_places:
             while True:
                 place = random.choice(self.food_places[key])    
@@ -37,22 +66,26 @@ class RoutePage(Screen):
                     waypoints.append(place)
                     place_number_hint -= 1
                     break
-
         print("adding interests", file=sys.stderr)
 
         for _ in range(place_number_hint):
             added = self.add_waypoint(waypoints)
             if not added:
                 break
-        print("find directions", file=sys.stderr)
-                
-        route_details = self.optimize_route(waypoints)
-        route = route_details[0]
-        time_spent = route_details[1]
-        print("while loops", file=sys.stderr)
+
+
+    def optimize_route(self, waypoints):
+
+        time_spent = 100000           # arbitrarily large number for comparison
+        for point in waypoints:
+            temp_route = self.find_directions(waypoints, point)
+            time = self.calculate_time(temp_route)
+            if time < time_spent:
+                route = temp_route
+                time_spent = time
 
         entered = False
-        while time_spent > user_info.trip_length + 15:
+        while time_spent > self.user_info.trip_length + 15:
             removed = self.remove_waypoint(waypoints)
             if not removed:
                 break
@@ -64,7 +97,7 @@ class RoutePage(Screen):
             print("trip length too long", file=sys.stderr)
 
         if not entered:
-            while time_spent < user_info.trip_length - 40:
+            while time_spent < self.user_info.trip_length - 40:
                 added = self.add_waypoint(waypoints)
                 if not added:
                     break
@@ -75,23 +108,7 @@ class RoutePage(Screen):
                    
                 print("trip length too short", file=sys.stderr)
 
-        print("ordered:")
-        for i in route['waypoint_order']:
-            print(waypoints[i]['name'])
-
-        print("Time spent: ", time_spent/60, file=sys.stderr)
-        
-    def optimize_route(self, waypoints):
-
-        shortest = 100000
-        for point in waypoints:
-            temp_route = self.find_directions(waypoints, point)
-            time = self.calculate_time(temp_route)
-            if time < shortest:
-                route = temp_route
-                shortest = time
-
-        return (route, shortest)
+        return (route, time_spent)
 
     def calculate_time(self, route):
         leg_duration = 0
@@ -132,10 +149,9 @@ class RoutePage(Screen):
 
     def find_directions(self, waypoints, destination):
         
-        user_info =  App.get_running_app().user_info
-        user_loc = str(user_info.lat) + ',' + str(user_info.lon)
+        user_loc = str(self.user_info.lat) + ',' + str(self.user_info.lon)
         
-        transportation = user_info.transportation
+        transportation = self.user_info.transportation
         
         if transportation == 'cycling' or transportation == 'walking':
             avoid = "&avoid=highways"
