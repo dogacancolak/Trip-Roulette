@@ -101,8 +101,6 @@ MainScreen:
     
         WindowManager:
             id: windows
-    
-            on_current: app.root.routepage.generate_trip if self.current == loadingpage.name
 
             HomePage:
                 id: homepage
@@ -118,7 +116,6 @@ MainScreen:
                 id: routepage
             LoadingPage:
                 id: loadingpage
-
 
         MDNavigationDrawer:
             id: nav_drawer

@@ -11,6 +11,9 @@ import json
 import sys
 import itertools
 from kivymd.toast import toast
+import threading
+import concurrent.futures
+from kivy.clock import Clock, mainthread
 import time
 
 class RoutePage(Screen):
@@ -18,14 +21,29 @@ class RoutePage(Screen):
     user_info = None
     interest_places = None
     food_places = None
+
+    def show_route_page(self):
+
+        executor = concurrent.futures.ThreadPoolExecutor(max_workers=2)
+        f1 = executor.submit(self.show_loading_page)
+        f2 = executor.submit(self.generate_trip)
+        
+        f2.add_done_callback(self.done_callback)
+    
+    def done_callback(self, *args):
+        app = App.get_running_app()
+        app.root.windows.current = app.root.routepage.name
+
+  
+    def show_loading_page(self):
+        app = App.get_running_app()
+
+        app.root.homepage.dialog.dismiss()
+        app.root.windows.current = app.root.loadingpage.name
+      
     def generate_trip(self): 
         app = App.get_running_app()
 
-        app.root.windows.return_homepage()
-
-        print("george")
-        time.sleep(2)
-        print("mike")
         self.user_info = app.user_info
 
         print("entering first api call", file=sys.stderr)
