@@ -3,6 +3,7 @@
 #:include formpage.kv
 #:include routepage.kv
 
+
 <SettingsButton>:
     icon: "settings"
     pos_hint: {"top": 0.95, "x": 0.05}
@@ -86,7 +87,8 @@
         height: self.width
         pos_hint: {"center_x": 0.5, "center_y": 2/3}
     Label:
-        text: "Yarrami yeyin"
+        id: loading_label
+        text: "Fetching places..."
         pos_hint: {"center_x": 0.5, "center_y": 1/3}
         
 MainScreen:

@@ -15,6 +15,9 @@ import threading
 import concurrent.futures
 from kivy.clock import Clock, mainthread
 import time
+from itertools import repeat
+
+loading_label_texts = ["Selecting locations...", "Optimizing route..."]
 
 class RoutePage(Screen):
 
@@ -29,28 +32,52 @@ class RoutePage(Screen):
         f2 = executor.submit(self.generate_trip)
         
         f2.add_done_callback(self.done_callback)
-    
+
     def done_callback(self, *args):
         app = App.get_running_app()
         app.root.windows.current = app.root.routepage.name
 
-  
+    def amcik(self):
+        time.sleep(1)
+        print("bitti yav")
+
     def show_loading_page(self):
         app = App.get_running_app()
 
         app.root.homepage.dialog.dismiss()
         app.root.windows.current = app.root.loadingpage.name
-      
+
+    def change_loading_label(self, *args):
+        app = App.get_running_app()
+        if loading_label_texts:
+            text = loading_label_texts[0]
+            app.root.loadingpage.ids.loading_label.text = text
+            loading_label_texts.remove(text)
+         
     def generate_trip(self): 
         app = App.get_running_app()
-
         self.user_info = app.user_info
 
-        print("entering first api call", file=sys.stderr)
-        self.interest_places = get_places_in_radius(self.user_info, self.user_info.interests)
-        self.food_places     = get_places_in_radius(self.user_info, self.user_info.food)
-        print("exiting first api call", file=sys.stderr)
+        trigger = Clock.create_trigger(self.change_loading_label)
+        inputs = [self.user_info.interests, self.user_info.food]
+
+        print("entering api", file=sys.stderr)
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            results = executor.map(get_places_in_radius, repeat(self.user_info), inputs)
+        print("exiting api", file=sys.stderr)
         
+        trigger()
+        self.interest_places = results[0]
+        self.food_places     = results[1]
+
+        # print("entering api", file=sys.stderr)
+
+        # self.interest_places = get_places_in_radius(self.user_info, self.user_info.interests)
+        # trigger()
+        # self.food_places     = get_places_in_radius(self.user_info, self.user_info.food)
+        
+        # print("exiting api", file=sys.stderr)
+
         if not self.interest_places and not self.food_places:
             toast("No places found nearby. Please expand your options.")
             return False
@@ -61,6 +88,8 @@ class RoutePage(Screen):
         self.populate_waypoints(waypoints)
 
         print("find directions", file=sys.stderr)
+
+        trigger()
 
         route_details = self.optimize_route(waypoints)
         route = route_details[0]
@@ -75,7 +104,7 @@ class RoutePage(Screen):
         
     def populate_waypoints(self, waypoints):
         place_number_hint = ceil(self.user_info.trip_length / 60 * 1.3)
-         # approximately 1.4 places per hour
+         # approximately 1.4 places per hour    
 
         for key in self.food_places:
             while True:
