@@ -21,9 +21,9 @@ loading_label_texts = ["Selecting locations...", "Optimizing route..."]
 
 class RoutePage(Screen):
 
+    interest_places = {}
+    food_places = {}
     user_info = None
-    interest_places = None
-    food_places = None
 
     def show_route_page(self):
 
@@ -31,15 +31,11 @@ class RoutePage(Screen):
         f1 = executor.submit(self.show_loading_page)
         f2 = executor.submit(self.generate_trip)
         
-        f2.add_done_callback(self.done_callback)
+        def done_callback(self, *args):
+            app = App.get_running_app()
+            app.root.windows.current = app.root.routepage.name
 
-    def done_callback(self, *args):
-        app = App.get_running_app()
-        app.root.windows.current = app.root.routepage.name
-
-    def amcik(self):
-        time.sleep(1)
-        print("bitti yav")
+        f2.add_done_callback(done_callback)
 
     def show_loading_page(self):
         app = App.get_running_app()
@@ -56,28 +52,38 @@ class RoutePage(Screen):
          
     def generate_trip(self): 
         app = App.get_running_app()
-        self.user_info = app.user_info
+        user_info = app.user_info
+        self.user_info = user_info
 
         trigger = Clock.create_trigger(self.change_loading_label)
-        inputs = [self.user_info.interests, self.user_info.food]
-
+        results = []
+        start = time.time()
         print("entering api", file=sys.stderr)
         with concurrent.futures.ThreadPoolExecutor() as executor:
-            results = executor.map(get_places_in_radius, repeat(self.user_info), inputs)
-        print("exiting api", file=sys.stderr)
+            combined_locations = user_info.interests + user_info.food
+            results = executor.map(get_places_in_radius, repeat(user_info), combined_locations)
+
+            for dictionary in results:
+                if dictionary:
+                    key = next(iter(dictionary))
+                    if key in user_info.food:
+                        self.food_places.update(dictionary)
+                    elif key in user_info.interests:
+                        self.interest_places.update(dictionary)
+                    else:
+                        print("sicmisiniz")
+
+
+        data_pop_time = time.time() - start
+        count = 0
+        for value in self.food_places.values():
+            count += len(value)
+        for value in self.interest_places.values():
+            count += len(value)          
+
+        print("number of interest + food: ", count)
         
-        trigger()
-        self.interest_places = results[0]
-        self.food_places     = results[1]
-
-        # print("entering api", file=sys.stderr)
-
-        # self.interest_places = get_places_in_radius(self.user_info, self.user_info.interests)
-        # trigger()
-        # self.food_places     = get_places_in_radius(self.user_info, self.user_info.food)
         
-        # print("exiting api", file=sys.stderr)
-
         if not self.interest_places and not self.food_places:
             toast("No places found nearby. Please expand your options.")
             return False
@@ -90,49 +96,18 @@ class RoutePage(Screen):
         print("find directions", file=sys.stderr)
 
         trigger()
+        route_start_time = time.time()
 
+       
+        
         route_details = self.optimize_route(waypoints)
         route = route_details[0]
         time_spent = route_details[1]
-        print("while loops", file=sys.stderr)
 
-        print("ordered:")
-        for i in route['waypoint_order']:
-            print(waypoints[i]['name'])
-
-        print("Time spent: ", time_spent/60, file=sys.stderr)
+        # print("before time optimization: ", time_spent / 60)
         
-    def populate_waypoints(self, waypoints):
-        place_number_hint = ceil(self.user_info.trip_length / 60 * 1.3)
-         # approximately 1.4 places per hour    
-
-        for key in self.food_places:
-            while True:
-                place = random.choice(self.food_places[key])    
-                if all(point['name'] != place['name'] for point in waypoints):
-                    waypoints.append(place)
-                    place_number_hint -= 1
-                    break
-        print("adding interests", file=sys.stderr)
-
-        for _ in range(place_number_hint):
-            added = self.add_waypoint(waypoints)
-            if not added:
-                break
-
-
-    def optimize_route(self, waypoints):
-
-        time_spent = 100000           # arbitrarily large number for comparison
-        for point in waypoints:
-            temp_route = self.find_directions(waypoints, point)
-            time = self.calculate_time(temp_route)
-            if time < time_spent:
-                route = temp_route
-                time_spent = time
-
         entered = False
-        while time_spent > self.user_info.trip_length + 15:
+        while time_spent > user_info.trip_length + 15:
             removed = self.remove_waypoint(waypoints)
             if not removed:
                 break
@@ -144,9 +119,10 @@ class RoutePage(Screen):
             print("trip length too long", file=sys.stderr)
 
         if not entered:
-            while time_spent < self.user_info.trip_length - 40:
+            while time_spent < user_info.trip_length - 40:
                 added = self.add_waypoint(waypoints)
                 if not added:
+                    
                     break
                 else:
                     route_details = self.optimize_route(waypoints)
@@ -154,6 +130,50 @@ class RoutePage(Screen):
                     time_spent = route_details[1]
                    
                 print("trip length too short", file=sys.stderr)
+
+        route_time = time.time() - route_start_time
+        print("while loops", file=sys.stderr)
+
+        print("ordered:")
+        for i in route['waypoint_order']:
+            print(waypoints[i]['name'])
+
+        print("Time spent: ", time_spent/60, file=sys.stderr)
+        
+        all_time = time.time() - start
+        print("Data population took: " , data_pop_time , "seconds")
+        print("Route Optimization took: ", route_time)
+        print("Runtime is: " , all_time)
+        
+    def populate_waypoints(self, waypoints):
+    
+        place_number_hint = ceil(self.user_info.trip_length / 60 * 1.25)
+         # approximately 1.3 places per hour    
+        
+        for key in self.food_places:
+            while True:
+                place = random.choice(self.food_places[key])    
+                if all(point['name'] != place['name'] for point in waypoints):
+                    waypoints.append(place)
+                    place_number_hint -= 1
+                    break
+
+        for _ in range(place_number_hint):
+            added = self.add_waypoint(waypoints)
+            if not added:
+                break
+
+    def optimize_route(self, waypoints):
+        time_spent = 100000           # arbitrarily large number for comparison
+        route = None
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            results = executor.map(self.find_directions, repeat(waypoints), waypoints)
+            
+            for temp_route in results:
+                time = self.calculate_time(temp_route)
+                if time < time_spent:
+                    route = temp_route
+                    time_spent = time
 
         return (route, time_spent)
 
@@ -180,8 +200,10 @@ class RoutePage(Screen):
     # If successfully added a waypoint, returns True
     # If cannot add any more waypoints, returns False
     def add_waypoint(self, waypoints):
+        
         while True:
             if not self.interest_places:
+                print("No interests left, could not add waypoint", file=sys.stderr)
                 return False
             else:
                 key = random.choice(list(self.interest_places))
