@@ -16,6 +16,7 @@ import concurrent.futures
 from kivy.clock import Clock, mainthread
 import time
 from itertools import repeat
+import urllib
 
 loading_label_texts = ["Selecting locations...", "Optimizing route..."]
 
@@ -73,7 +74,6 @@ class RoutePage(Screen):
                     else:
                         print("sicmisiniz")
 
-
         data_pop_time = time.time() - start
         count = 0
         for value in self.food_places.values():
@@ -99,13 +99,10 @@ class RoutePage(Screen):
         route_start_time = time.time()
 
        
-        
         route_details = self.optimize_route(waypoints)
         route = route_details[0]
         time_spent = route_details[1]
 
-        # print("before time optimization: ", time_spent / 60)
-        
         entered = False
         while time_spent > user_info.trip_length + 15:
             removed = self.remove_waypoint(waypoints)
@@ -134,9 +131,29 @@ class RoutePage(Screen):
         route_time = time.time() - route_start_time
         print("while loops", file=sys.stderr)
 
-        print("ordered:")
-        for i in route['waypoint_order']:
-            print(waypoints[i]['name'])
+        waypoints = [waypoints[i] for i in route['waypoint_order']]
+        for p in waypoints:
+            print(p['name'])
+            
+        url = 'https://www.google.com/maps/dir/?api=1&'
+        
+        user_loc = str(self.user_info.lat) + ',' + str(self.user_info.lon)
+        # dest_loc = str(waypoints[-1]['geometry']['location']['lat']) + ',' + str(waypoints[-1]['geometry']['location']['lat'])
+        waypoint_ids = ''
+        url_waypoints = ''
+        
+        for point in waypoints[:-1]:
+            waypoint_ids += point['place_id'] + '|'
+            # point_loc = str(point['geometry']['location']['lat']) + ',' + str(point['geometry']['location']['lat'])
+            url_waypoints += point['name'] + '|'
+
+        extension = {'origin': user_loc, 'destination': waypoints[-1]['name'], 'destination_place_id': waypoints[-1]["place_id"],\
+                     'waypoints': url_waypoints, 'waypoint_place_ids': waypoint_ids, 'travelmode': user_info.transportation} 
+
+        extension = urllib.parse.urlencode(extension)
+
+        url += extension
+        print(url)   
 
         print("Time spent: ", time_spent/60, file=sys.stderr)
         
@@ -244,22 +261,3 @@ class RoutePage(Screen):
             return route
         else:
             print("no route found")
-
-
-    # def remove_duplicates(self, dict_raw):
-    #     filtered_dict = {}
-    #     for key in dict_raw:
-    #         # print("key is: ", key, file=)
-    #         filtered_list = []
-    #         for p in dict_raw[key]:
-    #             duplicate = False
-    #             if p in itertools.chain(*filtered_dict.values()):
-    #                     duplicate = True
-    #                     break
-    #             if not duplicate:
-    #                 if 'restaurant' not in p['types'] or p in itertools.chain(*self.food_places.values()):
-    #                     filtered_list.append(p)
-    #         if filtered_list:
-    #             filtered_dict[key] = filtered_list
-
-    #     dict_raw = filtered_dict
