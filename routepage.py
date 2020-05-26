@@ -27,6 +27,7 @@ class RoutePage(Screen):
             app = App.get_running_app()
             app.root.windows.current = app.root.routepage.name
             self.map.center_on(app.user_info.lat, app.user_info.lon)
+            
 
         f2.add_done_callback(done_callback)
   
