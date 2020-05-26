@@ -10,7 +10,6 @@ class GpsBlinker(MapMarker):
         anim.bind(on_complete=self.reset)
         anim.start(self)
 
-
     def reset(self, *args):
         self.outer_opacity = 1
         self.blink_size = self.default_blink_size

@@ -9,11 +9,10 @@
 <MapView>:
     zoom: 15
     double_tap_zoom: True
-    map_source: MapSource(min_zoom=3)
+    map_source: MapSource(min_zoom=3, max_zoom=17)
     GpsBlinker:
         id: blinker
     
-
 <FoodOption>:
     orientation: "vertical"
     title: "Set on Usage" # set title when used
@@ -119,7 +118,8 @@
             pos_hint: {"y": 0.25, "right": 0.9}
             height: self.width
             md_bg_color: app.theme_cls.primary_color
-            
+            on_release: mapview.center_on(app.user_info.lat, app.user_info.lon); mapview.zoom = 15
+   
         TransportOptions:
             data: {'bicycle': '', 'car': '', 'walk': '', 'bus': ''}
             md_bg_color: app.theme_cls.primary_dark  

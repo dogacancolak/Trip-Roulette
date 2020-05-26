@@ -4,15 +4,27 @@
 #:import MapSource kivy.garden.mapview.MapSource
 #:import GpsBlinker gpsblinker.GpsBlinker
 
-<MapView>:
-    zoom: 15
-    double_tap_zoom: True
-    map_source: MapSource(min_zoom=3)
-    GpsBlinker:
-        id: blinker
+<Waypoint>:
+    lat: app.user_info.lat
+    lon: app.user_info.lon
+    MDIconButton:
+        logo: {'restaurant': 'food-fork-drink', 'cafe': 'coffee', 'bar': 'glass-wine', 'pub': 'beer', 'bowling_alley': 'bowling', 'amusement_park': 'ferris-wheel', 'casino': 'cards-playing-outline', 'spa': 'spa-outline', 'night_club': 'party-popper', 'movie_theater': 'theater', 'tourist_attraction': 'camera-outline', 'art_gallery': 'image-frame', 'aquarium': 'jellyfish-outline'}
+        icon: 'coffee'
+        pos: root.pos
+        height: self.width
+        md_bg_color: app.theme_cls.primary_color
+    # canvas:
+    #     Color:
+    #         rgba: app.theme_cls.primary_color
+    #     RoundedRectangle:
+
 
 <RoutePage>
     name: "Route Page"    
-        
+    map: mapview
+
     MapView:
         id: mapview
+        Waypoint:
+    # GpsBlinker:
+    #     id: blinker
