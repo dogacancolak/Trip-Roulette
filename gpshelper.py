@@ -2,6 +2,9 @@ from kivy.app import App
 from kivy.utils import platform
 from kivymd.uix.dialog import MDDialog
 from gpsblinker import GpsBlinker
+import requests
+import json
+import urllib.request
 
 class GpsHelper():
     has_centered_map = False
@@ -33,23 +36,22 @@ class GpsHelper():
 
         else:
             key = '58a2cf7603d503df29b6ed36d4d0a919'
-            send_url = 'http://api.ipstack.com/check'
-            r = requests.get(send_url)
-            j = json.loads(r.text)
+            send_url = 'http://api.ipstack.com/check?access_key=' + key
+            j = json.loads(urllib.request.urlopen(send_url).read())
             lat = j['latitude']
             lon = j['longitude']
-
-
-        self.update_blinker_position()
+            self.update_blinker_position(lat=lat, lon=lon)
 
     def update_blinker_position(self, *args, **kwargs):
-        my_lat = App.get_running_app().user_info.lat #kwargs['lat']
-        my_lon = App.get_running_app().user_info.lon #kwargs['lon']
+        my_lat = kwargs['lat'] #App.get_running_app().user_info.lat 
+        my_lon = kwargs['lon'] #App.get_running_app().user_info.lon
         print("GPS POSITION", my_lat, my_lon)
         # Update GpsBlinker position
         gps_blinker = App.get_running_app().root.homepage.map.ids.blinker
         gps_blinker.lat = my_lat
         gps_blinker.lon = my_lon
+        App.get_running_app().user_info.lat = my_lat
+        App.get_running_app().user_info.lon = my_lon
 
         # Center map on gps
         if not self.has_centered_map:
