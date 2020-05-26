@@ -7,23 +7,28 @@
 <MapView>:
     zoom: 15
     double_tap_zoom: True
-    map_source: MapSource(min_zoom=3, max_zoom=17)
+    map_source: MapSource(min_zoom=10, max_zoom=17)
     GpsBlinker:
         id: blinker
 
 <Waypoint>:
     source: 'KivyMD/kivymd/images/transparent.png'
+    size_hint: None, None
+    size: list(map(dp, self.texture_size))
+
     MDIconButton:
         id: logo
         icon: 'city-variant-outline'
         pos: root.pos
         height: self.width
         md_bg_color: app.theme_cls.primary_color
-    # canvas:
-    #     Color:
-    #         rgba: app.theme_cls.primary_color
-    #     RoundedRectangle:
-
+        canvas:
+            Color:
+                rgba: 1, 0, 1, 1
+            RoundedRectangle:
+                radius: [self.width/2.0, ]
+                size: [logo.width / 3, logo.height / 3]
+                pos: [logo.x + logo.width / 3, logo.y - logo.height / 6]
 
 <RoutePage>
     name: "Route Page"    
