@@ -31,9 +31,11 @@ class GpsHelper():
                           on_status=self.on_auth_status)
             gps.start(minTime=1000, minDistance=0)
 
+        self.update_blinker_position()
+
     def update_blinker_position(self, *args, **kwargs):
-        my_lat = kwargs['lat']
-        my_lon = kwargs['lon']
+        my_lat = App.get_running_app().user_info.lat #kwargs['lat']
+        my_lon = App.get_running_app().user_info.lon #kwargs['lon']
         print("GPS POSITION", my_lat, my_lon)
         # Update GpsBlinker position
         gps_blinker = App.get_running_app().root.homepage.map.ids.blinker
@@ -42,7 +44,7 @@ class GpsHelper():
 
         # Center map on gps
         if not self.has_centered_map:
-            map = App.get_running_app().root.ids.mapview
+            map = App.get_running_app().root.homepage.map
             map.center_on(my_lat, my_lon)
             self.has_centered_map = True
 
