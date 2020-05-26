@@ -1,10 +1,7 @@
-number of interest + food:  368
-Lord Hobo Cambridge
-Target
-Urban Outfitters
-Royale
-Cafe Polonia
-The Junction
-Data population took:  8.661497592926025 seconds
-Route Optimization took:  2.010542869567871
-Runtime is:  10.678026676177979
+number of interest + food:  77
+Macy's
+Cafe 26
+https://www.google.com/maps/dir/?api=1&origin=42.360674%2C-71.06514&destination=Cafe+26&destination_place_id=ChIJW_a-KZ1w44kRHk5Kn5rtyfU&waypoints=Macy%27s%7C&waypoint_place_ids=ChIJs_rCyIJw44kRtr6LNJkpZ3w%7C&travelmode=cycling
+Data population took:  5.8957905769348145 seconds
+Route Optimization took:  2.4359421730041504
+Runtime is:  8.45555305480957
