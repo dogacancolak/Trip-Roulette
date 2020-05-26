@@ -73,7 +73,7 @@
                 size_hint: 0.8, 0.6
                 pos_hint: {'center_x': .5, 'center_y': .5}
                 on_release:
-                    if app.user_info.interests or app.user_info.food: app.root.routepage.show_route_page()
+                    if app.user_info.interests or app.user_info.food: app.root.routepage.generate()
                     else: app.root.homepage.toast_pop()
 
 <PopupDialog>:

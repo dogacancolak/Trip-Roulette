@@ -10,7 +10,6 @@ import json
 import sys
 import concurrent.futures
 import time
-import webbrowser
 import math
 from itertools import repeat
 
@@ -18,7 +17,7 @@ interest_places = {}
 food_places = {}
 user_info = None
 
-def generate_trip(): 
+def generate_trip(trip_details): 
     global interest_places
     global food_places
     global user_info
@@ -52,7 +51,9 @@ def generate_trip():
                     interest_places.update(dictionary)
                 else:
                     toast("Key Error")
-                    return ([], '')    #return empty waypoints and empty url
+                    trip_details.append([])
+                    trip_details.append('')
+                    return trip_details    #return empty waypoints and empty url
 
     data_pop_time = time.time() - start
     count = 0
@@ -66,8 +67,9 @@ def generate_trip():
     
     if not interest_places and not food_places:
         toast("No places found nearby. Please expand your options.")
-        return ([], '')    #return empty waypoints and empty url
-    
+        trip_details.append([])
+        trip_details.append('')
+        return trip_details    #return empty waypoints and empty url    
     # print("adding waypoints", file=sys.stderr)
 
     waypoints = []
@@ -77,8 +79,6 @@ def generate_trip():
 
     trigger()
     route_start_time = time.time()
-
-    print("bu ne")
 
     route_details = optimize_route(waypoints)
     route = route_details[0]
@@ -95,8 +95,6 @@ def generate_trip():
             time_spent = route_details[1]
         entered = True
         print("trip length too long", file=sys.stderr)
-
-    print("hadi")
 
     if not entered:
         while time_spent < user_info.trip_length - 40:
@@ -128,7 +126,9 @@ def generate_trip():
     print("Route Optimization took: ", route_time)
     print("Runtime is: " , all_time)
     
-    return (waypoints, url)
+    trip_details.append(waypoints)
+    trip_details.append(url)
+    return trip_details    #return waypoints and url   
 
 def generate_url(waypoints):
     url = 'https://www.google.com/maps/dir/?api=1&'
@@ -149,8 +149,6 @@ def generate_url(waypoints):
 
     extension = urllib.parse.urlencode(extension)
     url += extension
-
-    webbrowser.open(url)
     
     return url
 
