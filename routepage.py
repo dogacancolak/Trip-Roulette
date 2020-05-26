@@ -17,8 +17,8 @@ from kivy.clock import Clock, mainthread
 import time
 from itertools import repeat
 import urllib
+import webbrowser
 
-loading_label_texts = ["Selecting locations...", "Optimizing route..."]
 
 class RoutePage(Screen):
 
@@ -43,20 +43,22 @@ class RoutePage(Screen):
 
         app.root.homepage.dialog.dismiss()
         app.root.windows.current = app.root.loadingpage.name
-
-    def change_loading_label(self, *args):
-        app = App.get_running_app()
-        if loading_label_texts:
-            text = loading_label_texts[0]
-            app.root.loadingpage.ids.loading_label.text = text
-            loading_label_texts.remove(text)
          
     def generate_trip(self): 
         app = App.get_running_app()
         user_info = app.user_info
         self.user_info = user_info
 
-        trigger = Clock.create_trigger(self.change_loading_label)
+        loading_label_texts = ["Selecting locations...", "Optimizing route..."]
+
+        def change_loading_label(self, *args):
+            app = App.get_running_app()
+            if loading_label_texts:
+                text = loading_label_texts[0]
+                app.root.loadingpage.ids.loading_label.text = text
+                loading_label_texts.remove(text)
+
+        trigger = Clock.create_trigger(change_loading_label)
         results = []
         start = time.time()
         print("entering api", file=sys.stderr)
@@ -153,7 +155,8 @@ class RoutePage(Screen):
         extension = urllib.parse.urlencode(extension)
 
         url += extension
-        print(url)   
+
+        webbrowser.open(url)
 
         print("Time spent: ", time_spent/60, file=sys.stderr)
         

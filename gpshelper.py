@@ -31,6 +31,15 @@ class GpsHelper():
                           on_status=self.on_auth_status)
             gps.start(minTime=1000, minDistance=0)
 
+        else:
+            key = '58a2cf7603d503df29b6ed36d4d0a919'
+            send_url = 'http://api.ipstack.com/check'
+            r = requests.get(send_url)
+            j = json.loads(r.text)
+            lat = j['latitude']
+            lon = j['longitude']
+
+
         self.update_blinker_position()
 
     def update_blinker_position(self, *args, **kwargs):

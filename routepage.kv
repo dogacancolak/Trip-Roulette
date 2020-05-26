@@ -1,11 +1,19 @@
+#:kivy 1.11.1
 
+#:import MapView kivy.garden.mapview.MapView
+#:import MapSource kivy.garden.mapview.MapSource
+#:import GpsBlinker gpsblinker.GpsBlinker
+#:include gpsblinker.kv
 
-# <MapView>:
-#     zoom: 2
-#     GpsBlinker:
-#         id: blinker
+<MapView>:
+    zoom: 15
+    double_tap_zoom: True
+    map_source: MapSource(min_zoom=3)
+    GpsBlinker:
+        id: blinker
 
 <RoutePage>
     name: "Route Page"    
-    # MapView:
-    #     id: mapview
+        
+    MapView:
+        id: mapview
