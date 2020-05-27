@@ -69,7 +69,7 @@
             on_value: root.update_slider_values(self, self.value, "budget")
         FloatLayout:
             MDFillRoundFlatButton:
-                text: "Generate!"
+                text: "Generate"
                 size_hint: 0.8, 0.6
                 pos_hint: {'center_x': .5, 'center_y': .5}
                 on_release:
@@ -91,23 +91,35 @@
         id: mapview
 
     FloatLayout:
+    
+        canvas:
+            # opacity: 0.3
+            Color: 
+                rgb: app.theme_cls.primary_color
+                opacity: 0.5
+           
+            RoundedRectangle: 
+                size:(self.width/2, self.width/2)
+                pos: (self.width/4, self.width/2)
+                radius:[400,]
 
         SettingsButton:
             height: gps.height
             width:  gps.width
             pos_x: 20
 
-        MDFlatButton:
+        MDFillRoundFlatButton:            
             md_bg_color: app.theme_cls.primary_color
-            pos_hint: {"center_x": 0.5, "y": 0.03}
-            size_hint: 0.55, 0.1
+            pos_hint: {"center_x": 0.5, "y": 0.025}
+            size_hint: 0.55, 0.07
             on_release: root.show_confirmation_dialog()
            
             Label:
                 font_size: "22sp"
                 text: "Generate Trip"
                 
-                
+        
+
         # MDRoundFlatButton:
         #     text: "Log In"
         #     text_color: app.theme_cls.primary_color

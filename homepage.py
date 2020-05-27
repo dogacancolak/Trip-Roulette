@@ -9,6 +9,7 @@ from kivymd.theming import ThemableBehavior,ThemeManager
 from kivymd import images_path
 from kivymd.toast import toast
 from kivymd.uix.button import MDFloatingActionButtonSpeedDial
+from kivy.graphics import *
 
 class FoodOption(BoxLayout):
     def update_food_options(self, switch, value):
