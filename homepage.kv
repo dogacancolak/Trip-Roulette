@@ -92,15 +92,27 @@
 
     FloatLayout:
     
-        canvas:
-            # opacity: 0.3
-            Color: 
-                rgba: 1, 1, 1, 0.5
-           
-            RoundedRectangle: 
-                size:(self.width/2, self.width/2)
-                pos: (self.width/4, self.width/2)
-                radius:[400,]
+        Widget:
+            id: circle
+            canvas:
+                # opacity: 0.3
+                Color: 
+                    rgba: app.theme_cls.primary_dark[:3] + [0.3]
+                RoundedRectangle: 
+                    group: 'a'
+                    size:(self.width/2, self.width/2)
+                    pos: (self.width / 4, root.height/2 - self.width / 4)
+                    radius:[400,]
+    
+                Color: 
+                    rgba: app.theme_cls.primary_dark
+                RoundedRectangle: 
+                    group: 'b'
+                    size:(self.width/48, self.width/48)
+                    pos: (self.width / 2 - self.width / 96, root.height/2 - self.width / 96)
+                    radius:[400,]
+            
+            
 
         SettingsButton:
             height: gps.height
