@@ -93,7 +93,10 @@
     FloatLayout:
 
         SettingsButton:
-        
+            height: gps.height
+            width:  gps.width
+            pos_x: 20
+
         MDFlatButton:
             md_bg_color: app.theme_cls.primary_dark
             pos_hint: {"center_x": 0.5, "y": 0.03}
@@ -118,9 +121,10 @@
         #     pos_hint: {"center_x": 0.75, "y": 0.15}
             
         MDIconButton:
+            id: gps
             icon: "crosshairs-gps"
             height: 56
-            pos: 20, 20
+            pos: "20px", "20px"
             width: self.height 
             md_bg_color: app.theme_cls.primary_color
             on_release: mapview.center_on(app.user_info.lat, app.user_info.lon); mapview.zoom = 15
