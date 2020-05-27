@@ -94,33 +94,42 @@
 
         SettingsButton:
         
-        MDRaisedButton:
-            text: "Generate Trip"
+        MDFlatButton:
             md_bg_color: app.theme_cls.primary_dark
             pos_hint: {"center_x": 0.5, "y": 0.03}
-            size_hint: 0.8, 0.1
+            size_hint: 0.55, 0.1
             on_release: root.show_confirmation_dialog()
+           
+            Label:
+                font_size: "22sp"
+                text: "Generate Trip"
+                
+                
+           
 
-        MDRoundFlatButton:
-            text: "Log In"
-            text_color: app.theme_cls.primary_color
-            pos_hint: {"center_x": 0.25, "y": 0.15}
-            size: account_create.size
+        # MDRoundFlatButton:
+        #     text: "Log In"
+        #     text_color: app.theme_cls.primary_color
+        #     pos_hint: {"center_x": 0.25, "y": 0.15}
+        #     size: account_create.size
 
-        MDRoundFlatButton:
-            id: account_create
-            text: "Create Account"
-            text_color: app.theme_cls.primary_color
-            pos_hint: {"center_x": 0.75, "y": 0.15}
+        # MDRoundFlatButton:
+        #     id: account_create
+        #     text: "Create Account"
+        #     text_color: app.theme_cls.primary_color
+        #     pos_hint: {"center_x": 0.75, "y": 0.15}
             
         MDIconButton:
             icon: "crosshairs-gps"
-            pos_hint: {"y": 0.25, "right": 0.9}
-            height: self.width
+            height: 56
+            pos: 20, 20
+            width: self.height 
             md_bg_color: app.theme_cls.primary_color
             on_release: mapview.center_on(app.user_info.lat, app.user_info.lon); mapview.zoom = 15
-   
+           
+            
         TransportOptions:
+            id: transport
             data: {'bicycle': '', 'car': '', 'walk': '', 'bus': ''}
             md_bg_color: app.theme_cls.primary_dark  
             callback: self.update_transport
