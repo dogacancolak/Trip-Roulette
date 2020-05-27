@@ -116,7 +116,7 @@ class TripRouletteApp(MDApp):
     user_info = UserInfo()
 
     def build(self):
-        self.theme_cls.primary_palette = "Green"
+        self.theme_cls.primary_palette = "Red"
         self.theme_cls.theme_style = "Dark"
 
     def on_start(self):
