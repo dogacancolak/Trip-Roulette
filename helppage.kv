@@ -3,8 +3,12 @@
     name: "Help"    
     PageToolbar:
         title: root.name
-        
-    
+    Label:
+        text: "Reach us out on: "
+        halign: "center"
+        color: app.theme_cls.primary_color
+        pos_hint:{"y" :0.85}
+        text_size: self.size
     Label:
         text: "Phone: +90 (553) 204 24 75"
         halign: "center"
@@ -16,11 +20,11 @@
         text: "Email: triproulette@gmail.com"
         halign: "center"
         color: app.theme_cls.primary_color
-        pos_hint:{"y" :0.7}
+        pos_hint:{"y" :0.75}
         text_size: self.size
     Image:
-        source: 'chad.jpg'
-        size_hint: 0.6, 0.6
+        source: 'chad.jpeg'
+        size_hint: 0.75, 0.75
         pos_hint: {"center_x": 0.5, "bottom": 0.1}
         keep_ratio: True
         
