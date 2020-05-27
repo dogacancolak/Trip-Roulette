@@ -279,4 +279,4 @@ def find_directions(waypoints, destination):
         return route
     else:
         toast("No Route Found")
-        return ([], '')    #return empty waypoints and empty url
+        return {}    #return empty route

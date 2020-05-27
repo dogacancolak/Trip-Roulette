@@ -45,6 +45,9 @@ class RoutePage(Screen):
         url       = trip_details[1]
         route     = trip_details[2]
         
+        if not route:
+            app.root.windows.return_homepage()
+
         for point in waypoints:             # a 'point' is e.g. {'restaurant': json_place}
             place_type = next(iter(point))
             point = point[place_type]
