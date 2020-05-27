@@ -17,6 +17,8 @@ interest_places = {}
 food_places = {}
 user_info = None
 
+loading_label_texts = ["Selecting locations...", "Optimizing route..."]
+
 def generate_trip(trip_details): 
     global interest_places
     global food_places
@@ -25,7 +27,6 @@ def generate_trip(trip_details):
     app = App.get_running_app()
     user_info = app.user_info
 
-    loading_label_texts = ["Selecting locations...", "Optimizing route..."]
 
     def change_loading_label(*args):
         app = App.get_running_app()
@@ -53,7 +54,8 @@ def generate_trip(trip_details):
                     toast("Key Error")
                     trip_details.append([])
                     trip_details.append('')
-                    return trip_details    #return empty waypoints and empty url
+                    trip_details.append({})
+                    return trip_details    #return empty waypoints and empty url and empty route json
 
     data_pop_time = time.time() - start
     count = 0
@@ -64,25 +66,28 @@ def generate_trip(trip_details):
 
     print("number of interest + food: ", count)
     
-    
     if not interest_places and not food_places:
         toast("No places found nearby. Please expand your options.")
         trip_details.append([])
         trip_details.append('')
+        trip_details.append({})
         return trip_details    #return empty waypoints and empty url    
     # print("adding waypoints", file=sys.stderr)
+
+    trigger()
 
     waypoints = []
     populate_waypoints(waypoints)
 
     # print("find directions", file=sys.stderr)
 
-    trigger()
     route_start_time = time.time()
 
     route_details = optimize_route(waypoints)
     route = route_details[0]
     time_spent = route_details[1]
+
+    trigger()
 
     entered = False
     while time_spent > user_info.trip_length + 15:
@@ -128,6 +133,7 @@ def generate_trip(trip_details):
     
     trip_details.append(waypoints)
     trip_details.append(url)
+    trip_details.append(route)
     return trip_details    #return waypoints and url   
 
 def generate_url(waypoints):
@@ -261,7 +267,7 @@ def find_directions(waypoints, destination):
         api_waypoints += 'place_id:' + list(point.values())[0]['place_id'] + '|'
         
     endpoint       = 'https://maps.googleapis.com/maps/api/directions/json?'
-    key            = 'AIzaSyA4H5RbPwYejTlXVI1hjio_4q4XYS_Ubts'
+    key            = 'AIzaSyDnNL7QG3n7CDhT1OfX4CCzbOW3KkudlVY'
     nav_request    = 'origin={}&destination=place_id:{}&mode={}{}&waypoints=optimize:true|{}&key={}'\
                         .format(user_loc, list(destination.values())[0]['place_id'], \
                                 transportation, avoid, api_waypoints, key)

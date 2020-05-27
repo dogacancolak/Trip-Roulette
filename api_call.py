@@ -23,7 +23,7 @@ def get_places_in_radius(user_info, place):
     radius    = user_info.radius
     max_price = user_info.budget
     
-    key            = 'AIzaSyA4H5RbPwYejTlXVI1hjio_4q4XYS_Ubts'
+    key            = 'AIzaSyDnNL7QG3n7CDhT1OfX4CCzbOW3KkudlVY'
     endpoint       = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
     location       = str(lat) + ',' + str(lon)
     
