@@ -118,7 +118,7 @@
             pos_hint: {"y": 0.25, "right": 0.9}
             height: self.width
             md_bg_color: app.theme_cls.primary_color
-            on_release: mapview.center_on(app.user_info.lat, app.user_info.lon); mapview.zoom = 15
+            on_release: mapview.center_on(app.user_info.lat, app.user_info.lon)
    
         TransportOptions:
             data: {'bicycle': '', 'car': '', 'walk': '', 'bus': ''}

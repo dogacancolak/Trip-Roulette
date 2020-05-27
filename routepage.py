@@ -12,8 +12,12 @@ import concurrent.futures
 import time
 import webbrowser
 import threading
+import polyline
 
 waypoint_logos = {'restaurant': 'food-fork-drink', 'cafe': 'coffee', 'bar': 'glass-wine', 'bowling_alley': 'bowling', 'amusement_park': 'ferris-wheel', 'casino': 'cards-playing-outline', 'spa': 'spa-outline', 'night_club': 'party-popper', 'movie_theater': 'theater', 'tourist_attraction': 'camera-outline', 'art_gallery': 'image-frame', 'aquarium': 'jellyfish-outline'}
+
+class PolylinePoint(MapMarker):
+    pass
 
 class Waypoint(MapMarker):
     pass
@@ -47,7 +51,15 @@ class RoutePage(Screen):
         
         if not route:
             app.root.windows.return_homepage()
+            return
 
+        self.add_waypoint_markers(waypoints)
+
+        self.center_map_on_route(route)
+            
+        webbrowser.open(url)
+
+    def add_waypoint_markers(self, waypoints):
         for point in waypoints:             # a 'point' is e.g. {'restaurant': json_place}
             place_type = next(iter(point))
             point = point[place_type]
@@ -60,17 +72,21 @@ class RoutePage(Screen):
 
             self.map.add_marker(m)
 
-        # sw_bounds = route['bounds']['southwest']
-        # ne_bounds = route['bounds']['northeast']
+    def center_map_on_route(self, route):
+        sw_bounds = route['bounds']['southwest']
+        ne_bounds = route['bounds']['northeast']
 
-        # route_area_center_lat = (sw_bounds['lat'] + ne_bounds['lat']) / 2
-        # route_area_center_lon = (sw_bounds['lng'] + ne_bounds['lng']) / 2
+        route_area_center_lat = (sw_bounds['lat'] + ne_bounds['lat']) / 2
+        route_area_center_lon = (sw_bounds['lng'] + ne_bounds['lng']) / 2
 
-        # for zoom in reversed(range(20)): 
-        #     self.map.set_zoom_at(zoom)
-        # x1, y1, x2, y2 = self.map.get_bbox()
-
-        webbrowser.open(url)
+        # zoom out until route fits on the map
+        for zoom in reversed(range(18)):    # max zoom is 17
+            self.map.zoom = zoom
+            self.map.center_on(route_area_center_lat, route_area_center_lon)
+            x1, y1, x2, y2 = self.map.get_bbox()
+            if x1 < sw_bounds['lat'] and y1 < sw_bounds['lng'] and x2 > ne_bounds['lat'] and y2 > ne_bounds['lng']:
+                # self.map.zoom -= 1
+                break
 
     def show_loading_page(self, *args):
         app = App.get_running_app()

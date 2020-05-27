@@ -84,7 +84,14 @@ def generate_trip(trip_details):
     route_start_time = time.time()
 
     route_details = optimize_route(waypoints)
+
     route = route_details[0]
+    if not route:
+        trip_details.append([])
+        trip_details.append('')
+        trip_details.append({})
+        return trip_details    #return empty waypoints and empty url and empty route json
+
     time_spent = route_details[1]
 
     trigger()
@@ -191,6 +198,8 @@ def optimize_route(waypoints):
         results = executor.map(find_directions, repeat(waypoints), waypoints)
         
         for temp_route in results:
+            if not temp_route:
+                return ({}, 0)
             time = calculate_time(temp_route)
             if time < time_spent:
                 route = temp_route
