@@ -11,22 +11,21 @@
     GpsBlinker:
         id: blinker
 
-# <MapMarkerPopup>:
-#     source: 'KivyMD/kivymd/images/transparent.png'
-    # size: "190pt", "50pt"
-    # MDIconButton:
-    #     id: logo
-    #     icon: 'city-variant-outline'
-    #     pos: root.pos
-    #     height: self.width
-    #     md_bg_color: 0, 0, 0, 0
-    #     canvas:
-    #         Color:
-    #             rgba: 1, 0, 1, 1
-    #         RoundedRectangle:
-    #             radius: [self.width/2.0, ]
-    #             size: [logo.width / 3, logo.height / 3]
-    #             pos: [logo.x + logo.width / 3, logo.y - logo.height / 6]
+<Waypoint>:
+    source: 'KivyMD/kivymd/images/transparent.png'
+    MDIconButton:
+        id: logo
+        icon: 'city-variant-outline'
+        pos: root.pos
+        height: self.width
+        md_bg_color: app.theme_cls.primary_color[:3] + [1]
+        canvas:
+            Color:
+                rgba: app.theme_cls.primary_dark[:3] + [1]
+            RoundedRectangle:
+                radius: [self.width/2.0, ]
+                size: [logo.width / 3, logo.height / 3]
+                pos: [logo.x + logo.width / 3, logo.y - logo.height / 6]
 
 <RoutePage>
     name: "Route Page"    
