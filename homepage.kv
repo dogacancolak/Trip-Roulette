@@ -94,7 +94,7 @@
 
         SettingsButton:
         
-        MDFlatButton:
+        MDFillRoundFlatButton:
             md_bg_color: app.theme_cls.primary_dark
             pos_hint: {"center_x": 0.5, "y": 0.03}
             size_hint: 0.55, 0.1
@@ -119,8 +119,8 @@
             
         MDIconButton:
             icon: "crosshairs-gps"
-            height: 56
-            pos: 20, 20
+            height: '42pt'
+            pos: '14pt', '14pt'
             width: self.height 
             md_bg_color: app.theme_cls.primary_color
             on_release: mapview.center_on(app.user_info.lat, app.user_info.lon); mapview.zoom = 15
