@@ -36,6 +36,9 @@ from homepage import HomePage
 from formpage import FormPage
 from routepage import RoutePage
 
+from kivy.core.window import Window
+Window.size = (450, 775)
+
 class UserInfo:
     # FIELDS:
     # lat                 (Float)
