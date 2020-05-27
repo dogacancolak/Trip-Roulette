@@ -10,6 +10,8 @@ from kivymd import images_path
 from kivymd.toast import toast
 from kivymd.uix.button import MDFloatingActionButtonSpeedDial
 
+from kivy.garden.mapview import MapMarkerPopup
+
 class FoodOption(BoxLayout):
     def update_food_options(self, switch, value):
         food = App.get_running_app().user_info.food

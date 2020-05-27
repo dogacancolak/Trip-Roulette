@@ -4,8 +4,9 @@ from kivy.app import App
 from kivy.clock import Clock
 from kivy.properties import ObjectProperty
 from kivy.uix.screenmanager import Screen
+from kivy.uix.image import Image
 
-from kivy.garden.mapview import MapMarker
+from kivy.garden.mapview import MapMarkerPopup
 
 import trip
 import concurrent.futures
@@ -15,10 +16,7 @@ import threading
 
 waypoint_logos = {'restaurant': 'food-fork-drink', 'cafe': 'coffee', 'bar': 'glass-wine', 'bowling_alley': 'bowling', 'amusement_park': 'ferris-wheel', 'casino': 'cards-playing-outline', 'spa': 'spa-outline', 'night_club': 'party-popper', 'movie_theater': 'theater', 'tourist_attraction': 'camera-outline', 'art_gallery': 'image-frame', 'aquarium': 'jellyfish-outline'}
 
-class PolylinePoint(MapMarker):
-    pass
-
-class Waypoint(MapMarker):
+class Waypoint(MapMarkerPopup):
     pass
 
 class RoutePage(Screen):
@@ -37,6 +35,7 @@ class RoutePage(Screen):
         def callback(future, *args):
             self.show_route_page(trip_details)
 
+
         f2.add_done_callback(callback) 
 
     def show_route_page(self, trip_details):
@@ -52,12 +51,11 @@ class RoutePage(Screen):
             app.root.windows.return_homepage()
             return
 
-        print('hes')
         self.add_waypoint_markers(waypoints)
-        print('mes')
+
         self.center_map_on_route(route)
             
-        webbrowser.open(url)
+        # webbrowser.open(url)
 
     def add_waypoint_markers(self, waypoints):
         for point in waypoints:             # a 'point' is e.g. {'restaurant': json_place}
@@ -65,14 +63,17 @@ class RoutePage(Screen):
             point = point[place_type]
             lat = point['geometry']['location']['lat']
             lon = point['geometry']['location']['lng']
-            print('kes')
-            m   = Waypoint(lat=lat, lon=lon)
-            print('nes')
+            m   = MapMarkerPopup(lat=lat, lon=lon)
             # if place_type in waypoint_logos:
             #     m.ids.logo.icon = waypoint_logos[place_type]
-
             self.map.add_marker(m)
-            print('pes')
+        # app = App.get_running_app()
+        # print('hes')
+        # m = MapMarkerPopup(lat=app.user_info.lat, lon=app.user_info.lon)
+
+        # # m = Waypoint(lat=app.user_info.lat, lon=app.user_info.lon)
+        # self.map.add_widget(m)
+
     def center_map_on_route(self, route):
         sw_bounds = route['bounds']['southwest']
         ne_bounds = route['bounds']['northeast']

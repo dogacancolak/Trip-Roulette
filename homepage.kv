@@ -97,10 +97,12 @@
             width:  gps.width
             pos_x: 20
 
-        MDFlatButton:
+        MDFillRoundFlatButton:
             md_bg_color: app.theme_cls.primary_color
-            pos_hint: {"center_x": 0.5, "y": 0.03}
-            size_hint: 0.55, 0.1
+            pos_hint: {"center_x": 0.5}
+            y: "14pt"
+            size_hint: 0.55, None
+            height: "44pt"
             on_release: root.show_confirmation_dialog()
            
             Label:
@@ -122,6 +124,7 @@
             
         MDIconButton:
             id: gps
+            radius: ['22pt', '22pt']
             icon: "crosshairs-gps"
             height: "44pt"
             pos: "14pt", "14pt"
