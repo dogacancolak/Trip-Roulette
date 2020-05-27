@@ -12,7 +12,6 @@ import concurrent.futures
 import time
 import webbrowser
 import threading
-import polyline
 
 waypoint_logos = {'restaurant': 'food-fork-drink', 'cafe': 'coffee', 'bar': 'glass-wine', 'bowling_alley': 'bowling', 'amusement_park': 'ferris-wheel', 'casino': 'cards-playing-outline', 'spa': 'spa-outline', 'night_club': 'party-popper', 'movie_theater': 'theater', 'tourist_attraction': 'camera-outline', 'art_gallery': 'image-frame', 'aquarium': 'jellyfish-outline'}
 
@@ -53,8 +52,9 @@ class RoutePage(Screen):
             app.root.windows.return_homepage()
             return
 
+        print('hes')
         self.add_waypoint_markers(waypoints)
-
+        print('mes')
         self.center_map_on_route(route)
             
         webbrowser.open(url)
@@ -65,13 +65,14 @@ class RoutePage(Screen):
             point = point[place_type]
             lat = point['geometry']['location']['lat']
             lon = point['geometry']['location']['lng']
+            print('kes')
             m   = Waypoint(lat=lat, lon=lon)
-
-            if place_type in waypoint_logos:
-                m.ids.logo.icon = waypoint_logos[place_type]
+            print('nes')
+            # if place_type in waypoint_logos:
+            #     m.ids.logo.icon = waypoint_logos[place_type]
 
             self.map.add_marker(m)
-
+            print('pes')
     def center_map_on_route(self, route):
         sw_bounds = route['bounds']['southwest']
         ne_bounds = route['bounds']['northeast']
@@ -85,7 +86,6 @@ class RoutePage(Screen):
             self.map.center_on(route_area_center_lat, route_area_center_lon)
             x1, y1, x2, y2 = self.map.get_bbox()
             if x1 < sw_bounds['lat'] and y1 < sw_bounds['lng'] and x2 > ne_bounds['lat'] and y2 > ne_bounds['lng']:
-                # self.map.zoom -= 1
                 break
 
     def show_loading_page(self, *args):
