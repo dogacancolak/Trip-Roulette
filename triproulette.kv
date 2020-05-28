@@ -2,7 +2,6 @@
 #:include helppage.kv
 #:include formpage.kv
 #:include routepage.kv
-
             
 <ItemDrawer>:   
     on_release: 
@@ -83,7 +82,8 @@
         id: loading_label
         text: "Fetching places..."
         pos_hint: {"center_x": 0.5, "center_y": 1/3}
-        
+
+
 MainScreen:
     nav_drawer: nav_drawer
     windows: windows

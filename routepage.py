@@ -68,7 +68,7 @@ class RoutePage(Screen):
             lat = point['geometry']['location']['lat']
             lon = point['geometry']['location']['lng']
             m   = Waypoint(lat=lat, lon=lon, )
-            m.ids.waypoint_order = str(index + 1)
+            m.ids.waypoint_order.text = str(index + 1)
             if place_type in waypoint_logos:
                 m.ids.logo.icon = waypoint_logos[place_type]
             self.map.add_marker(m)

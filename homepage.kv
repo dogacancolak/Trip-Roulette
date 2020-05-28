@@ -91,11 +91,18 @@
     md_bg_color: 0, 0, 0, 0
     canvas.before:
         Color:
+            rgba: app.theme_cls.primary_dark
+        RoundedRectangle:
+            radius: [self.width/2.0, ]
+            size: [self.width * 1.05, self.height * 1.05]
+            pos: [self.x - self.width * .05 / 2, self.y - self.height * .05 / 2]
+        Color:
             rgba: app.theme_cls.primary_color
         RoundedRectangle:
             radius: [self.width/2.0, ]
-            size: [self.width, self.height]
-            pos: [self.x, self.y]
+            size: self.size
+            pos: self.pos
+
 
 <SearchCircle>:
     canvas:
@@ -164,6 +171,12 @@
             on_release: mapview.center_on(app.user_info.gps_lat, app.user_info.gps_lon)
             md_bg_color: 0, 0, 0, 0
             canvas.before:
+                Color:
+                    rgba: app.theme_cls.primary_dark
+                RoundedRectangle:
+                    radius: [self.width/2.0, ]
+                    size: [self.width * 1.05, self.height * 1.05]
+                    pos: [self.x - self.width * .05 / 2, self.y - self.height * .05 / 2]
                 Color:
                     rgba: app.theme_cls.primary_color
                 RoundedRectangle:
