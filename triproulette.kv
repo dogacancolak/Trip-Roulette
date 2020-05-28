@@ -2,6 +2,7 @@
 #:include helppage.kv
 #:include formpage.kv
 #:include routepage.kv
+
             
 <ItemDrawer>:   
     on_release: 
@@ -62,9 +63,21 @@
     pos_hint: {"top": 1}
 
 <DetailsPage>
-    name: "Account Details"
+    name: "How It Works"
     PageToolbar:
         title: root.name
+    Label:
+        text_size: self.size
+        padding: 15, 15
+        text: "Trip Roulette is an app that lets you create personalized trips. You can tune your trip according to your interests using the personalize section. You can also set a custom trip duration and budget. Trip Roulette scans through your selected region and creates the perfect trip for your needs!\n\n Locations are collected from  Google's location database and sorted according to your interests. You can use Trip Roulette to discover new places wherever you are!"
+        max_lines: 40
+        line_wrap: True
+        line_height: 1.5
+        valign: "middle"
+        halign: "left"
+     
+        
+
     
 <LogPage>
     name: "Log Out/Log In"

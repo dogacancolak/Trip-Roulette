@@ -123,7 +123,7 @@ class TripRouletteApp(MDApp):
 
     def on_start(self):
         icons_item = {
-            "account": "Account Details",
+            "account": "How It Works",
             "city-variant-outline": "Personalize",
             "login": "Log Out/Log In",
             "help": "Help",
