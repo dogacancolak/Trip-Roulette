@@ -7,7 +7,7 @@
 <RouteMapView>:
     zoom: 15
     double_tap_zoom: True
-    map_source: MapSource(min_zoom=10, max_zoom=17)
+    map_source: MapSource(min_zoom=10, max_zoom=15)
     GpsBlinker:
         id: blinker
 
@@ -16,16 +16,27 @@
     MDIconButton:
         id: logo
         icon: 'city-variant-outline'
-        pos: root.pos
+        pos: self.parent.pos
         height: self.width
-        md_bg_color: app.theme_cls.primary_color[:3] + [1]
-        canvas:
+        md_bg_color: 0, 0, 0, 0
+        canvas.before:
             Color:
-                rgba: app.theme_cls.primary_dark[:3] + [1]
+                rgba: app.theme_cls.primary_color
             RoundedRectangle:
                 radius: [self.width/2.0, ]
-                size: [logo.width / 3, logo.height / 3]
-                pos: [logo.x + logo.width / 3, logo.y - logo.height / 6]
+                size: [self.width, self.height]
+                pos: [self.x, self.y]
+        Label:
+            id: waypoint_order
+            pos_hint: {'center_x': 0.5, 'center_y': 0}
+            size_hint: 0.5, 0.5
+            canvas.before:
+                Color:
+                    rgba: app.theme_cls.primary_dark
+                RoundedRectangle:
+                    radius: [self.width/2.0, ]
+                    size: [self.width, self.height]
+                    pos: [self.x, self.y]
 
 <RoutePage>
     name: "Route Page"    
@@ -34,4 +45,4 @@
     RouteMapView:
         id: mapview
     # GpsBlinker:
-    #     id: blinker
+    #     id: blinkero

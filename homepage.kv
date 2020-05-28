@@ -83,6 +83,20 @@
     size_hint: 0.7, 0.4
     pos_hint: {"center_x": 0.5, "center_y": 0.5}
     
+<SettingsButton>:
+    icon: "settings"
+    pos_hint: {"top": 0.95, "x": 0.05}
+    height: self.width
+    on_release: app.root.nav_drawer.set_state("open")
+    md_bg_color: 0, 0, 0, 0
+    canvas.before:
+        Color:
+            rgba: app.theme_cls.primary_color
+        RoundedRectangle:
+            radius: [self.width/2.0, ]
+            size: [self.width, self.height]
+            pos: [self.x, self.y]
+
 <SearchCircle>:
     canvas:
         Color: 
@@ -129,8 +143,6 @@
                 font_size: "22sp"
                 text: "Generate Trip"
                 
-        
-
         # MDRoundFlatButton:
         #     text: "Log In"
         #     text_color: app.theme_cls.primary_color
@@ -149,9 +161,16 @@
             height: "44pt"
             pos: "14pt", "14pt"
             width: self.height 
-            md_bg_color: app.theme_cls.primary_color
             on_release: mapview.center_on(app.user_info.gps_lat, app.user_info.gps_lon)
-           
+            md_bg_color: 0, 0, 0, 0
+            canvas.before:
+                Color:
+                    rgba: app.theme_cls.primary_color
+                RoundedRectangle:
+                    radius: [self.width/2.0, ]
+                    size: [self.width, self.height]
+                    pos: [self.x, self.y]
+
         TransportOptions:
             id: transport
             data: {'bicycle': '', 'car': '', 'walk': '', 'bus': ''}

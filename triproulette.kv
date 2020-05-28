@@ -3,13 +3,6 @@
 #:include formpage.kv
 #:include routepage.kv
 
-
-<SettingsButton>:
-    icon: "settings"
-    pos_hint: {"top": 0.95, "x": 0.05}
-    height: self.width
-    on_release: app.root.nav_drawer.set_state("open")
-    md_bg_color: app.theme_cls.primary_color
             
 <ItemDrawer>:   
     on_release: 

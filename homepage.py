@@ -9,7 +9,7 @@ from kivy.uix.widget import Widget
 from kivymd.theming import ThemableBehavior,ThemeManager
 from kivymd import images_path
 from kivymd.toast import toast
-from kivymd.uix.button import MDFloatingActionButtonSpeedDial
+from kivymd.uix.button import MDFloatingActionButtonSpeedDial, MDIconButton
 from kivy.graphics import *
 
 from kivy.garden.mapview import MapMarkerPopup, MapMarker, MapView
@@ -17,6 +17,9 @@ from kivy.garden.mapview import MapMarkerPopup, MapMarker, MapView
 from geopy import distance
 
 class HomeMapView(MapView):
+    pass
+
+class SettingsButton(MDIconButton):
     pass
 
 class SearchCircle(Widget):
