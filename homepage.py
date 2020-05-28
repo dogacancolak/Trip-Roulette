@@ -35,7 +35,7 @@ class SearchCircle(Widget):
 
         app.user_info.radius = radius_in_meters
         print(round(radius_in_meters), " meters and zoom: ", map.zoom, " and scale: ", map.scale)
-        # print(user_coords)
+        print(app.user_info.lat, app.user_info.lon)
 
 
 class FoodOption(BoxLayout):
@@ -78,16 +78,16 @@ class TransportOptions(MDFloatingActionButtonSpeedDial):
         y = circle.center_y
         if selection == 'bicycle':
             transport = 'cycling'
-            map.zoom = 13
+            map.zoom = 14
         elif selection == 'car':
             transport = 'driving'
             map.zoom = 11
         elif selection == 'bus':
             transport = 'transit'
-            map.zoom = 11
+            map.zoom = 12
         elif selection == 'walk':
             transport = 'walking'
-            map.zoom = 14
+            map.zoom = 15
 
         self.icon = selection
         self.close_stack()

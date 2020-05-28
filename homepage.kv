@@ -7,10 +7,9 @@
 #:import Toast kivymd.toast
 
 <HomeMapView>:
-    zoom: 14
-    on_zoom: app.root.homepage.circle.set_search_radius()
+    zoom: 15
     double_tap_zoom: True
-    map_source: MapSource(min_zoom=10, max_zoom=14)
+    map_source: MapSource(min_zoom=10, max_zoom=15)
     GpsBlinker:
         id: blinker
     

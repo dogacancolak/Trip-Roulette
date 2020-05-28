@@ -137,4 +137,7 @@ class TripRouletteApp(MDApp):
         # Initialize GPS
         GpsHelper().run()
 
-TripRouletteApp().run()
+app = TripRouletteApp()
+import bugs
+bugs.fixBugs()
+app.run()
