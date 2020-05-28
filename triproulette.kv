@@ -57,7 +57,7 @@
     #     left_action_items: [['menu', lambda x: nav_drawer.toggle_nav_drawer()]]
 
 <PageToolbar>
-    right_action_items: [["keyboard-return", lambda x: app.root.windows.return_homepage()]]
+    right_action_items: [["keyboard-return", lambda x: app.root.windows.return_homepage("left")]]
     md_bg_color: app.theme_cls.accent_color
     pos_hint: {"top": 1}
 
@@ -71,7 +71,7 @@
     PageToolbar:
         title: root.name
 
-<LoadingPage>:
+<LoadingPage>
     name: "LoadingPage"
     MDSpinner:
         id: spinner
@@ -82,7 +82,6 @@
         id: loading_label
         text: "Fetching places..."
         pos_hint: {"center_x": 0.5, "center_y": 1/3}
-
 
 MainScreen:
     nav_drawer: nav_drawer

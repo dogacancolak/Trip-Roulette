@@ -100,9 +100,12 @@ class LoadingPage(Screen):
     pass
 
 class WindowManager(ScreenManager):
-    def return_homepage(self):
+    def return_homepage(self, direction):
             self.current = "HomePage"
-            self.current_screen.manager.transition.direction = "left"
+            if direction == "right":
+                self.current_screen.manager.transition.direction = "right"
+            else:
+                self.current_screen.manager.transition.direction = "left"
 
 class MainScreen(Screen):
     nav_drawer = ObjectProperty(None)

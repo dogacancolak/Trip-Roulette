@@ -54,10 +54,12 @@
 
     RouteMapView:
         id: mapview
+    # GpsBlinker:
+    #     id: blinkero
 
     MDIconButton:
         icon: "home"
-        on_release: app.root.windows.return_homepage()
+        on_release: app.root.windows.return_homepage("right")
         height: "44pt"
         width: self.height 
         pos_hint: {"top": 0.95, "x": 0.05}

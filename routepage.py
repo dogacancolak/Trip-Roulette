@@ -8,12 +8,14 @@ from kivy.uix.image import Image
 from amciks import waypoints, url, route
 
 from kivy.garden.mapview import MapMarkerPopup, MapMarker, MapView
-
+from kivymd.uix.button import MDFloatingActionButtonSpeedDial, MDIconButton
 import trip
 import concurrent.futures
 import time
 import webbrowser
 import threading
+from kivymd.uix.toolbar import MDToolbar
+
 
 waypoint_logos = {'restaurant': 'food-fork-drink', 'cafe': 'coffee', 'bar': 'glass-wine', 'bowling_alley': 'bowling', 'amusement_park': 'ferris-wheel', 'casino': 'cards-playing-outline', 'spa': 'spa-outline', 'night_club': 'party-popper', 'movie_theater': 'theater', 'tourist_attraction': 'camera-outline', 'art_gallery': 'image-frame', 'aquarium': 'jellyfish-outline'}
 
@@ -21,6 +23,9 @@ class RouteMapView(MapView):
     pass
     
 class Waypoint(MapMarker):
+    pass
+
+class PageToolbar(MDToolbar):
     pass
 
 class RoutePage(Screen):
