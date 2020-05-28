@@ -3,6 +3,10 @@
 #:import MapView kivy.garden.mapview.MapView
 #:import MapSource kivy.garden.mapview.MapSource
 #:import GpsBlinker gpsblinker.GpsBlinker
+ 
+
+
+
 
 <RouteMapView>:
     zoom: 15
@@ -38,11 +42,18 @@
                     size: [self.width, self.height]
                     pos: [self.x, self.y]
 
+
 <RoutePage>
     name: "Route Page"    
     map: mapview
 
     RouteMapView:
         id: mapview
+        
+# <PageToolbar>
+#     right_action_items: [["keyboard-return", lambda x: app.root.windows.return_homepage()]]
+#     md_bg_color: app.theme_cls.accent_color
+#     pos_hint: {"top": 1}
+    
     # GpsBlinker:
     #     id: blinkero
