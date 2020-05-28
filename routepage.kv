@@ -3,10 +3,6 @@
 #:import MapView kivy.garden.mapview.MapView
 #:import MapSource kivy.garden.mapview.MapSource
 #:import GpsBlinker gpsblinker.GpsBlinker
- 
-
-
-
 
 <RouteMapView>:
     zoom: 15
@@ -17,31 +13,40 @@
 
 <Waypoint>:
     source: 'KivyMD/kivymd/images/transparent.png'
-    MDIconButton:
-        id: logo
-        icon: 'city-variant-outline'
-        pos: self.parent.pos
-        height: self.width
-        md_bg_color: 0, 0, 0, 0
-        canvas.before:
-            Color:
-                rgba: app.theme_cls.primary_color
-            RoundedRectangle:
-                radius: [self.width/2.0, ]
-                size: [self.width, self.height]
-                pos: [self.x, self.y]
-        Label:
-            id: waypoint_order
-            pos_hint: {'center_x': 0.5, 'center_y': 0}
-            size_hint: 0.5, 0.5
+    FloatLayout:
+        id: float
+        pos: root.pos
+        MDIconButton:
+            id: logo
+            icon: 'city-variant-outline'
+            pos: self.parent.pos
+            height: self.width
+            md_bg_color: 0, 0, 0, 0
             canvas.before:
                 Color:
                     rgba: app.theme_cls.primary_dark
                 RoundedRectangle:
                     radius: [self.width/2.0, ]
-                    size: [self.width, self.height]
-                    pos: [self.x, self.y]
-
+                    size: [self.width * 1.05, self.height * 1.05]
+                    pos: [self.x - self.width * .05 / 2, self.y - self.height * .05 / 2]
+                Color:
+                    rgba: app.theme_cls.primary_color
+                RoundedRectangle:
+                    radius: [self.width/2.0, ]
+                    size: self.size
+                    pos: self.pos
+        Label:
+            id: waypoint_order
+            size_hint: 0.4, 0.4
+            pos_hint: {'center_x': 0.5, 'center_y': 0}
+            font_size: '12sp'
+            canvas.before:
+                Color:
+                    rgba: app.theme_cls.primary_dark
+                RoundedRectangle:
+                    radius: [self.size[0] / 2, ]
+                    size: self.size
+                    pos: self.pos
 
 <RoutePage>
     name: "Route Page"    
@@ -49,11 +54,13 @@
 
     RouteMapView:
         id: mapview
-        
-# <PageToolbar>
-#     right_action_items: [["keyboard-return", lambda x: app.root.windows.return_homepage()]]
-#     md_bg_color: app.theme_cls.accent_color
-#     pos_hint: {"top": 1}
-    
     # GpsBlinker:
     #     id: blinkero
+
+    MDIconButton:
+        icon: "home"
+        on_release: app.root.windows.return_homepage("right")
+        height: "44pt"
+        width: self.height 
+        pos_hint: {"top": 0.95, "x": 0.05}
+        md_bg_color: app.theme_cls.primary_color
