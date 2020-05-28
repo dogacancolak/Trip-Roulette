@@ -35,8 +35,7 @@ def get_places_in_radius(user_info, place):
     else:
         place_search_word = 'keyword'
 
-    #&opennow
-    nav_request =  'location={}&maxprice={}&radius={}&{}={}&rankby=prominence&key={}'\
+    nav_request =  'location={}&opennow&maxprice={}&radius={}&{}={}&rankby=prominence&key={}'\
                     .format(str(location), str(max_price), str(radius), place_search_word, place, key)
     request = endpoint + nav_request
 

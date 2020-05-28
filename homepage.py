@@ -37,9 +37,6 @@ class SearchCircle(Widget):
         radius_in_meters = distance.distance(outer_coords, user_coords).km * 1000
 
         app.user_info.radius = radius_in_meters
-        print(round(radius_in_meters), " meters and zoom: ", map.zoom, " and scale: ", map.scale)
-        print(app.user_info.lat, app.user_info.lon)
-
 
 class FoodOption(BoxLayout):
     def update_food_options(self, switch, value):

@@ -3,6 +3,7 @@
 #:import MapView kivy.garden.mapview.MapView
 #:import MapSource kivy.garden.mapview.MapSource
 #:import GpsBlinker gpsblinker.GpsBlinker
+#:import utils kivy.utils
 
 <RouteMapView>:
     zoom: 15
@@ -11,8 +12,15 @@
     GpsBlinker:
         id: blinker
 
+<WaypointBubble>:
+    size_hint: (None, None) 
+    # pos_hint: {'center_x': .5, 'y': 1}
+    size: (500, 500) 
+
 <Waypoint>:
     source: 'KivyMD/kivymd/images/transparent.png'
+    outer_color: (138/255.0,43/255.0,226/255.0,1)
+    inner_color: (147/255.0,112/255.0,219/255.0, 1)
     FloatLayout:
         id: float
         pos: root.pos
@@ -24,13 +32,13 @@
             md_bg_color: 0, 0, 0, 0
             canvas.before:
                 Color:
-                    rgba: app.theme_cls.primary_dark
+                    rgba: root.outer_color
                 RoundedRectangle:
                     radius: [self.width/2.0, ]
                     size: [self.width * 1.05, self.height * 1.05]
                     pos: [self.x - self.width * .05 / 2, self.y - self.height * .05 / 2]
                 Color:
-                    rgba: app.theme_cls.primary_color
+                    rgba: root.inner_color
                 RoundedRectangle:
                     radius: [self.width/2.0, ]
                     size: self.size
@@ -42,7 +50,7 @@
             font_size: '12sp'
             canvas.before:
                 Color:
-                    rgba: app.theme_cls.primary_dark
+                    rgba: root.outer_color
                 RoundedRectangle:
                     radius: [self.size[0] / 2, ]
                     size: self.size
@@ -59,8 +67,34 @@
 
     MDIconButton:
         icon: "home"
-        on_release: app.root.windows.return_homepage("right")
+        on_release: root.remove_waypoint_markers(); app.root.windows.return_homepage("right")
         height: "44pt"
         width: self.height 
         pos_hint: {"top": 0.95, "x": 0.05}
-        md_bg_color: app.theme_cls.primary_color
+        md_bg_color: 0, 0, 0, 0
+        canvas.before:
+            Color:
+                rgba: app.theme_cls.primary_dark
+            RoundedRectangle:
+                radius: [self.width/2.0, ]
+                size: [self.width * 1.05, self.height * 1.05]
+                pos: [self.x - self.width * .05 / 2, self.y - self.height * .05 / 2]
+            Color:
+                rgba: app.theme_cls.primary_color
+            RoundedRectangle:
+                radius: [self.width/2.0, ]
+                size: self.size
+                pos: self.pos
+
+    MDFillRoundFlatButton:         
+        id: google_maps_button
+        url: 'url'   
+        md_bg_color: 0.29, 0.54, 0.95, 1
+        pos_hint: {"center_x": 0.5, "y": 0.025}
+        size_hint: 0.55, 0.07
+        on_release: app.root.routepage.open_google_maps(self.url)
+
+        
+        Label:
+            font_size: "22sp"
+            text: "Open on Google Maps"

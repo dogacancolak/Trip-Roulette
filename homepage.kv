@@ -50,12 +50,13 @@
         MDSlider:
             id: duration_slider
             min: 1
-            max: 12
-            value: 4
+            max: 6
+            value: 2
             hint: False
             on_value: root.update_slider_values(self, self.value, "duration")
         Label:
-            text: str(round(duration_slider.value)) + " hours"
+            hour: ' hours' if round(duration_slider.value) > 1 else ' hour'
+            text: str(round(duration_slider.value)) + self.hour
 
     GridLayout:
         cols: 3

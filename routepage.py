@@ -5,23 +5,28 @@ from kivy.clock import Clock
 from kivy.properties import ObjectProperty
 from kivy.uix.screenmanager import Screen
 from kivy.uix.image import Image
-from amciks import waypoints, url, route
+from kivy.uix.bubble import Bubble 
+
+# from amciks import waypoints, url, route
+from waypoint_logos import waypoint_logos
 
 from kivy.garden.mapview import MapMarkerPopup, MapMarker, MapView
 from kivymd.uix.button import MDFloatingActionButtonSpeedDial, MDIconButton
+from kivymd.uix.toolbar import MDToolbar
+
 import trip
 import concurrent.futures
 import time
 import webbrowser
 import threading
-from kivymd.uix.toolbar import MDToolbar
-
-
-waypoint_logos = {'restaurant': 'food-fork-drink', 'cafe': 'coffee', 'bar': 'glass-wine', 'bowling_alley': 'bowling', 'amusement_park': 'ferris-wheel', 'casino': 'cards-playing-outline', 'spa': 'spa-outline', 'night_club': 'party-popper', 'movie_theater': 'theater', 'tourist_attraction': 'camera-outline', 'art_gallery': 'image-frame', 'aquarium': 'jellyfish-outline'}
+from functools import partial
 
 class RouteMapView(MapView):
     pass
     
+class WaypointBubble(Bubble):
+    pass
+
 class Waypoint(MapMarker):
     pass
 
@@ -30,16 +35,16 @@ class PageToolbar(MDToolbar):
 
 class RoutePage(Screen):
     map = ObjectProperty(None)
+    waypoint_markers = []
 
     def generate(self):
-
         executor = concurrent.futures.ThreadPoolExecutor(max_workers=2)
         executor.submit(self.show_loading_page)
 
-        f2 = executor.submit(self.test_function)
+        # f2 = executor.submit(self.test_function)
 
         trip_details = []
-        # f2 = executor.submit(trip.generate_trip, trip_details)
+        f2 = executor.submit(trip.generate_trip, trip_details)
         
         def callback(future, *args):
             self.show_route_page(trip_details)
@@ -52,9 +57,12 @@ class RoutePage(Screen):
         app.root.windows.current = app.root.routepage.name
         self.map.center_on(app.user_info.lat, app.user_info.lon)
 
-        # waypoints = trip_details[0]
-        # url       = trip_details[1]
-        # route     = trip_details[2]
+        gps_blinker = self.map.ids.blinker
+        gps_blinker.blink()
+
+        waypoints = trip_details[0]
+        url       = trip_details[1]
+        route     = trip_details[2]
         
         if not route:
             app.root.windows.return_homepage()
@@ -64,7 +72,7 @@ class RoutePage(Screen):
 
         self.center_map_on_route(route)
             
-        # webbrowser.open(url)
+        self.ids.google_maps_button.url = url
 
     def add_waypoint_markers(self, waypoints):
         for index, point in enumerate(waypoints):             # a 'point' is e.g. {'restaurant': json_place}
@@ -72,11 +80,26 @@ class RoutePage(Screen):
             point = point[place_type]
             lat = point['geometry']['location']['lat']
             lon = point['geometry']['location']['lng']
-            m   = Waypoint(lat=lat, lon=lon, )
-            m.ids.waypoint_order.text = str(index + 1)
+            m   = Waypoint(lat=lat, lon=lon)
+
             if place_type in waypoint_logos:
-                m.ids.logo.icon = waypoint_logos[place_type]
+                outer_color = [color / 255 for color in waypoint_logos[place_type][2][:3]] + [1]
+                inner_color = [color / 255 for color in waypoint_logos[place_type][1][:3]] + [1]
+                m.ids.logo.icon = waypoint_logos[place_type][0]
+                m.outer_color = outer_color
+                m.inner_color = inner_color
+
+            buttoncallback = partial(self.show_place_details, point, m)
+            m.ids.logo.bind(on_press=buttoncallback)
+
+            m.ids.waypoint_order.text = str(index + 1)
+
             self.map.add_marker(m)
+            self.waypoint_markers.append(m)
+
+    def remove_waypoint_markers(self):
+        for m in self.waypoint_markers:
+            self.map.remove_marker(m)
 
     def center_map_on_route(self, route):
         sw_bounds = route['bounds']['southwest']
@@ -93,13 +116,19 @@ class RoutePage(Screen):
             if x1 < sw_bounds['lat'] and y1 < sw_bounds['lng'] and x2 > ne_bounds['lat'] and y2 > ne_bounds['lng']:
                 break
 
+    def open_google_maps(self, url):
+        webbrowser.open(url)
+
     def show_loading_page(self, *args):
         app = App.get_running_app()
 
         app.root.homepage.dialog.dismiss()
         app.root.windows.current = app.root.loadingpage.name
 
+    def show_place_details(self, point, marker, instance):
+        b = WaypointBubble()
+        b.bind(center_x=marker.ids.logo.center_x)
+        marker.add_widget(b)
+
     def test_function(self):
         time.sleep(1)
-
-
