@@ -84,9 +84,6 @@ class DrawerList(ThemableBehavior, MDList):
                 break
         instance_item.text_color = self.theme_cls.text_color
 
-class SettingsButton(MDIconButton):
-    pass
-
 class PageToolbar(MDToolbar):
     pass
 

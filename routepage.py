@@ -5,7 +5,7 @@ from kivy.clock import Clock
 from kivy.properties import ObjectProperty
 from kivy.uix.screenmanager import Screen
 from kivy.uix.image import Image
-# from amciks import waypoints, url, route
+from amciks import waypoints, url, route
 
 from kivy.garden.mapview import MapMarkerPopup, MapMarker, MapView
 
@@ -31,10 +31,10 @@ class RoutePage(Screen):
         executor = concurrent.futures.ThreadPoolExecutor(max_workers=2)
         executor.submit(self.show_loading_page)
 
-        # f2 = executor.submit(self.test_function)
+        f2 = executor.submit(self.test_function)
 
         trip_details = []
-        f2 = executor.submit(trip.generate_trip, trip_details)
+        # f2 = executor.submit(trip.generate_trip, trip_details)
         
         def callback(future, *args):
             self.show_route_page(trip_details)
@@ -47,9 +47,9 @@ class RoutePage(Screen):
         app.root.windows.current = app.root.routepage.name
         self.map.center_on(app.user_info.lat, app.user_info.lon)
 
-        waypoints = trip_details[0]
-        url       = trip_details[1]
-        route     = trip_details[2]
+        # waypoints = trip_details[0]
+        # url       = trip_details[1]
+        # route     = trip_details[2]
         
         if not route:
             app.root.windows.return_homepage()
@@ -62,22 +62,16 @@ class RoutePage(Screen):
         # webbrowser.open(url)
 
     def add_waypoint_markers(self, waypoints):
-        for point in waypoints:             # a 'point' is e.g. {'restaurant': json_place}
+        for index, point in enumerate(waypoints):             # a 'point' is e.g. {'restaurant': json_place}
             place_type = next(iter(point))
             point = point[place_type]
             lat = point['geometry']['location']['lat']
             lon = point['geometry']['location']['lng']
-            m   = Waypoint(lat=lat, lon=lon)
+            m   = Waypoint(lat=lat, lon=lon, )
+            m.ids.waypoint_order = str(index + 1)
             if place_type in waypoint_logos:
                 m.ids.logo.icon = waypoint_logos[place_type]
             self.map.add_marker(m)
-
-        # app = App.get_running_app()
-        # print('hes')
-        # m = MapMarkerPopup(lat=app.user_info.lat, lon=app.user_info.lon)
-
-        # # m = Waypoint(lat=app.user_info.lat, lon=app.user_info.lon)
-        # self.map.add_widget(m)
 
     def center_map_on_route(self, route):
         sw_bounds = route['bounds']['southwest']
@@ -87,7 +81,7 @@ class RoutePage(Screen):
         route_area_center_lon = (sw_bounds['lng'] + ne_bounds['lng']) / 2
 
         # zoom out until route fits on the map
-        for zoom in reversed(range(18)):    # max zoom is 17
+        for zoom in reversed(range(16)):    # max zoom is 15
             self.map.zoom = zoom
             self.map.center_on(route_area_center_lat, route_area_center_lon)
             x1, y1, x2, y2 = self.map.get_bbox()
