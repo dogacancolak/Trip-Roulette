@@ -50,8 +50,8 @@ class GpsHelper():
         gps_blinker = App.get_running_app().root.homepage.map.ids.blinker
         gps_blinker.lat = my_lat
         gps_blinker.lon = my_lon
-        App.get_running_app().user_info.lat = my_lat
-        App.get_running_app().user_info.lon = my_lon
+        App.get_running_app().user_info.gps_lat = my_lat
+        App.get_running_app().user_info.gps_lon = my_lon
 
         # Center map on gps
         if not self.has_centered_map:

@@ -5,9 +5,9 @@ from kivy.clock import Clock
 from kivy.properties import ObjectProperty
 from kivy.uix.screenmanager import Screen
 from kivy.uix.image import Image
-from amciks import waypoints, url, route
+# from amciks import waypoints, url, route
 
-from kivy.garden.mapview import MapMarkerPopup, MapMarker
+from kivy.garden.mapview import MapMarkerPopup, MapMarker, MapView
 
 import trip
 import concurrent.futures
@@ -17,6 +17,9 @@ import threading
 
 waypoint_logos = {'restaurant': 'food-fork-drink', 'cafe': 'coffee', 'bar': 'glass-wine', 'bowling_alley': 'bowling', 'amusement_park': 'ferris-wheel', 'casino': 'cards-playing-outline', 'spa': 'spa-outline', 'night_club': 'party-popper', 'movie_theater': 'theater', 'tourist_attraction': 'camera-outline', 'art_gallery': 'image-frame', 'aquarium': 'jellyfish-outline'}
 
+class RouteMapView(MapView):
+    pass
+    
 class Waypoint(MapMarker):
     pass
 
@@ -28,10 +31,10 @@ class RoutePage(Screen):
         executor = concurrent.futures.ThreadPoolExecutor(max_workers=2)
         executor.submit(self.show_loading_page)
 
-        f2 = executor.submit(self.test_function)
+        # f2 = executor.submit(self.test_function)
 
         trip_details = []
-        # f2 = executor.submit(trip.generate_trip, trip_details)
+        f2 = executor.submit(trip.generate_trip, trip_details)
         
         def callback(future, *args):
             self.show_route_page(trip_details)
@@ -44,14 +47,10 @@ class RoutePage(Screen):
         app.root.windows.current = app.root.routepage.name
         self.map.center_on(app.user_info.lat, app.user_info.lon)
 
-        # waypoints = trip_details[0]
-        # url       = trip_details[1]
-        # route     = trip_details[2]
+        waypoints = trip_details[0]
+        url       = trip_details[1]
+        route     = trip_details[2]
         
-        print(waypoints, '\n')
-        print(url, '\n')
-        print(route, '\n')
-
         if not route:
             app.root.windows.return_homepage()
             return

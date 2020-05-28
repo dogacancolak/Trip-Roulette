@@ -4,7 +4,7 @@
 #:import MapSource kivy.garden.mapview.MapSource
 #:import GpsBlinker gpsblinker.GpsBlinker
 
-<MapView>:
+<RouteMapView>:
     zoom: 15
     double_tap_zoom: True
     map_source: MapSource(min_zoom=10, max_zoom=17)
@@ -31,7 +31,7 @@
     name: "Route Page"    
     map: mapview
 
-    MapView:
+    RouteMapView:
         id: mapview
     # GpsBlinker:
     #     id: blinker
