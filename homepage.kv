@@ -6,10 +6,10 @@
 #:include gpsblinker.kv
 #:import Toast kivymd.toast
 
-<MapView>:
+<HomeMapView>:
     zoom: 15
     double_tap_zoom: True
-    map_source: MapSource(min_zoom=10, max_zoom=17)
+    map_source: MapSource(min_zoom=10, max_zoom=15)
     GpsBlinker:
         id: blinker
     
@@ -83,36 +83,36 @@
     size_hint: 0.7, 0.4
     pos_hint: {"center_x": 0.5, "center_y": 0.5}
     
+<SearchCircle>:
+    canvas:
+        Color: 
+            rgba: app.theme_cls.primary_dark[:3] + [0.3]
+        RoundedRectangle: 
+            group: 'a'
+            size:(self.width/2, self.width/2)
+            pos: (self.width / 4, root.height/2 - self.width / 4)
+            radius:[self.width/2,]
+
+        Color: 
+            rgba: app.theme_cls.primary_dark
+        RoundedRectangle: 
+            group: 'b'
+            size:(self.width/48, self.width/48)
+            pos: (self.width / 2 - self.width / 96, root.height/2 - self.width / 96)
+            radius:[self.width/48,]
+
 <HomePage>:
     name: "HomePage"
     map: mapview
-    
-    MapView:
+    circle: circle
+
+    HomeMapView:
         id: mapview
 
     FloatLayout:
     
-        Widget:
+        SearchCircle:
             id: circle
-            canvas:
-                # opacity: 0.3
-                Color: 
-                    rgba: app.theme_cls.primary_dark[:3] + [0.3]
-                RoundedRectangle: 
-                    group: 'a'
-                    size:(self.width/2, self.width/2)
-                    pos: (self.width / 4, root.height/2 - self.width / 4)
-                    radius:[400,]
-    
-                Color: 
-                    rgba: app.theme_cls.primary_dark
-                RoundedRectangle: 
-                    group: 'b'
-                    size:(self.width/48, self.width/48)
-                    pos: (self.width / 2 - self.width / 96, root.height/2 - self.width / 96)
-                    radius:[400,]
-            
-            
 
         SettingsButton:
             height: gps.height
@@ -123,7 +123,7 @@
             md_bg_color: app.theme_cls.primary_color
             pos_hint: {"center_x": 0.5, "y": 0.025}
             size_hint: 0.55, 0.07
-            on_release: root.show_confirmation_dialog()
+            on_release: app.user_info.lat = mapview.lat; app.user_info.lon = mapview.lon; circle.set_search_radius(); root.show_confirmation_dialog()
            
             Label:
                 font_size: "22sp"
@@ -150,7 +150,7 @@
             pos: "14pt", "14pt"
             width: self.height 
             md_bg_color: app.theme_cls.primary_color
-            on_release: mapview.center_on(app.user_info.lat, app.user_info.lon); mapview.zoom = 15
+            on_release: mapview.center_on(app.user_info.gps_lat, app.user_info.gps_lon)
            
         TransportOptions:
             id: transport
