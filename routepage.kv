@@ -12,11 +12,12 @@
     GpsBlinker:
         id: blinker
 
-<WaypointBubble>:
-    Bubble:
-        size_hint: (None, None) 
-        # pos: self.parent.center_x - self.width / 2, self.parent.top + 10 
-        size: (500, 500) 
+<WaypointDialog>:
+    title_align: 'center'
+    title_size: '18sp'
+    separator_color: app.theme_cls.primary_color
+    size_hint: 0.7, 0.4
+    pos_hint: {"center_x": 0.5, "center_y": 0.5}
 
 <Waypoint>:
     source: 'KivyMD/kivymd/images/transparent.png'

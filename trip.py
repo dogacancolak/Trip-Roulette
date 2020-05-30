@@ -46,6 +46,7 @@ def generate_trip(trip_details):
         for dictionary in results:
             if dictionary:
                 key = next(iter(dictionary))
+                print(key, ": ", len(dictionary[key]))
                 if key in user_info.food:
                     food_places.update(dictionary)
                 elif key in user_info.interests:

@@ -6,6 +6,8 @@ from kivy.properties import ObjectProperty
 from kivy.uix.screenmanager import Screen
 from kivy.uix.image import Image
 from kivy.uix.bubble import Bubble 
+from kivy.uix.popup import Popup
+from kivy.uix.image import AsyncImage
 
 # from amciks import waypoints, url, route
 from waypoint_logos import waypoint_logos
@@ -19,12 +21,14 @@ import concurrent.futures
 import time
 import webbrowser
 import threading
+import urllib
+import json
 from functools import partial
 
 class RouteMapView(MapView):
     pass
     
-class WaypointBubble(Bubble):
+class WaypointDialog(Popup):
     pass
 
 class Waypoint(MapMarker):
@@ -36,6 +40,7 @@ class PageToolbar(MDToolbar):
 class RoutePage(Screen):
     map = ObjectProperty(None)
     waypoint_markers = []
+    dialog = None
 
     def generate(self):
         executor = concurrent.futures.ThreadPoolExecutor(max_workers=2)
@@ -65,7 +70,7 @@ class RoutePage(Screen):
         route     = trip_details[2]
         
         if not route:
-            app.root.windows.return_homepage()
+            app.root.windows.return_homepage('right')
             return
 
         self.add_waypoint_markers(waypoints)
@@ -83,8 +88,8 @@ class RoutePage(Screen):
             m   = Waypoint(lat=lat, lon=lon)
 
             if place_type in waypoint_logos:
-                outer_color = [color / 255 for color in waypoint_logos[place_type][2][:3]] + [1]
-                inner_color = [color / 255 for color in waypoint_logos[place_type][1][:3]] + [1]
+                outer_color = [color / 255 for color in waypoint_logos[place_type][2]] + [1]
+                inner_color = [color / 255 for color in waypoint_logos[place_type][1]] + [1]
                 m.ids.logo.icon = waypoint_logos[place_type][0]
                 m.outer_color = outer_color
                 m.inner_color = inner_color
@@ -100,6 +105,7 @@ class RoutePage(Screen):
     def remove_waypoint_markers(self):
         for m in self.waypoint_markers:
             self.map.remove_marker(m)
+        self.waypoint_markers = []
 
     def center_map_on_route(self, route):
         sw_bounds = route['bounds']['southwest']
@@ -126,9 +132,19 @@ class RoutePage(Screen):
         app.root.windows.current = app.root.loadingpage.name
 
     def show_place_details(self, point, marker, instance):
-        b = WaypointBubble(pos=(marker.center_x, marker.top))
-        b.bind()
-        marker.add_widget(b)
+
+        self.dialog = WaypointDialog(title=point['name'])
+
+        request = 'https://maps.googleapis.com/maps/api/place/photo?'
+        key     = 'key=AIzaSyDnNL7QG3n7CDhT1OfX4CCzbOW3KkudlVY'
+        maxwidth = '&maxwidth=' + '1500'
+        ref = '&photoreference=' + point['photos'][0]['photo_reference']
+        source = request + key + ref + maxwidth + '&ext=.png'
+        img = AsyncImage(source=source)
+        self.dialog.add_widget(img)
+
+        self.dialog.open()
+
 
     def test_function(self):
         time.sleep(1)

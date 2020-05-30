@@ -46,7 +46,8 @@ def get_places_in_radius(user_info, place):
             token = response["next_page_token"]
 
         result[place] = response["results"]
-
+    else:
+        print(place, ' sekmis')
 
     while token:
 
