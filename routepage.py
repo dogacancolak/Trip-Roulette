@@ -126,8 +126,8 @@ class RoutePage(Screen):
         app.root.windows.current = app.root.loadingpage.name
 
     def show_place_details(self, point, marker, instance):
-        b = WaypointBubble()
-        b.bind(center_x=marker.ids.logo.center_x)
+        b = WaypointBubble(pos=(marker.center_x, marker.top))
+        b.bind()
         marker.add_widget(b)
 
     def test_function(self):
