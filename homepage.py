@@ -12,6 +12,12 @@ from kivymd.toast import toast
 from kivymd.uix.button import MDFloatingActionButtonSpeedDial, MDIconButton
 from kivy.graphics import *
 
+from kivy.utils import platform
+if platform == "ios":
+    from os.path import join, dirname
+    import kivy.garden
+    kivy.garden.garden_app_dir = join(dirname(__file__), "libs", "garden")
+    
 from kivy.garden.mapview import MapMarkerPopup, MapMarker, MapView
 
 from geopy import distance

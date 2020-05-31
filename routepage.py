@@ -12,6 +12,12 @@ from kivy.uix.image import AsyncImage
 # from amciks import waypoints, url, route
 from waypoint_logos import waypoint_logos
 
+from kivy.utils import platform
+if platform == "ios":
+    from os.path import join, dirname
+    import kivy.garden
+    kivy.garden.garden_app_dir = join(dirname(__file__), "libs", "garden")
+    
 from kivy.garden.mapview import MapMarkerPopup, MapMarker, MapView
 from kivymd.uix.button import MDFloatingActionButtonSpeedDial, MDIconButton
 from kivymd.uix.toolbar import MDToolbar
@@ -135,13 +141,14 @@ class RoutePage(Screen):
 
         self.dialog = WaypointDialog(title=point['name'])
 
-        request = 'https://maps.googleapis.com/maps/api/place/photo?'
-        key     = 'key=AIzaSyDnNL7QG3n7CDhT1OfX4CCzbOW3KkudlVY'
-        maxwidth = '&maxwidth=' + '1500'
-        ref = '&photoreference=' + point['photos'][0]['photo_reference']
-        source = request + key + ref + maxwidth + '&ext=.png'
-        img = AsyncImage(source=source)
-        self.dialog.add_widget(img)
+        if point['photos']:
+            request = 'https://maps.googleapis.com/maps/api/place/photo?'
+            key     = 'key=AIzaSyDnNL7QG3n7CDhT1OfX4CCzbOW3KkudlVY'
+            maxwidth = '&maxwidth=' + '1500'
+            ref = '&photoreference=' + point['photos'][0]['photo_reference']
+            source = request + key + ref + maxwidth + '&ext=.png'
+            img = AsyncImage(source=source)
+            self.dialog.add_widget(img)
 
         self.dialog.open()
 
