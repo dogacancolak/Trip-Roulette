@@ -86,8 +86,6 @@
     
 <SettingsButton>:
     icon: "settings"
-    pos_hint: {"top": 0.95, "x": 0.05}
-    height: self.width
     on_release: app.root.nav_drawer.set_state("open")
     md_bg_color: 0, 0, 0, 0
     canvas.before:
@@ -127,6 +125,7 @@
     name: "HomePage"
     map: mapview
     circle: circle
+    speed_dial: transport
 
     HomeMapView:
         id: mapview
@@ -139,7 +138,7 @@
         SettingsButton:
             height: gps.height
             width:  gps.width
-            pos_x: 20
+            pos: (gps.x, root.height - root.get_speed_dial_root_button().top)
 
         MDFillRoundFlatButton:            
             md_bg_color: app.theme_cls.primary_color
@@ -150,24 +149,12 @@
             Label:
                 font_size: "22sp"
                 text: "Generate Trip"
-                
-        # MDRoundFlatButton:
-        #     text: "Log In"
-        #     text_color: app.theme_cls.primary_color
-        #     pos_hint: {"center_x": 0.25, "y": 0.15}
-        #     size: account_create.size
-
-        # MDRoundFlatButton:
-        #     id: account_create
-        #     text: "Create Account"
-        #     text_color: app.theme_cls.primary_color
-        #     pos_hint: {"center_x": 0.75, "y": 0.15}
             
         MDIconButton:
             id: gps
             icon: "crosshairs-gps"
-            height: "44pt"
-            pos: "14pt", "14pt"
+            size: root.get_speed_dial_root_button().size
+            pos: (root.width - root.get_speed_dial_root_button().right, root.get_speed_dial_root_button().y)
             width: self.height 
             on_release: mapview.center_on(app.user_info.gps_lat, app.user_info.gps_lon)
             md_bg_color: 0, 0, 0, 0

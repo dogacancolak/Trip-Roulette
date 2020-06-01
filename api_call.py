@@ -2,6 +2,8 @@ import urllib.request
 import json
 import time
 import timeit
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
 
 valid_location_types = {"airport", "hindu_temple", "library", \
                         "amusement_park", "aquarium",\

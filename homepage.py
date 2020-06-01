@@ -9,7 +9,7 @@ from kivy.uix.widget import Widget
 from kivymd.theming import ThemableBehavior,ThemeManager
 from kivymd import images_path
 from kivymd.toast import toast
-from kivymd.uix.button import MDFloatingActionButtonSpeedDial, MDIconButton
+from kivymd.uix.button import MDFloatingActionButtonSpeedDial, MDIconButton, MDFloatingRootButton
 from kivy.graphics import *
 
 from kivy.utils import platform
@@ -103,6 +103,12 @@ class HomePage(Screen):
     map = ObjectProperty(None)
     dialog = None
     circle = ObjectProperty(None)
+    speed_dial = ObjectProperty(None)
+
+    def get_speed_dial_root_button(self):
+        for widget in self.speed_dial.children:
+            if isinstance(widget, MDFloatingRootButton):
+                return widget
 
     def toast_pop(self):
         toast("Please include at least one interest")

@@ -16,8 +16,17 @@ MIN_LATITUDE = -90.
 MAX_LATITUDE = 90.
 MIN_LONGITUDE = -180.
 MAX_LONGITUDE = 180.
-CACHE_DIR = "cache"
-
+from kivy.utils import platform
+from kivy.app import App
+import os.path
+if platform == 'ios': # Erik Sandberg fix 10/14/2018
+    root_folder = App().user_data_dir
+    CACHE_DIR = os.path.join(root_folder, 'cache')
+    cache_folder = os.path.join(root_folder, 'cache')
+    CACHE_DIR = cache_folder
+    #CACHE_DIR = "Library/Caches"
+else:
+    CACHE_DIR = "cache"
 try:
     # fix if used within garden
     import sys

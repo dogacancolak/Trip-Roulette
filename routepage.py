@@ -101,7 +101,7 @@ class RoutePage(Screen):
                 m.inner_color = inner_color
 
             buttoncallback = partial(self.show_place_details, point, m)
-            m.ids.logo.bind(on_press=buttoncallback)
+            m.ids.logo.bind(on_release=buttoncallback)
 
             m.ids.waypoint_order.text = str(index + 1)
 
@@ -141,14 +141,14 @@ class RoutePage(Screen):
 
         self.dialog = WaypointDialog(title=point['name'])
 
-        if point['photos']:
-            request = 'https://maps.googleapis.com/maps/api/place/photo?'
-            key     = 'key=AIzaSyDnNL7QG3n7CDhT1OfX4CCzbOW3KkudlVY'
-            maxwidth = '&maxwidth=' + '1500'
-            ref = '&photoreference=' + point['photos'][0]['photo_reference']
-            source = request + key + ref + maxwidth + '&ext=.png'
-            img = AsyncImage(source=source)
-            self.dialog.add_widget(img)
+        if 'photos' in point and point['photos']:
+                request = 'https://maps.googleapis.com/maps/api/place/photo?'
+                key     = 'key=AIzaSyDnNL7QG3n7CDhT1OfX4CCzbOW3KkudlVY'
+                maxwidth = '&maxwidth=' + '1500'
+                ref = '&photoreference=' + point['photos'][0]['photo_reference']
+                source = request + key + ref + maxwidth + '&ext=.png'
+                img = AsyncImage(source=source)
+                self.dialog.add_widget(img)
 
         self.dialog.open()
 
