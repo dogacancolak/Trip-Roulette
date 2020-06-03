@@ -2,13 +2,13 @@
 #:include helppage.kv
 #:include formpage.kv
 #:include routepage.kv
-
-            
+#:import sm kivy.uix.screenmanager
+         
 <ItemDrawer>:   
     on_release: 
         self.parent.set_color_item(self)
         app.root.windows.current = self.text
-        app.root.windows.current_screen.manager.transition.direction = "right"
+        app.root.windows.current_screen.manager.transition = sm.NoTransition()
         app.root.nav_drawer.set_state("close")
     
     IconLeftWidget:
