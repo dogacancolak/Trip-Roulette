@@ -9,7 +9,6 @@ from kivy.uix.bubble import Bubble
 from kivy.uix.popup import Popup
 from kivy.uix.image import AsyncImage
 
-# from amciks import waypoints, url, route
 from waypoint_logos import waypoint_logos
 
 from kivy.utils import platform
@@ -52,8 +51,6 @@ class RoutePage(Screen):
         executor = concurrent.futures.ThreadPoolExecutor(max_workers=2)
         executor.submit(self.show_loading_page)
 
-        # f2 = executor.submit(self.test_function)
-
         trip_details = []
         f2 = executor.submit(trip.generate_trip, trip_details)
         
@@ -67,9 +64,6 @@ class RoutePage(Screen):
         app = App.get_running_app()
         app.root.windows.current = app.root.routepage.name
         self.map.center_on(app.user_info.lat, app.user_info.lon)
-
-        gps_blinker = self.map.ids.blinker
-        gps_blinker.blink()
 
         waypoints = trip_details[0]
         url       = trip_details[1]
@@ -151,7 +145,3 @@ class RoutePage(Screen):
                 self.dialog.add_widget(img)
 
         self.dialog.open()
-
-
-    def test_function(self):
-        time.sleep(1)

@@ -70,8 +70,9 @@
             on_value: root.update_slider_values(self, self.value, "budget")
         FloatLayout:
             MDFillRoundFlatButton:
-                text: "Generate"
-                size_hint: 0.8, 0.6
+                text: "Go!"
+                font_name: 'fonts/Roboto-Bold.ttf'
+                size_hint: 0.9, 0.8
                 pos_hint: {'center_x': .5, 'center_y': .5}
                 on_release:
                     if app.user_info.interests or app.user_info.food: app.root.routepage.generate()
@@ -151,6 +152,7 @@
            
             Label:
                 font_size: "22sp"
+                font_name: 'fonts/Roboto-Bold.ttf'
                 text: "Generate Trip"
             
         MDIconButton:
