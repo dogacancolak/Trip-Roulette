@@ -88,9 +88,6 @@ class TransportOptions(MDFloatingActionButtonSpeedDial):
         elif selection == 'car':
             transport = 'driving'
             map.zoom = 11
-        elif selection == 'bus':
-            transport = 'transit'
-            map.zoom = 12
         elif selection == 'walk':
             transport = 'walking'
             map.zoom = 15

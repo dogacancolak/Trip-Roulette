@@ -46,7 +46,7 @@
         cols: 3
         Label:
             id: duration_label
-            text: "Trip Duration:" 
+            text: "Duration:" 
         MDSlider:
             id: duration_slider
             min: 1
@@ -136,15 +136,18 @@
             id: circle
 
         SettingsButton:
+            id: settings_button
             height: gps.height
             width:  gps.width
             pos: (gps.x, root.height - root.get_speed_dial_root_button().top)
 
-        MDFillRoundFlatButton:            
+        MDFillRoundFlatButton:
             md_bg_color: app.theme_cls.primary_color
-            pos_hint: {"center_x": 0.5, "y": 0.025}
-            size_hint: 0.55, 0.07
-            on_release: app.user_info.lat = mapview.lat; app.user_info.lon = mapview.lon; circle.set_search_radius(); root.show_confirmation_dialog()
+            pos_hint: {"center_x": 0.5}
+            y: gps.y
+            height: gps.height
+            width: root.width - gps.right * 2 - 30
+            on_release: app.root.routepage.ids.homebutton.pos = settings_button.pos; app.root.routepage.ids.homebutton.size = settings_button.size; app.user_info.lat = mapview.lat; app.user_info.lon = mapview.lon; circle.set_search_radius(); root.show_confirmation_dialog()
            
             Label:
                 font_size: "22sp"
@@ -174,7 +177,9 @@
 
         TransportOptions:
             id: transport
-            data: {'bicycle': '', 'car': '', 'walk': '', 'bus': ''}
+            data: {'bicycle': '', 'car': '', 'walk': ''}
+            color_icon_root_button: 1, 1, 1, 1
+            color_icon_stack_button: 1, 1, 1, 1
             md_bg_color: app.theme_cls.primary_dark  
             callback: self.update_transport
             pos_hint: {"center_y": 0.5}

@@ -87,9 +87,6 @@ class DrawerList(ThemableBehavior, MDList):
 class PageToolbar(MDToolbar):
     pass
 
-class LogPage(Screen):
-    pass
-
 class HelpPage(Screen):
     pass
 
@@ -125,8 +122,7 @@ class TripRouletteApp(MDApp):
         icons_item = {
             "account": "How It Works",
             "city-variant-outline": "Personalize",
-            "login": "Log Out/Log In",
-            "help": "Help",
+            "help": "Help"
         }
 
         for icon_name in icons_item.keys():
