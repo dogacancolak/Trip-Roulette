@@ -37,7 +37,7 @@ from formpage import FormPage
 from routepage import RoutePage
 
 from kivy.core.window import Window
-Window.size = (450, 775)
+Window.fullscreen = 'auto'
 
 class UserInfo:
     # FIELDS:
