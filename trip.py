@@ -46,7 +46,6 @@ def generate_trip(trip_details):
         for dictionary in results:
             if dictionary:
                 key = next(iter(dictionary))
-                print(key, ": ", len(dictionary[key]))
                 if key in user_info.food:
                     food_places.update(dictionary)
                 elif key in user_info.interests:
@@ -65,7 +64,7 @@ def generate_trip(trip_details):
     for value in interest_places.values():
         count += len(value)          
 
-    print("number of interest + food: ", count)
+    # print("number of interest + food: ", count)
     
     if not interest_places and not food_places:
         toast("No places found nearby. Please expand your options.")
@@ -107,7 +106,7 @@ def generate_trip(trip_details):
             route = route_details[0]
             time_spent = route_details[1]
         entered = True
-        print("trip length too long", file=sys.stderr)
+        # print("trip length too long", file=sys.stderr)
 
     if not entered:
         while time_spent < user_info.trip_length - 40:
@@ -120,7 +119,7 @@ def generate_trip(trip_details):
                 route = route_details[0]
                 time_spent = route_details[1]
                 
-            print("trip length too short", file=sys.stderr)
+            # print("trip length too short", file=sys.stderr)
 
     route_time = time.time() - route_start_time
     # print("while loops", file=sys.stderr)
@@ -132,12 +131,12 @@ def generate_trip(trip_details):
         
     url = generate_url(waypoints)
 
-    print("Time spent: ", time_spent/60, file=sys.stderr)
+    # print("Time spent: ", time_spent/60, file=sys.stderr)
     
-    all_time = time.time() - start
-    print("Data population took: " , data_pop_time , "seconds")
-    print("Route Optimization took: ", route_time)
-    print("Runtime is: " , all_time)
+    # all_time = time.time() - start
+    # print("Data population took: " , data_pop_time , "seconds")
+    # print("Route Optimization took: ", route_time)
+    # print("Runtime is: " , all_time)
     
     trip_details.append(waypoints)
     trip_details.append(url)
@@ -245,7 +244,7 @@ def add_waypoint(waypoints):
 
     while True:
         if not interest_places:
-            print("No interests left, could not add waypoint", file=sys.stderr)
+            # print("No interests left, could not add waypoint", file=sys.stderr)
             return False
         else:
             key = random.choice(list(interest_places))

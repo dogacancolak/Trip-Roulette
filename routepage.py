@@ -9,9 +9,14 @@ from kivy.uix.bubble import Bubble
 from kivy.uix.popup import Popup
 from kivy.uix.image import AsyncImage
 
-# from amciks import waypoints, url, route
 from waypoint_logos import waypoint_logos
 
+from kivy.utils import platform
+if platform == "ios":
+    from os.path import join, dirname
+    import kivy.garden
+    kivy.garden.garden_app_dir = join(dirname(__file__), "libs", "garden")
+    
 from kivy.garden.mapview import MapMarkerPopup, MapMarker, MapView
 from kivymd.uix.button import MDFloatingActionButtonSpeedDial, MDIconButton
 from kivymd.uix.toolbar import MDToolbar
@@ -46,8 +51,6 @@ class RoutePage(Screen):
         executor = concurrent.futures.ThreadPoolExecutor(max_workers=2)
         executor.submit(self.show_loading_page)
 
-        # f2 = executor.submit(self.test_function)
-
         trip_details = []
         f2 = executor.submit(trip.generate_trip, trip_details)
         
@@ -61,9 +64,6 @@ class RoutePage(Screen):
         app = App.get_running_app()
         app.root.windows.current = app.root.routepage.name
         self.map.center_on(app.user_info.lat, app.user_info.lon)
-
-        gps_blinker = self.map.ids.blinker
-        gps_blinker.blink()
 
         waypoints = trip_details[0]
         url       = trip_details[1]
@@ -95,7 +95,7 @@ class RoutePage(Screen):
                 m.inner_color = inner_color
 
             buttoncallback = partial(self.show_place_details, point, m)
-            m.ids.logo.bind(on_press=buttoncallback)
+            m.ids.logo.bind(on_release=buttoncallback)
 
             m.ids.waypoint_order.text = str(index + 1)
 
@@ -135,16 +135,13 @@ class RoutePage(Screen):
 
         self.dialog = WaypointDialog(title=point['name'])
 
-        request = 'https://maps.googleapis.com/maps/api/place/photo?'
-        key     = 'key=AIzaSyDnNL7QG3n7CDhT1OfX4CCzbOW3KkudlVY'
-        maxwidth = '&maxwidth=' + '1500'
-        ref = '&photoreference=' + point['photos'][0]['photo_reference']
-        source = request + key + ref + maxwidth + '&ext=.png'
-        img = AsyncImage(source=source)
-        self.dialog.add_widget(img)
+        if 'photos' in point and point['photos']:
+                request = 'https://maps.googleapis.com/maps/api/place/photo?'
+                key     = 'key=AIzaSyDnNL7QG3n7CDhT1OfX4CCzbOW3KkudlVY'
+                maxwidth = '&maxwidth=' + '1500'
+                ref = '&photoreference=' + point['photos'][0]['photo_reference']
+                source = request + key + ref + maxwidth + '&ext=.png'
+                img = AsyncImage(source=source)
+                self.dialog.add_widget(img)
 
         self.dialog.open()
-
-
-    def test_function(self):
-        time.sleep(1)

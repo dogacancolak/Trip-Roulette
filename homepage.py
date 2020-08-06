@@ -9,9 +9,15 @@ from kivy.uix.widget import Widget
 from kivymd.theming import ThemableBehavior,ThemeManager
 from kivymd import images_path
 from kivymd.toast import toast
-from kivymd.uix.button import MDFloatingActionButtonSpeedDial, MDIconButton
+from kivymd.uix.button import MDFloatingActionButtonSpeedDial, MDIconButton, MDFloatingRootButton
 from kivy.graphics import *
 
+from kivy.utils import platform
+if platform == "ios":
+    from os.path import join, dirname
+    import kivy.garden
+    kivy.garden.garden_app_dir = join(dirname(__file__), "libs", "garden")
+    
 from kivy.garden.mapview import MapMarkerPopup, MapMarker, MapView
 
 from geopy import distance
@@ -82,9 +88,6 @@ class TransportOptions(MDFloatingActionButtonSpeedDial):
         elif selection == 'car':
             transport = 'driving'
             map.zoom = 11
-        elif selection == 'bus':
-            transport = 'transit'
-            map.zoom = 12
         elif selection == 'walk':
             transport = 'walking'
             map.zoom = 15
@@ -97,6 +100,12 @@ class HomePage(Screen):
     map = ObjectProperty(None)
     dialog = None
     circle = ObjectProperty(None)
+    speed_dial = ObjectProperty(None)
+
+    def get_speed_dial_root_button(self):
+        for widget in self.speed_dial.children:
+            if isinstance(widget, MDFloatingRootButton):
+                return widget
 
     def toast_pop(self):
         toast("Please include at least one interest")

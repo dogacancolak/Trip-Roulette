@@ -2,13 +2,13 @@
 #:include helppage.kv
 #:include formpage.kv
 #:include routepage.kv
-
-            
+#:import sm kivy.uix.screenmanager
+         
 <ItemDrawer>:   
     on_release: 
         self.parent.set_color_item(self)
         app.root.windows.current = self.text
-        app.root.windows.current_screen.manager.transition.direction = "right"
+        app.root.windows.current_screen.manager.transition = sm.NoTransition()
         app.root.nav_drawer.set_state("close")
     
     IconLeftWidget:
@@ -52,11 +52,6 @@
         DrawerList:
             id: md_list
 
-    # MDToolbar:
-    #     title: "Navigation Drawer"
-    #     elevation: 10
-    #     left_action_items: [['menu', lambda x: nav_drawer.toggle_nav_drawer()]]
-
 <PageToolbar>
     right_action_items: [["keyboard-return", lambda x: app.root.windows.return_homepage("left")]]
     md_bg_color: app.theme_cls.accent_color
@@ -75,14 +70,6 @@
         line_height: 1.5
         valign: "middle"
         halign: "left"
-     
-        
-
-    
-<LogPage>
-    name: "Log Out/Log In"
-    PageToolbar:
-        title: root.name
 
 <LoadingPage>
     name: "LoadingPage"
@@ -117,8 +104,6 @@ MainScreen:
                 id: detailspage
             HelpPage:
                 id: helppage
-            LogPage:
-                id: logpage
             RoutePage:
                 id: routepage
             LoadingPage:
@@ -129,6 +114,3 @@ MainScreen:
 
             ContentNavigationDrawer:
                 id: content_drawer
-
-
-            
