@@ -1,8 +1,12 @@
+# config.py
+api_key = 'AIzaSyDnNL7QG3n7CDhT1OfX4CCzbOW3KkudlVY'
+
 import urllib.request
 import json
 import time
 import timeit
 import ssl
+import config
 ssl._create_default_https_context = ssl._create_unverified_context
 
 valid_location_types = {"airport", "hindu_temple", "library", \
@@ -25,7 +29,7 @@ def get_places_in_radius(user_info, place):
     radius    = user_info.radius
     max_price = user_info.budget
     
-    key            = 'AIzaSyDnNL7QG3n7CDhT1OfX4CCzbOW3KkudlVY'
+    key            = config.api_key
     endpoint       = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
     location       = str(lat) + ',' + str(lon)
     
