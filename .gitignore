@@ -4,3 +4,4 @@ KivyMD/
 .DS_Store
 *.pyc
 *.kv
+config.py
