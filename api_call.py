@@ -5,7 +5,6 @@ import json
 import time
 import timeit
 import ssl
-import config
 ssl._create_default_https_context = ssl._create_unverified_context
 
 valid_location_types = {"airport", "hindu_temple", "library", \
