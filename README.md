@@ -1,6 +1,6 @@
 # Trip-Roulette
 
-Trip Roulette is a cross-platform app that generates randomized daytrips around the user. 
+Trip Roulette is a cross-platform app that generates randomized day trips around the user. 
 
 ## Installation
 
