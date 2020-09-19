@@ -1,3 +1,6 @@
+from kivy.config import Config
+Config.set('graphics', 'fullscreen', '0')
+
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.properties import StringProperty, ObjectProperty, BooleanProperty

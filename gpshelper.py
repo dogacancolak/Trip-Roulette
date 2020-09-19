@@ -36,13 +36,13 @@ class GpsHelper():
                         #   on_status=self.on_auth_status)
             gps.start(minTime=1000, minDistance=0)
 
-        # else:
-        #     key = '58a2cf7603d503df29b6ed36d4d0a919'
-        #     send_url = 'http://api.ipstack.com/check?access_key=' + key
-        #     j = json.loads(urllib.request.urlopen(send_url).read())
-        #     lat = j['latitude']
-        #     lon = j['longitude']
-        #     self.update_blinker_position(lat=lat, lon=lon)
+        else:
+            key = '58a2cf7603d503df29b6ed36d4d0a919'
+            send_url = 'http://api.ipstack.com/check?access_key=' + key
+            j = json.loads(urllib.request.urlopen(send_url).read())
+            lat = j['latitude']
+            lon = j['longitude']
+            self.update_blinker_position(lat=lat, lon=lon)
 
     def update_blinker_position(self, *args, **kwargs):
         my_lat = kwargs['lat'] #
