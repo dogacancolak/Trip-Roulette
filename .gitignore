@@ -4,4 +4,6 @@ KivyMD/
 .DS_Store
 *.pyc
 *.kv
+
+# .gitignore 
 config.py
