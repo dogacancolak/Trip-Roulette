@@ -1,4 +1,5 @@
 
+import config
 import urllib.request
 import json
 import time
