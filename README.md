@@ -14,8 +14,7 @@ The product is currently on beta version where we do integration tests and could
 * After clicking on **Generate Trip** button, Trip Roulette generates a trip that you can finish in user-given timeframe. 
 
 ![Preferences](/demo/preferences.gif)
-![Demo1](/demo/demos.gif)
-![Demo2](/demo/demo2.gif)
+![Demo1](/demo/demo_trip.gif)
 
 ## How it works
 
