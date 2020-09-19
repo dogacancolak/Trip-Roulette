@@ -8,10 +8,11 @@ The product is currently on beta version where we do integration tests and could
 
 ## Usage
 
-![Map_feature](/demo/map_features.gif)
 * You can easily generate trips on **Trip Roulette** using the generate trip button. You can also personalize your trip to fit your interests and hobbies. Furthermore, simply adjust the trip length and average cost for further customization.
 * After clicking on **Generate Trip** button, Trip Roulette generates a trip that you can finish in user-given timeframe. 
 
+![Map_feature](/demo/map_features.gif)
+![Preferences](/demo/preferences.gif)
 ## How it works
 
 * Trip Roulette estimates the average time of travel by calculating the estimated time for transportation and combining it with average time spent on the tour stops.
