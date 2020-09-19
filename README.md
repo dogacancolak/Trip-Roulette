@@ -1,4 +1,4 @@
-![Preview](/demo/combined-trip.jpg]
+![Preview](/demo/combined-trip.jpg)
 
 # Trip-Roulette
 
