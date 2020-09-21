@@ -20,7 +20,7 @@ The product is currently on beta version where we do integration tests and could
 
 ## How it works
 
-* Trip Roulette estimates the average time of travel by calculating the estimated time for transportation and combining it with average time spent on the tour stops.
+Trip Roulette randomly chooses among nearby places that fit your interests, and generates a route that will take a duration of the user's choice.
 
 ## Contributing
 
