@@ -1,4 +1,4 @@
-<img src="/demo/combined-trip.jpg" width="700"/>
+<img src="/demo/combined-trip.jpg" width="500"/>
 
 # Trip-Roulette
 
