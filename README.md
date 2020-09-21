@@ -10,13 +10,13 @@ The product is currently on beta version where we do integration tests and could
 
 ## Usage
 
-<img align="right" width="280" src="/demo/preferences.gif">
-
 * You can easily generate trips tailored to your interests on **Trip Roulette**. Just personalize your trip to fit your interests and hobbies. Furthermore, simply adjust the trip length and average cost for further customization.
 
-<img align="left" width="280" src="/demo/demo_trip.gif">
+<img width="280" src="/demo/preferences.gif">
 
 * After clicking on **Generate Trip** button, Trip Roulette generates a trip that will take approximately the duration that you've chosen. The algorithm will provide you with the most efficient route between the destinations. You can also start navigation on Google Maps.
+
+<img width="280" src="/demo/demo_trip.gif">
 
 ## How it works
 
