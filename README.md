@@ -1,6 +1,6 @@
 <img src="/demo/combined-trip.jpg" width="500"/>
 
-# Trip-Roulette
+# TripRoulette
 
 Trip Roulette is a cross-platform app that generates randomized day trips in proximity to the user. 
 
