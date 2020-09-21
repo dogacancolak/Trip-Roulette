@@ -11,7 +11,9 @@ The product is currently on beta version where we do integration tests and could
 ## Usage
 
 * You can easily generate trips on **Trip Roulette** using the generate trip button. You can also personalize your trip to fit your interests and hobbies. Furthermore, simply adjust the trip length and average cost for further customization.
-![Preferences](/demo/preferences.gif)
+<p align="center">
+  <img width="460" src="/demo/preferences.gif">
+</p>
 
 * After clicking on **Generate Trip** button, Trip Roulette generates a trip that you can finish in user-given timeframe. 
 ![Demo1](/demo/demo_trip.gif)
