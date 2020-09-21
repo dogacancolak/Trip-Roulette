@@ -1,4 +1,4 @@
-![Preview](/demo/combined-trip.jpg)
+<img src="/demo/combined-trip.jpg" width="300")
 
 # Trip-Roulette
 
