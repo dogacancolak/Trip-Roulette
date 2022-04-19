@@ -2,7 +2,7 @@ from kivy.app import App
 from kivy.clock import Clock
 from kivy.utils import platform
 from kivymd.uix.dialog import MDDialog
-from gpsblinker import GpsBlinker
+from graphics.gpsblinker import GpsBlinker
 from plyer import gps
 
 import requests
